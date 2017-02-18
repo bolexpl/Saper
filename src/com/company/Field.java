@@ -9,15 +9,16 @@ public class Field extends JButton {
     * 0 puste
     * */
     private int value;
+
+    public static final int MINA = -1;
+    public static final int PUSTE = 0;
+
     /*
     * 0 odkryte
     * 1 zakryte
     * 2 flaga
     * */
     private int state;
-    public static final int MINA = -1;
-    public static final int PUSTE = 0;
-
     public static final int ODKRYTE = 0;
     public static final int ZAKRYTE = 1;
     public static final int FLAGA = 2;
@@ -25,13 +26,34 @@ public class Field extends JButton {
 
     public Field() {
         super();
-        this.state = 0;
+        this.state = ZAKRYTE;
+        this.value = -2;
     }
 
     public Field(ImageIcon icon) {
         super(new ImageIcon(
                 (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
-        this.state = 0;
+        this.state = ZAKRYTE;
+        this.value = -2;
+    }
+
+    public Field(String s) {
+        super(s);
+        this.state = ZAKRYTE;
+        this.value = -2;
+    }
+
+    public Field(Action action) {
+        super(action);
+        this.state = ZAKRYTE;
+        this.value = -2;
+    }
+
+    public Field(String s, ImageIcon icon) {
+        super(s, new ImageIcon(
+                (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
+        this.state = ZAKRYTE;
+        this.value = -2;
     }
 
     public void setIcon(ImageIcon icon) {
@@ -41,22 +63,6 @@ public class Field extends JButton {
             super.setIcon(new ImageIcon(
                     (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
         }
-    }
-
-    public Field(String s) {
-        super(s);
-        this.state = 0;
-    }
-
-    public Field(Action action) {
-        super(action);
-        this.state = 0;
-    }
-
-    public Field(String s, ImageIcon icon) {
-        super(s, new ImageIcon(
-                (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
-        this.state = 0;
     }
 
     public int getValue() {
