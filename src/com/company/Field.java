@@ -3,8 +3,25 @@ package com.company;
 import javax.swing.*;
 
 public class Field extends JButton {
-    private short value;
-    private short state;
+
+    /*
+    * -1 mina
+    * 0 puste
+    * */
+    private int value;
+    /*
+    * 0 odkryte
+    * 1 zakryte
+    * 2 flaga
+    * */
+    private int state;
+    public static final int MINA = -1;
+    public static final int PUSTE = 0;
+
+    public static final int ODKRYTE = 0;
+    public static final int ZAKRYTE = 1;
+    public static final int FLAGA = 2;
+
 
     public Field() {
         super();
@@ -42,19 +59,19 @@ public class Field extends JButton {
         this.state = 0;
     }
 
-    public short getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(short value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
-    public short getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(short state) {
+    public void setState(int state) {
         this.state = state;
     }
 }
