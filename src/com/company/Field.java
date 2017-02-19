@@ -5,6 +5,7 @@ import javax.swing.*;
 public class Field extends JButton {
 
     /*
+    * -2 nieokreślone
     * -1 mina
     * 0 puste
     * */

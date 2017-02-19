@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
 public class Window extends JFrame {
@@ -31,13 +33,17 @@ public class Window extends JFrame {
                 button[c][i].setPreferredSize(new Dimension(40, 40));
                 button[c][i].setMargin(new Insets(0, 0, 0, 0));
 
-                button[c][i].addActionListener(new Odkrycie(c, i));
+//                button[c][i].addActionListener(new Odkrycie(c, i));
+                button[c][i].addMouseListener(new Odkrycie(c, i));
                 panel.add(button[c][i]);
             }
         }
 
         pack();
         setVisible(true);
+
+
+//        generate(0, 0);
     }
 
     /**
@@ -60,6 +66,14 @@ public class Window extends JFrame {
 //            button[x][y].setIcon(flaga);
         }
 
+//        button[4][0].setValue(Field.MINA);
+//        button[4][1].setValue(Field.MINA);
+//        button[4][2].setValue(Field.MINA);
+//        button[0][4].setValue(Field.MINA);
+//        button[1][4].setValue(Field.MINA);
+//        button[2][4].setValue(Field.MINA);
+
+
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
         for (int i = 0; i < maxX; i++) {
@@ -80,9 +94,41 @@ public class Window extends JFrame {
                         }
                     }
                     button[i][c].setValue(countMines);
-//                    if(countMines != Field.PUSTE){
-//                        button[i][c].setText(Integer.toString(countMines));
-//                    }
+                }
+            }
+        }
+    }
+
+    public void discovery(int x, int y) {
+        if (button[x][y].getState() == Field.ZAKRYTE) {
+            button[x][y].setState(Field.ODKRYTE);
+            button[x][y].setBackground(Color.WHITE);
+
+            if (button[x][y].getValue() > Field.PUSTE) {
+
+                button[x][y].setText(Integer.toString(button[x][y].getValue()));
+            } else if (button[x][y].getValue() == Field.MINA) {
+
+                button[x][y].setIcon(trafione);
+                Alert dialog = new Alert("Przegrana");
+                dialog.pack();
+                dialog.setLocation(600, 300);
+                dialog.setVisible(true);
+                System.exit(0);
+            } else if (button[x][y].getValue() == Field.PUSTE) {
+
+                //rekurencja
+                int xmin, xmax, ymin, ymax;
+                xmin = (x == 0) ? 0 : x - 1;
+                xmax = (x == maxX - 1) ? maxX - 1 : x + 1;
+
+                ymin = (y == 0) ? 0 : y - 1;
+                ymax = (y == maxY - 1) ? maxY - 1 : y + 1;
+
+                for (int i = ymin; i <= ymax; i++) {
+                    for (int c = xmin; c <= xmax; c++) {
+                        discovery(c, i);
+                    }
                 }
             }
         }
@@ -91,7 +137,25 @@ public class Window extends JFrame {
     /**
      * reakcja na kliknięcie
      */
-    class Odkrycie implements ActionListener {
+//    class Odkrycie1 implements ActionListener {
+//        private int x;
+//        private int y;
+//
+//        public Odkrycie1(int x, int y) {
+//            this.x = x;
+//            this.y = y;
+//        }
+//
+//        @Override
+//        public void actionPerformed(ActionEvent actionEvent) {
+//            if (button[x][y].getValue() == -2) {
+////                generate(x, y);
+//            }
+//            discovery(x,y);
+//        }
+//    }
+
+    class Odkrycie implements MouseListener {
         private int x;
         private int y;
 
@@ -101,45 +165,42 @@ public class Window extends JFrame {
         }
 
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {
-            if (button[x][y].getValue() == -2) {
-                generate(x, y);
-            }
-
-            if (button[x][y].getState() == Field.ZAKRYTE) {
-                button[x][y].setState(Field.ODKRYTE);
-                button[x][y].setBackground(Color.WHITE);
-
-                if (button[x][y].getValue() > Field.PUSTE) {
-                    button[x][y].setText(Integer.toString(button[x][y].getValue()));
-                }
-
-                if(button[x][y].getValue() == Field.MINA){
+        public void mouseClicked(MouseEvent e) {
+            if(e.getButton() == 3){
+                if(button[x][y].getState() != Field.FLAGA){
+                    button[x][y].setState(Field.FLAGA);
                     button[x][y].setIcon(flaga);
+                }else{
+                    button[x][y].setState(Field.ZAKRYTE);
+                    button[x][y].setIcon(null);
                 }
-
-                if (button[x][y].getValue() == Field.PUSTE) {
-//                    System.out.println(x + ", " + y + ": " + button[x][y].getValue() + ", " + button[x][y].getState());
-
-                    System.out.println("obecne: "+x+", "+y);
-                    //rekurencja
-                    int xmin, xmax, ymin, ymax;
-                    xmin = (x == 0) ? 0 : x - 1;
-                    xmax = (x == maxX - 1) ? maxX - 1 : x + 1;
-
-                    ymin = (y == 0) ? 0 : y - 1;
-                    ymax = (y == maxY - 1) ? maxY - 1 : y + 1;
-
-                    for (int i = ymin; i <= ymax; i++) {
-                        for (int c = xmin; c <= xmax; c++) {
-                            if(i!=x && c!=y){
-                                button[i][c].doClick();
-//                                System.out.println(i+", "+c);
-                            }
-                        }
-                    }
+            }else if(e.getButton() == 1){
+                if (button[x][y].getValue() == -2) {
+                    generate(x, y);
                 }
+                discovery(x,y);
             }
         }
+
+        @Override
+        public void mousePressed(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent mouseEvent) {
+
+        }
     }
+
 }
