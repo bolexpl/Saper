@@ -140,7 +140,6 @@ class Window extends JFrame {
                 System.exit(0);
             } else if (button[x][y].getValue() > Field.PUSTE) {
 
-
                 switch (button[x][y].getValue()){
                     case 1:
                         button[x][y].setForeground(Color.BLUE);
@@ -270,23 +269,15 @@ class Window extends JFrame {
         }
 
         @Override
-        public void mousePressed(MouseEvent mouseEvent) {
-
-        }
+        public void mousePressed(MouseEvent mouseEvent) {}
 
         @Override
-        public void mouseReleased(MouseEvent mouseEvent) {
-
-        }
+        public void mouseReleased(MouseEvent mouseEvent) {}
 
         @Override
-        public void mouseEntered(MouseEvent mouseEvent) {
-
-        }
+        public void mouseEntered(MouseEvent mouseEvent) {}
 
         @Override
-        public void mouseExited(MouseEvent mouseEvent) {
-
-        }
+        public void mouseExited(MouseEvent mouseEvent) {}
     }
 }
