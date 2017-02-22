@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.IntSummaryStatistics;
 import java.util.Random;
 
 class Window extends JFrame {
@@ -78,6 +79,23 @@ class Window extends JFrame {
 //        button[0][4].setValue(Field.MINA);
 //        button[1][4].setValue(Field.MINA);
 //        button[2][4].setValue(Field.MINA);
+//
+//        button[8][0].setForeground(Color.BLUE);
+//        button[8][0].setText(Integer.toString(1));
+//        button[8][1].setForeground(Color.GREEN);
+//        button[8][1].setText(Integer.toString(2));
+//        button[8][2].setForeground(Color.RED);
+//        button[8][2].setText(Integer.toString(3));
+//        button[8][3].setForeground(Color.YELLOW);
+//        button[8][3].setText(Integer.toString(4));
+//        button[8][4].setForeground(Color.CYAN);
+//        button[8][4].setText(Integer.toString(5));
+//        button[8][5].setForeground(Color.MAGENTA);
+//        button[8][5].setText(Integer.toString(6));
+//        button[8][6].setForeground(Color.ORANGE);
+//        button[8][6].setText(Integer.toString(7));
+//        button[8][7].setForeground(Color.GRAY);
+//        button[8][7].setText(Integer.toString(8));
 
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
@@ -123,22 +141,76 @@ class Window extends JFrame {
                 System.exit(0);
             } else if (button[x][y].getValue() > Field.PUSTE) {
 
+
+                switch (button[x][y].getValue()){
+                    case 1:
+                        button[x][y].setForeground(Color.BLUE);
+                        break;
+                    case 2:
+                        button[x][y].setForeground(Color.GREEN);
+                        break;
+                    case 3:
+                        button[x][y].setForeground(Color.RED);
+                        break;
+                    case 4:
+                        button[x][y].setForeground(Color.YELLOW);
+                        break;
+                    case 5:
+                        button[x][y].setForeground(Color.CYAN);
+                        break;
+                    case 6:
+                        button[x][y].setForeground(Color.MAGENTA);
+                        break;
+                    case 7:
+                        button[x][y].setForeground(Color.ORANGE);
+                        break;
+                    case 8:
+                        button[x][y].setForeground(Color.GRAY);
+                        break;
+                }
                 button[x][y].setText(Integer.toString(button[x][y].getValue()));
                 emptyFields--;
             } else if (button[x][y].getValue() == Field.PUSTE) {
-                emptyFields--;
 
                 //rekurencja
-                int xmin, xmax, ymin, ymax;
-                xmin = (x == 0) ? 0 : x - 1;
-                xmax = (x == maxX - 1) ? maxX - 1 : x + 1;
+                int xmin = (x == 0) ? 0 : x - 1;
+                int xmax = (x == maxX - 1) ? maxX - 1 : x + 1;
 
-                ymin = (y == 0) ? 0 : y - 1;
-                ymax = (y == maxY - 1) ? maxY - 1 : y + 1;
+                int ymin = (y == 0) ? 0 : y - 1;
+                int ymax = (y == maxY - 1) ? maxY - 1 : y + 1;
 
                 for (int i = ymin; i <= ymax; i++) {
                     for (int c = xmin; c <= xmax; c++) {
                         discovery(c, i);
+                    }
+                }
+                emptyFields--;
+            }
+        }else if(button[x][y].getState() == Field.ODKRYTE && button[x][y].getValue() > Field.PUSTE){
+
+            int xmin = (x == 0) ? 0 : x - 1;
+            int xmax = (x == maxX - 1) ? maxX - 1 : x + 1;
+
+            int ymin = (y == 0) ? 0 : y - 1;
+            int ymax = (y == maxY - 1) ? maxY - 1 : y + 1;
+
+            int countMines=0, countFlags=0;
+            for (int i = ymin; i <= ymax; i++) {
+                for (int c = xmin; c <= xmax; c++) {
+                    if(button[c][i].getState() ==  Field.FLAGA){
+                        countFlags++;
+                    }
+                    if(button[c][i].getValue() == Field.MINA){
+                        countMines++;
+                    }
+                }
+            }
+            if(countFlags == countMines){
+                for (int i = ymin; i <= ymax; i++) {
+                    for (int c = xmin; c <= xmax; c++) {
+                        if(button[c][i].getState() == Field.ZAKRYTE){
+                            discovery(c, i);
+                        }
                     }
                 }
             }
@@ -218,5 +290,4 @@ class Window extends JFrame {
 
         }
     }
-
 }
