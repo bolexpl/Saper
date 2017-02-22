@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.IntSummaryStatistics;
 import java.util.Random;
 
 class Window extends JFrame {
@@ -26,7 +25,7 @@ class Window extends JFrame {
         JPanel plansza = new JPanel();
         JPanel menu = new JPanel();
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setContentPane(mainPanel);
         setLayout(new BorderLayout());
         setLocation(500, 200);
