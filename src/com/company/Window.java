@@ -2,29 +2,41 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
-public class Window extends JFrame {
+class Window extends JFrame {
 
-    private JPanel panel = new JPanel();
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
     private final int maxX = 9;
     private final int maxY = 9;
     private final int hardline = 15;
-    Field button[][];
+    private Field button[][];
+    private int minesFields = hardline;
+    private int emptyFields = (maxX * maxY) - hardline;
+
+    private JLabel minyBT = new JLabel(Integer.toString(minesFields));
 
     public Window() {
         super("Saper");
+        JPanel mainPanel = new JPanel();
+        JPanel plansza = new JPanel();
+        JPanel menu = new JPanel();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(panel);
-        setLayout(new GridLayout(maxY, maxX));
+        setContentPane(mainPanel);
+        setLayout(new BorderLayout());
         setLocation(500, 200);
+
+        mainPanel.add(menu, BorderLayout.NORTH);
+        menu.setLayout(new FlowLayout());
+        menu.add(new JLabel("Pozostałe miny:"));
+        menu.add(minyBT);
+
+        mainPanel.add(plansza, BorderLayout.CENTER);
+        plansza.setLayout(new GridLayout(maxY, maxX));
 
         button = new Field[maxX][maxY];
         for (int i = 0; i < maxY; i++) {
@@ -32,18 +44,13 @@ public class Window extends JFrame {
                 button[c][i] = new Field();
                 button[c][i].setPreferredSize(new Dimension(40, 40));
                 button[c][i].setMargin(new Insets(0, 0, 0, 0));
-
-//                button[c][i].addActionListener(new Odkrycie(c, i));
                 button[c][i].addMouseListener(new Odkrycie(c, i));
-                panel.add(button[c][i]);
+                plansza.add(button[c][i]);
             }
         }
 
         pack();
         setVisible(true);
-
-
-//        generate(0, 0);
     }
 
     /**
@@ -63,7 +70,6 @@ public class Window extends JFrame {
                     || x == xx + 1 || y == yy + 1);
 
             button[x][y].setValue(Field.MINA);
-//            button[x][y].setIcon(flaga);
         }
 
 //        button[4][0].setValue(Field.MINA);
@@ -72,7 +78,6 @@ public class Window extends JFrame {
 //        button[0][4].setValue(Field.MINA);
 //        button[1][4].setValue(Field.MINA);
 //        button[2][4].setValue(Field.MINA);
-
 
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
@@ -99,23 +104,29 @@ public class Window extends JFrame {
         }
     }
 
-    public void discovery(int x, int y) {
+    /**
+     * odkrycie pola
+     */
+    private void discovery(int x, int y) {
         if (button[x][y].getState() == Field.ZAKRYTE) {
             button[x][y].setState(Field.ODKRYTE);
             button[x][y].setBackground(Color.WHITE);
 
-            if (button[x][y].getValue() > Field.PUSTE) {
-
-                button[x][y].setText(Integer.toString(button[x][y].getValue()));
-            } else if (button[x][y].getValue() == Field.MINA) {
+            if (button[x][y].getValue() == Field.MINA) {
 
                 button[x][y].setIcon(trafione);
                 Alert dialog = new Alert("Przegrana");
                 dialog.pack();
+                dialog.setSize(150, 80);
                 dialog.setLocation(600, 300);
                 dialog.setVisible(true);
                 System.exit(0);
+            } else if (button[x][y].getValue() > Field.PUSTE) {
+
+                button[x][y].setText(Integer.toString(button[x][y].getValue()));
+                emptyFields--;
             } else if (button[x][y].getValue() == Field.PUSTE) {
+                emptyFields--;
 
                 //rekurencja
                 int xmin, xmax, ymin, ymax;
@@ -137,48 +148,42 @@ public class Window extends JFrame {
     /**
      * reakcja na kliknięcie
      */
-//    class Odkrycie1 implements ActionListener {
-//        private int x;
-//        private int y;
-//
-//        public Odkrycie1(int x, int y) {
-//            this.x = x;
-//            this.y = y;
-//        }
-//
-//        @Override
-//        public void actionPerformed(ActionEvent actionEvent) {
-//            if (button[x][y].getValue() == -2) {
-////                generate(x, y);
-//            }
-//            discovery(x,y);
-//        }
-//    }
-
     class Odkrycie implements MouseListener {
         private int x;
         private int y;
 
-        public Odkrycie(int x, int y) {
+        private Odkrycie(int x, int y) {
             this.x = x;
             this.y = y;
         }
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            if(e.getButton() == 3){
-                if(button[x][y].getState() != Field.FLAGA){
+            if (e.getButton() == 3) {
+                if (button[x][y].getState() != Field.FLAGA) {
                     button[x][y].setState(Field.FLAGA);
                     button[x][y].setIcon(flaga);
-                }else{
+                    minesFields--;
+                    minyBT.setText(Integer.toString(minesFields));
+                } else {
                     button[x][y].setState(Field.ZAKRYTE);
                     button[x][y].setIcon(null);
+                    minesFields++;
+                    minyBT.setText(Integer.toString(minesFields));
                 }
-            }else if(e.getButton() == 1){
+            } else if (e.getButton() == 1) {
                 if (button[x][y].getValue() == -2) {
                     generate(x, y);
                 }
-                discovery(x,y);
+                discovery(x, y);
+            }
+            if (minesFields == 0 || emptyFields == 0) {
+                Alert dialog = new Alert("Wygrana");
+                dialog.pack();
+                dialog.setSize(150, 80);
+                dialog.setLocation(600, 300);
+                dialog.setVisible(true);
+                System.exit(0);
             }
         }
 
