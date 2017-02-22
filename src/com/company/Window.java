@@ -177,7 +177,18 @@ class Window extends JFrame {
                 }
                 discovery(x, y);
             }
-            if (minesFields == 0 || emptyFields == 0) {
+
+            boolean allMinesFlagged=true;
+            if(minesFields==0){
+                for (int i = 0; i < maxX; i++) {
+                    for (int c = 0; c < maxY; c++) {
+                        if(button[c][i].getValue() == Field.MINA && button[c][i].getState() != Field.FLAGA){
+                            allMinesFlagged=false;
+                        }
+                    }
+                }
+            }
+            if (allMinesFlagged && minesFields == 0) {
                 Alert dialog = new Alert("Wygrana");
                 dialog.pack();
                 dialog.setSize(150, 80);
