@@ -25,7 +25,7 @@ class Window extends JFrame {
         JPanel plansza = new JPanel();
         JPanel bar = new JPanel();
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setContentPane(mainPanel);
         setLayout(new BorderLayout());
         setLocation(500, 200);
@@ -293,23 +293,15 @@ class Window extends JFrame {
         }
 
         @Override
-        public void mousePressed(MouseEvent mouseEvent) {
-
-        }
+        public void mousePressed(MouseEvent mouseEvent) {}
 
         @Override
-        public void mouseReleased(MouseEvent mouseEvent) {
-
-        }
+        public void mouseReleased(MouseEvent mouseEvent) {}
 
         @Override
-        public void mouseEntered(MouseEvent mouseEvent) {
-
-        }
+        public void mouseEntered(MouseEvent mouseEvent) {}
 
         @Override
-        public void mouseExited(MouseEvent mouseEvent) {
-
-        }
+        public void mouseExited(MouseEvent mouseEvent) {}
     }
 }
