@@ -2,39 +2,38 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.IntSummaryStatistics;
+import java.awt.event.*;
 import java.util.Random;
 
 class Window extends JFrame {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
-    private final int maxX = 9;
-    private final int maxY = 9;
+    private final int maxX = 10;
+    private final int maxY = 10;
     private final int hardline = 15;
     private Field button[][];
     private int minesFields = hardline;
     private int emptyFields = (maxX * maxY) - hardline;
-
     private JLabel minyBT = new JLabel(Integer.toString(minesFields));
 
     public Window() {
         super("Saper");
+        createMenuBar();
+
         JPanel mainPanel = new JPanel();
         JPanel plansza = new JPanel();
-        JPanel menu = new JPanel();
+        JPanel bar = new JPanel();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(mainPanel);
         setLayout(new BorderLayout());
         setLocation(500, 200);
 
-        mainPanel.add(menu, BorderLayout.NORTH);
-        menu.setLayout(new FlowLayout());
-        menu.add(new JLabel("Pozostałe miny:"));
-        menu.add(minyBT);
+        mainPanel.add(bar, BorderLayout.NORTH);
+        bar.setLayout(new FlowLayout());
+        bar.add(new JLabel("Pozostałe miny:"));
+        bar.add(minyBT);
 
         mainPanel.add(plansza, BorderLayout.CENTER);
         plansza.setLayout(new GridLayout(maxY, maxX));
@@ -52,6 +51,30 @@ class Window extends JFrame {
 
         pack();
         setVisible(true);
+    }
+
+    private void createMenuBar(){
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu game = new JMenu("Gra");
+        game.setMnemonic(KeyEvent.VK_G);
+
+        JMenuItem eMenuItem = new JMenuItem("Nowa gra");
+        eMenuItem.setMnemonic(KeyEvent.VK_N);
+        eMenuItem.setToolTipText("Exit application");
+        eMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.exit(0);
+            }
+        });
+
+        game.add(eMenuItem);
+
+        menuBar.add(game);
+        menuBar.add(Box.createHorizontalGlue());
+
+        setJMenuBar(menuBar);
     }
 
     /**
@@ -140,7 +163,6 @@ class Window extends JFrame {
                 dialog.setVisible(true);
                 System.exit(0);
             } else if (button[x][y].getValue() > Field.PUSTE) {
-
 
                 switch (button[x][y].getValue()){
                     case 1:
