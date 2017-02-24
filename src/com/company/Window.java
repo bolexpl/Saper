@@ -16,14 +16,12 @@ class Window extends JFrame {
     private int minesFields = hardline;
     private int emptyFields = (maxX * maxY) - hardline;
     private JLabel minyBT = new JLabel(Integer.toString(minesFields));
-
     private JPanel mainPanel = new JPanel();
     private JPanel plansza = new JPanel();
 
     public Window() {
         super("Saper");
         createMenuBar();
-
         JPanel bar = new JPanel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -39,16 +37,21 @@ class Window extends JFrame {
         newGame();
     }
 
-    private void newGame(){
+    /**
+     * Tworzenie nowej planszy
+     */
+    private void newGame() {
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+
         Prompt dialog = new Prompt(this);
         dialog.pack();
+        dialog.setLocation((int) screen.getWidth() / 2 - (int) dialog.getSize().getWidth() / 2,
+                (int) screen.getHeight() / 2 - (int) dialog.getSize().getHeight() / 2);
         dialog.setVisible(true);
 
         mainPanel.remove(plansza);
         plansza = new JPanel();
-
         mainPanel.add(plansza, BorderLayout.CENTER);
-
         plansza.setLayout(new GridLayout(maxY, maxX));
 
         button = new Field[maxX][maxY];
@@ -66,7 +69,10 @@ class Window extends JFrame {
         setVisible(true);
     }
 
-    private void createMenuBar(){
+    /**
+     * Tworzenie paska menu
+     */
+    private void createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu game = new JMenu("Gra");
@@ -78,11 +84,9 @@ class Window extends JFrame {
         eMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-//                System.exit(0);
                 newGame();
             }
         });
-
         game.add(eMenuItem);
 
         eMenuItem = new JMenuItem("Zakończ");
@@ -94,67 +98,61 @@ class Window extends JFrame {
                 System.exit(0);
             }
         });
-
         game.add(eMenuItem);
+
         menuBar.add(game);
         setJMenuBar(menuBar);
     }
 
-    public void setGameSize(int x, int y, int count){
+    /**
+     * Ustawienie rozmiarów planszy i ilości min
+     *
+     * @param x     - rozmiar x planszy
+     * @param y     - rozmiar y planszy
+     * @param count - ilość min
+     */
+    public void setGameSize(int x, int y, int count) {
         this.maxX = x;
         this.maxY = y;
         this.hardline = count;
         minesFields = hardline;
         emptyFields = (maxX * maxY) - hardline;
-        minyBT = new JLabel(Integer.toString(minesFields));
+        minyBT.setText(Integer.toString(minesFields));
     }
 
     /**
-     * generowanie min
+     * Generowanie min
+     *
+     * @param xx - współrzędna x wybranego pola
+     * @param yy - współrzędna y wybranego pola
      */
     private void generate(int xx, int yy) {
         int x;
         int y;
         Random rand = new Random();
-        for (int i = hardline; i > 0; i--) {
-            do {
-                x = rand.nextInt(maxX);
-                y = rand.nextInt(maxY);
-            } while (button[x][y].getValue() == Field.MINA
-                    || x == xx || y == yy
-                    || x == xx - 1 || y == yy - 1
-                    || x == xx + 1 || y == yy + 1);
-
-            button[x][y].setValue(Field.MINA);
+        int i = hardline;
+        while (i > 0) {
+            x = rand.nextInt(maxX);
+            y = rand.nextInt(maxY);
+            if (button[x][y].getValue() != Field.MINA
+                    && !((x == xx && y == yy)
+                    || (x == xx - 1 && y == yy - 1)
+                    || (x == xx + 1 && y == yy + 1)
+                    || (x == xx - 1 && y == yy)
+                    || (x == xx + 1 && y == yy)
+                    || (x == xx && y == yy - 1)
+                    || (x == xx && y == yy + 1)
+                    || (x == xx + 1 && y == yy - 1)
+                    || (x == xx - 1 && y == yy + 1))
+                    ) {
+                button[x][y].setValue(Field.MINA);
+                i--;
+            }
         }
-
-//        button[4][0].setValue(Field.MINA);
-//        button[4][1].setValue(Field.MINA);
-//        button[4][2].setValue(Field.MINA);
-//        button[0][4].setValue(Field.MINA);
-//        button[1][4].setValue(Field.MINA);
-//        button[2][4].setValue(Field.MINA);
-//
-//        button[8][0].setForeground(Color.BLUE);
-//        button[8][0].setText(Integer.toString(1));
-//        button[8][1].setForeground(Color.GREEN);
-//        button[8][1].setText(Integer.toString(2));
-//        button[8][2].setForeground(Color.RED);
-//        button[8][2].setText(Integer.toString(3));
-//        button[8][3].setForeground(Color.YELLOW);
-//        button[8][3].setText(Integer.toString(4));
-//        button[8][4].setForeground(Color.CYAN);
-//        button[8][4].setText(Integer.toString(5));
-//        button[8][5].setForeground(Color.MAGENTA);
-//        button[8][5].setText(Integer.toString(6));
-//        button[8][6].setForeground(Color.ORANGE);
-//        button[8][6].setText(Integer.toString(7));
-//        button[8][7].setForeground(Color.GRAY);
-//        button[8][7].setText(Integer.toString(8));
 
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
-        for (int i = 0; i < maxX; i++) {
+        for (i = 0; i < maxX; i++) {
             for (int c = 0; c < maxY; c++) {
                 if (button[i][c].getValue() != -1) {
                     countMines = 0;
@@ -178,7 +176,10 @@ class Window extends JFrame {
     }
 
     /**
-     * odkrycie pola
+     * Odkrywanie pola
+     *
+     * @param x - współrzędna x wybranego pola
+     * @param y - współrzędna y wybranego pola
      */
     private void discovery(int x, int y) {
         if (button[x][y].getState() == Field.ZAKRYTE) {
@@ -196,7 +197,7 @@ class Window extends JFrame {
                 System.exit(0);
             } else if (button[x][y].getValue() > Field.PUSTE) {
 
-                switch (button[x][y].getValue()){
+                switch (button[x][y].getValue()) {
                     case 1:
                         button[x][y].setForeground(Color.BLUE);
                         break;
@@ -240,7 +241,7 @@ class Window extends JFrame {
                 }
                 emptyFields--;
             }
-        }else if(button[x][y].getState() == Field.ODKRYTE && button[x][y].getValue() > Field.PUSTE){
+        } else if (button[x][y].getState() == Field.ODKRYTE && button[x][y].getValue() > Field.PUSTE) {
 
             int xmin = (x == 0) ? 0 : x - 1;
             int xmax = (x == maxX - 1) ? maxX - 1 : x + 1;
@@ -248,21 +249,21 @@ class Window extends JFrame {
             int ymin = (y == 0) ? 0 : y - 1;
             int ymax = (y == maxY - 1) ? maxY - 1 : y + 1;
 
-            int countMines=0, countFlags=0;
+            int countMines = 0, countFlags = 0;
             for (int i = ymin; i <= ymax; i++) {
                 for (int c = xmin; c <= xmax; c++) {
-                    if(button[c][i].getState() ==  Field.FLAGA){
+                    if (button[c][i].getState() == Field.FLAGA) {
                         countFlags++;
                     }
-                    if(button[c][i].getValue() == Field.MINA){
+                    if (button[c][i].getValue() == Field.MINA) {
                         countMines++;
                     }
                 }
             }
-            if(countFlags == countMines){
+            if (countFlags == countMines) {
                 for (int i = ymin; i <= ymax; i++) {
                     for (int c = xmin; c <= xmax; c++) {
-                        if(button[c][i].getState() == Field.ZAKRYTE){
+                        if (button[c][i].getState() == Field.ZAKRYTE) {
                             discovery(c, i);
                         }
                     }
@@ -272,12 +273,16 @@ class Window extends JFrame {
     }
 
     /**
-     * reakcja na kliknięcie
+     * Klasa reakcji na kliknięcie
      */
     class Odkrycie implements MouseListener {
         private int x;
         private int y;
 
+        /**
+         * @param x - współrzędna x wybranego pola
+         * @param y - współrzędna y wybranego pola
+         */
         private Odkrycie(int x, int y) {
             this.x = x;
             this.y = y;
@@ -291,7 +296,7 @@ class Window extends JFrame {
                     button[x][y].setIcon(flaga);
                     minesFields--;
                     minyBT.setText(Integer.toString(minesFields));
-                } else if(button[x][y].getState() == Field.FLAGA) {
+                } else if (button[x][y].getState() == Field.FLAGA) {
                     button[x][y].setState(Field.ZAKRYTE);
                     button[x][y].setIcon(null);
                     minesFields++;
@@ -304,36 +309,33 @@ class Window extends JFrame {
                 discovery(x, y);
             }
 
-            boolean allMinesFlagged = true;
-            if (minesFields == 0) {
-                for (int i = 0; i < maxX; i++) {
-                    for (int c = 0; c < maxY; c++) {
-                        if (button[c][i].getValue() == Field.MINA && button[c][i].getState() != Field.FLAGA) {
-                            allMinesFlagged = false;
-                        }
-                    }
-                }
-            }
-            if (allMinesFlagged && minesFields == 0 || emptyFields == 0) {
+            if (emptyFields == 0) {
                 Alert dialog = new Alert("Wygrana");
-                dialog.pack();
+
+                Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
                 dialog.setSize(150, 80);
-                dialog.setLocation(600, 300);
+                dialog.setLocation((int) screen.getWidth() / 2 - 150, (int) screen.getHeight() / 2 - 100);
+
+//                dialog.pack();
                 dialog.setVisible(true);
                 System.exit(0);
             }
         }
 
         @Override
-        public void mousePressed(MouseEvent mouseEvent) {}
+        public void mousePressed(MouseEvent mouseEvent) {
+        }
 
         @Override
-        public void mouseReleased(MouseEvent mouseEvent) {}
+        public void mouseReleased(MouseEvent mouseEvent) {
+        }
 
         @Override
-        public void mouseEntered(MouseEvent mouseEvent) {}
+        public void mouseEntered(MouseEvent mouseEvent) {
+        }
 
         @Override
-        public void mouseExited(MouseEvent mouseEvent) {}
+        public void mouseExited(MouseEvent mouseEvent) {
+        }
     }
 }
