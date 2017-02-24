@@ -5,24 +5,35 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-class Window extends JFrame {
+class Window extends JFrame implements Prompt.Trans {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
-    private final int maxX = 10;
-    private final int maxY = 10;
-    private final int hardline = 15;
+    private int maxX = 10;
+    private int maxY = 10;
+    private int hardline = 15;
     private Field button[][];
     private int minesFields = hardline;
     private int emptyFields = (maxX * maxY) - hardline;
     private JLabel minyBT = new JLabel(Integer.toString(minesFields));
 
+    private JPanel mainPanel = new JPanel();
+    private JPanel plansza = new JPanel();
+
+    @Override
+    public void setGameSize(int x, int y, int count){
+        this.maxX = x;
+        this.maxY = y;
+        this.hardline = count;
+        minesFields = hardline;
+        emptyFields = (maxX * maxY) - hardline;
+        minyBT = new JLabel(Integer.toString(minesFields));
+    }
+
     public Window() {
         super("Saper");
         createMenuBar();
 
-        JPanel mainPanel = new JPanel();
-        JPanel plansza = new JPanel();
         JPanel bar = new JPanel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -35,7 +46,19 @@ class Window extends JFrame {
         bar.add(new JLabel("Pozostałe miny:"));
         bar.add(minyBT);
 
+        newGame();
+    }
+
+    private void newGame(){
+        Prompt dialog = new Prompt(this);
+        dialog.pack();
+        dialog.setVisible(true);
+
+        mainPanel.remove(plansza);
+        plansza = new JPanel();
+
         mainPanel.add(plansza, BorderLayout.CENTER);
+
         plansza.setLayout(new GridLayout(maxY, maxX));
 
         button = new Field[maxX][maxY];
@@ -61,7 +84,20 @@ class Window extends JFrame {
 
         JMenuItem eMenuItem = new JMenuItem("Nowa gra");
         eMenuItem.setMnemonic(KeyEvent.VK_N);
-        eMenuItem.setToolTipText("Exit application");
+        eMenuItem.setToolTipText("Rozpoczęcie nowej gry");
+        eMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+//                System.exit(0);
+                newGame();
+            }
+        });
+
+        game.add(eMenuItem);
+
+        eMenuItem = new JMenuItem("Zakończ");
+        eMenuItem.setMnemonic(KeyEvent.VK_Z);
+        eMenuItem.setToolTipText("Wyjście z gry");
         eMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -70,10 +106,7 @@ class Window extends JFrame {
         });
 
         game.add(eMenuItem);
-
         menuBar.add(game);
-        menuBar.add(Box.createHorizontalGlue());
-
         setJMenuBar(menuBar);
     }
 
@@ -254,12 +287,12 @@ class Window extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getButton() == 3) {
-                if (button[x][y].getState() != Field.FLAGA) {
+                if (button[x][y].getState() == Field.ZAKRYTE) {
                     button[x][y].setState(Field.FLAGA);
                     button[x][y].setIcon(flaga);
                     minesFields--;
                     minyBT.setText(Integer.toString(minesFields));
-                } else {
+                } else if(button[x][y].getState() == Field.FLAGA) {
                     button[x][y].setState(Field.ZAKRYTE);
                     button[x][y].setIcon(null);
                     minesFields++;
