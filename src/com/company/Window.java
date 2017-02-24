@@ -27,7 +27,6 @@ class Window extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setContentPane(mainPanel);
         setLayout(new BorderLayout());
-        setLocation(500, 200);
 
         mainPanel.add(bar, BorderLayout.NORTH);
         bar.setLayout(new FlowLayout());
@@ -45,8 +44,8 @@ class Window extends JFrame {
 
         Prompt dialog = new Prompt(this);
         dialog.pack();
-        dialog.setLocation((int) screen.getWidth() / 2 - (int) dialog.getSize().getWidth() / 2,
-                (int) screen.getHeight() / 2 - (int) dialog.getSize().getHeight() / 2);
+        dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
+                (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
         dialog.setVisible(true);
 
         mainPanel.remove(plansza);
@@ -64,8 +63,9 @@ class Window extends JFrame {
                 plansza.add(button[c][i]);
             }
         }
-
         pack();
+        setLocation((int) screen.getWidth() / 2 - this.getWidth() / 2,
+                (int) screen.getHeight() / 2 - this.getHeight() / 2);
         setVisible(true);
     }
 
@@ -314,9 +314,8 @@ class Window extends JFrame {
 
                 Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
                 dialog.setSize(150, 80);
-                dialog.setLocation((int) screen.getWidth() / 2 - 150, (int) screen.getHeight() / 2 - 100);
-
-//                dialog.pack();
+                dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
+                        (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
                 dialog.setVisible(true);
                 System.exit(0);
             }

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="miny:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/miny_jar</output-path>
+    <root id="archive" name="miny.jar">
+      <element id="module-output" name="miny" />
+    </root>
+  </artifact>
+</component>

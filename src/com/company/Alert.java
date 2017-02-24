@@ -25,11 +25,4 @@ public class Alert extends JDialog {
         // add your code here
         dispose();
     }
-
-    public static void main(String[] args) {
-//        Alert dialog = new Alert("a");
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        System.exit(0);
-    }
 }
