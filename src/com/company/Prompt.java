@@ -64,10 +64,15 @@ public class Prompt extends JDialog {
             if (x <= 3 || y <= 3) {
                 message.setForeground(Color.RED);
                 message.setText("Za małe dane!");
-            } else {
-                w.setGameSize(x, y, count);
-                dispose();
+                return;
             }
+            if(count >= (x*y)-9) {
+                message.setForeground(Color.RED);
+                message.setText("Za dużo min!");
+                return;
+            }
+            w.setGameSize(x, y, count);
+            dispose();
         } else {
             message.setForeground(Color.RED);
             message.setText("Złe dane!");
@@ -76,16 +81,5 @@ public class Prompt extends JDialog {
 
     private void onCancel() {
         System.exit(0);
-    }
-
-    interface Trans {
-        void setGameSize(int x, int y, int count);
-    }
-
-    public static void main(String[] args) {
-//        Prompt dialog = new Prompt();
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        System.exit(0);
     }
 }

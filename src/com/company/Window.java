@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-class Window extends JFrame implements Prompt.Trans {
+class Window extends JFrame {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
@@ -19,16 +19,6 @@ class Window extends JFrame implements Prompt.Trans {
 
     private JPanel mainPanel = new JPanel();
     private JPanel plansza = new JPanel();
-
-    @Override
-    public void setGameSize(int x, int y, int count){
-        this.maxX = x;
-        this.maxY = y;
-        this.hardline = count;
-        minesFields = hardline;
-        emptyFields = (maxX * maxY) - hardline;
-        minyBT = new JLabel(Integer.toString(minesFields));
-    }
 
     public Window() {
         super("Saper");
@@ -108,6 +98,15 @@ class Window extends JFrame implements Prompt.Trans {
         game.add(eMenuItem);
         menuBar.add(game);
         setJMenuBar(menuBar);
+    }
+
+    public void setGameSize(int x, int y, int count){
+        this.maxX = x;
+        this.maxY = y;
+        this.hardline = count;
+        minesFields = hardline;
+        emptyFields = (maxX * maxY) - hardline;
+        minyBT = new JLabel(Integer.toString(minesFields));
     }
 
     /**
