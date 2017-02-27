@@ -194,7 +194,7 @@ class Window extends JFrame {
                 dialog.setSize(150, 80);
                 dialog.setLocation(600, 300);
                 dialog.setVisible(true);
-                System.exit(0);
+                newGame();
             } else if (button[x][y].getValue() > Field.PUSTE) {
 
                 switch (button[x][y].getValue()) {
@@ -317,7 +317,7 @@ class Window extends JFrame {
                 dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
                         (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
                 dialog.setVisible(true);
-                System.exit(0);
+                newGame();
             }
         }
 
