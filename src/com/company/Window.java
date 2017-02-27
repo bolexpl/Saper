@@ -190,6 +190,7 @@ class Window extends JFrame {
 
                 button[x][y].setIcon(trafione);
                 Alert dialog = new Alert("Przegrana");
+
                 dialog.pack();
                 dialog.setSize(150, 80);
                 dialog.setLocation(600, 300);
