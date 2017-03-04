@@ -89,6 +89,22 @@ class Window extends JFrame {
         });
         game.add(eMenuItem);
 
+        eMenuItem = new JMenuItem("Bot");
+        eMenuItem.setMnemonic(KeyEvent.VK_B);
+        eMenuItem.setToolTipText("Autopilot");
+        eMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try{
+                    MenuSelectionManager.defaultManager().clearSelectedPath();
+                    new Bot(button);
+                }catch (AWTException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        game.add(eMenuItem);
+
         eMenuItem = new JMenuItem("Zakończ");
         eMenuItem.setMnemonic(KeyEvent.VK_Z);
         eMenuItem.setToolTipText("Wyjście z gry");
