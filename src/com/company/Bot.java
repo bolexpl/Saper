@@ -10,7 +10,7 @@ class Bot {
     private int maxX;
     private int maxY;
 
-    public Bot(Field[][] button, int maxX, int maxY) throws AWTException {
+    Bot(Field[][] button, int maxX, int maxY) throws AWTException {
         this.bt = button;
         this.maxX=maxX;
         this.maxY=maxY;
@@ -45,5 +45,4 @@ class Bot {
 //        r.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 //        r.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
-
 }

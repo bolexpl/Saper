@@ -19,7 +19,7 @@ class Window extends JFrame {
     private JPanel mainPanel = new JPanel();
     private JPanel plansza = new JPanel();
 
-    public Window() {
+    Window() {
         super("Saper");
         createMenuBar();
         JPanel bar = new JPanel();
@@ -132,7 +132,7 @@ class Window extends JFrame {
      * @param y     - rozmiar y planszy
      * @param count - ilość min
      */
-    public void setGameSize(int x, int y, int count) {
+    void setGameSize(int x, int y, int count) {
         this.maxX = x;
         this.maxY = y;
         this.hardline = count;

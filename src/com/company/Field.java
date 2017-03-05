@@ -11,8 +11,8 @@ public class Field extends JButton {
     * */
     private int value;
 
-    public static final int MINA = -1;
-    public static final int PUSTE = 0;
+    static final int MINA = -1;
+    static final int PUSTE = 0;
 
     /*
     * 0 odkryte
@@ -20,12 +20,12 @@ public class Field extends JButton {
     * 2 flaga
     * */
     private int state;
-    public static final int ODKRYTE = 0;
-    public static final int ZAKRYTE = 1;
-    public static final int FLAGA = 2;
+    static final int ODKRYTE = 0;
+    static final int ZAKRYTE = 1;
+    static final int FLAGA = 2;
 
 
-    public Field() {
+    Field() {
         super();
         this.state = ZAKRYTE;
         this.value = -2;
@@ -57,7 +57,7 @@ public class Field extends JButton {
         this.value = -2;
     }
 
-    public void setIcon(ImageIcon icon) {
+    void setIcon(ImageIcon icon) {
         if(icon == null){
             super.setIcon(null);
         }else{
@@ -66,19 +66,19 @@ public class Field extends JButton {
         }
     }
 
-    public int getValue() {
+    int getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    void setValue(int value) {
         this.value = value;
     }
 
-    public int getState() {
+    int getState() {
         return state;
     }
 
-    public void setState(int state) {
+    void setState(int state) {
         this.state = state;
     }
 }
