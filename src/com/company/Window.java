@@ -95,12 +95,17 @@ class Window extends JFrame {
         eMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try{
-                    MenuSelectionManager.defaultManager().clearSelectedPath();
-                    new Bot(button);
-                }catch (AWTException e){
-                    e.printStackTrace();
-                }
+                MenuSelectionManager.defaultManager().clearSelectedPath();
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            new Bot(button,maxX, maxY);
+                        } catch (AWTException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
         game.add(eMenuItem);
