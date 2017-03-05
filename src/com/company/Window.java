@@ -156,32 +156,32 @@ class Window extends JFrame {
         int y;
         Random rand = new Random();
         int i = hardline;
-//        while (i > 0) {
-//            x = rand.nextInt(maxX);
-//            y = rand.nextInt(maxY);
-//            if (button[x][y].getValue() != Field.MINA
-//                    && !((x == xx && y == yy)
-//                    || (x == xx - 1 && y == yy - 1)
-//                    || (x == xx + 1 && y == yy + 1)
-//                    || (x == xx - 1 && y == yy)
-//                    || (x == xx + 1 && y == yy)
-//                    || (x == xx && y == yy - 1)
-//                    || (x == xx && y == yy + 1)
-//                    || (x == xx + 1 && y == yy - 1)
-//                    || (x == xx - 1 && y == yy + 1))
-//                    ) {
-//                button[x][y].setValue(Field.MINA);
-//                i--;
-//            }
-//        }
+        while (i > 0) {
+            x = rand.nextInt(maxX);
+            y = rand.nextInt(maxY);
+            if (button[x][y].getValue() != Field.MINA
+                    && !((x == xx && y == yy)
+                    || (x == xx - 1 && y == yy - 1)
+                    || (x == xx + 1 && y == yy + 1)
+                    || (x == xx - 1 && y == yy)
+                    || (x == xx + 1 && y == yy)
+                    || (x == xx && y == yy - 1)
+                    || (x == xx && y == yy + 1)
+                    || (x == xx + 1 && y == yy - 1)
+                    || (x == xx - 1 && y == yy + 1))
+                    ) {
+                button[x][y].setValue(Field.MINA);
+                i--;
+            }
+        }
 
-        button[0][2].setValue(Field.MINA);
-        button[5][1].setValue(Field.MINA);
-        button[6][4].setValue(Field.MINA);
-        button[8][4].setValue(Field.MINA);
-        button[6][6].setValue(Field.MINA);
-        button[3][8].setValue(Field.MINA);
-        button[9][8].setValue(Field.MINA);
+//        button[0][2].setValue(Field.MINA);
+//        button[5][1].setValue(Field.MINA);
+//        button[6][4].setValue(Field.MINA);
+//        button[8][4].setValue(Field.MINA);
+//        button[6][6].setValue(Field.MINA);
+//        button[3][8].setValue(Field.MINA);
+//        button[9][8].setValue(Field.MINA);
 
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
@@ -320,7 +320,6 @@ class Window extends JFrame {
     }
 
     private void debug(){
-        System.out.println("##############################################");
         for (int i = 0; i < maxY; i++) {
             for (int c = 0; c < maxX; c++) {
                 switch (button[c][i].getValue()){
@@ -347,7 +346,6 @@ class Window extends JFrame {
             }
             System.out.print("\n");
         }
-        System.out.println("##############################################");
     }
 
     /**
@@ -386,8 +384,11 @@ class Window extends JFrame {
                 }
                 discovery(x, y,true);
             }
+            System.out.println("##################################33");
+            System.out.println(x+", "+y);
             checkWin();
             debug();
+            System.out.println("##############################################");
 
         }
 

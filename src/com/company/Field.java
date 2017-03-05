@@ -58,9 +58,9 @@ public class Field extends JButton {
     }
 
     void setIcon(ImageIcon icon) {
-        if(icon == null){
+        if (icon == null) {
             super.setIcon(null);
-        }else{
+        } else {
             super.setIcon(new ImageIcon(
                     (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
         }
