@@ -5,13 +5,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-class Window extends JFrame {
+class Window extends JFrame implements KeyListener {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
     private int maxX = 10;
     private int maxY = 10;
-    private int hardline = 15;
+    private int hardline = 7;//15
     private Field button[][];
     private int minesFields = hardline;
     private int emptyFields = (maxX * maxY) - hardline;
@@ -19,13 +19,38 @@ class Window extends JFrame {
     private JPanel mainPanel = new JPanel();
     private JPanel plansza = new JPanel();
 
-    public Window() {
+    Window() {
         super("Saper");
+
+//        bot = new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    new Bot(button, maxX, maxY);
+//                } catch (AWTException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+
         createMenuBar();
+
         JPanel bar = new JPanel();
 
+        Action action = new AbstractAction("Stop autopilot") {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.exit(0);
+            }
+        };
+        KeyStroke key = KeyStroke.getKeyStroke('q');
+        bar.getActionMap().put("Stop autopilot", action);
+        bar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(key, "Stop autopilot");
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         setContentPane(mainPanel);
+
         setLayout(new BorderLayout());
 
         mainPanel.add(bar, BorderLayout.NORTH);
@@ -63,10 +88,15 @@ class Window extends JFrame {
                 plansza.add(button[c][i]);
             }
         }
+
         pack();
         setLocation((int) screen.getWidth() / 2 - this.getWidth() / 2,
                 (int) screen.getHeight() / 2 - this.getHeight() / 2);
         setVisible(true);
+
+        minesFields = hardline;
+        emptyFields = (maxX * maxY) - hardline;
+        minyBT.setText(Integer.toString(minesFields));
     }
 
     /**
@@ -95,12 +125,17 @@ class Window extends JFrame {
         eMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                try{
-                    MenuSelectionManager.defaultManager().clearSelectedPath();
-                    new Bot(button);
-                }catch (AWTException e){
-                    e.printStackTrace();
-                }
+                MenuSelectionManager.defaultManager().clearSelectedPath();
+                EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            new Bot(button, maxX, maxY);
+                        } catch (AWTException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
         game.add(eMenuItem);
@@ -127,7 +162,7 @@ class Window extends JFrame {
      * @param y     - rozmiar y planszy
      * @param count - ilość min
      */
-    public void setGameSize(int x, int y, int count) {
+    void setGameSize(int x, int y, int count) {
         this.maxX = x;
         this.maxY = y;
         this.hardline = count;
@@ -166,6 +201,14 @@ class Window extends JFrame {
             }
         }
 
+//        button[0][2].setValue(Field.MINA);
+//        button[5][1].setValue(Field.MINA);
+//        button[6][4].setValue(Field.MINA);
+//        button[8][4].setValue(Field.MINA);
+//        button[6][6].setValue(Field.MINA);
+//        button[3][8].setValue(Field.MINA);
+//        button[9][8].setValue(Field.MINA);
+
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
         for (i = 0; i < maxX; i++) {
@@ -197,7 +240,7 @@ class Window extends JFrame {
      * @param x - współrzędna x wybranego pola
      * @param y - współrzędna y wybranego pola
      */
-    private void discovery(int x, int y) {
+    private void discovery(int x, int y, boolean recursive) {
         if (button[x][y].getState() == Field.ZAKRYTE) {
             button[x][y].setState(Field.ODKRYTE);
             button[x][y].setBackground(Color.WHITE);
@@ -253,12 +296,12 @@ class Window extends JFrame {
 
                 for (int i = ymin; i <= ymax; i++) {
                     for (int c = xmin; c <= xmax; c++) {
-                        discovery(c, i);
+                        discovery(c, i, false);
                     }
                 }
                 emptyFields--;
             }
-        } else if (button[x][y].getState() == Field.ODKRYTE && button[x][y].getValue() > Field.PUSTE) {
+        } else if (button[x][y].getState() == Field.ODKRYTE && button[x][y].getValue() > Field.PUSTE && recursive) {
 
             int xmin = (x == 0) ? 0 : x - 1;
             int xmax = (x == maxX - 1) ? maxX - 1 : x + 1;
@@ -281,11 +324,53 @@ class Window extends JFrame {
                 for (int i = ymin; i <= ymax; i++) {
                     for (int c = xmin; c <= xmax; c++) {
                         if (button[c][i].getState() == Field.ZAKRYTE) {
-                            discovery(c, i);
+                            discovery(c, i, false);
                         }
                     }
                 }
             }
+        }
+    }
+
+    private void checkWin() {
+        if (emptyFields == 0) {
+            Alert dialog = new Alert("Wygrana");
+
+            Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+            dialog.setSize(150, 80);
+            dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
+                    (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
+            dialog.setVisible(true);
+            newGame();
+        }
+    }
+
+    private void debug() {
+        for (int i = 0; i < maxY; i++) {
+            for (int c = 0; c < maxX; c++) {
+                switch (button[c][i].getValue()) {
+                    case Field.MINA:
+                        System.out.print(" # ");
+                        break;
+                    case Field.PUSTE:
+                        System.out.print("   ");
+                        break;
+                    default:
+                        System.out.print(" " + button[c][i].getValue() + " ");
+                }
+            }
+
+            System.out.print(" | ");
+            for (int c = 0; c < maxX; c++) {
+                switch (button[c][i].getState()) {
+                    case Field.ZAKRYTE:
+                        System.out.print(" # ");
+                        break;
+                    default:
+                        System.out.print("   ");
+                }
+            }
+            System.out.print("\n");
         }
     }
 
@@ -323,19 +408,14 @@ class Window extends JFrame {
                 if (button[x][y].getValue() == -2) {
                     generate(x, y);
                 }
-                discovery(x, y);
+                discovery(x, y, true);
             }
+//            System.out.println("##############################################");
+//            System.out.println(x+", "+y);
+            checkWin();
+//            debug();
+//            System.out.println("##############################################");
 
-            if (emptyFields == 0) {
-                Alert dialog = new Alert("Wygrana");
-
-                Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-                dialog.setSize(150, 80);
-                dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
-                        (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
-                dialog.setVisible(true);
-                newGame();
-            }
         }
 
         @Override
@@ -353,5 +433,20 @@ class Window extends JFrame {
         @Override
         public void mouseExited(MouseEvent mouseEvent) {
         }
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+        System.out.println("b");
+        System.exit(0);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
     }
 }
