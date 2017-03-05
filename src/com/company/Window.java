@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-class Window extends JFrame {
+class Window extends JFrame implements KeyListener {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
@@ -21,11 +21,36 @@ class Window extends JFrame {
 
     Window() {
         super("Saper");
+
+//        bot = new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    new Bot(button, maxX, maxY);
+//                } catch (AWTException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+
         createMenuBar();
+
         JPanel bar = new JPanel();
 
+        Action action = new AbstractAction("Stop autopilot") {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.exit(0);
+            }
+        };
+        KeyStroke key = KeyStroke.getKeyStroke('q');
+        bar.getActionMap().put("Stop autopilot", action);
+        bar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(key, "Stop autopilot");
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         setContentPane(mainPanel);
+
         setLayout(new BorderLayout());
 
         mainPanel.add(bar, BorderLayout.NORTH);
@@ -63,6 +88,7 @@ class Window extends JFrame {
                 plansza.add(button[c][i]);
             }
         }
+
         pack();
         setLocation((int) screen.getWidth() / 2 - this.getWidth() / 2,
                 (int) screen.getHeight() / 2 - this.getHeight() / 2);
@@ -104,7 +130,7 @@ class Window extends JFrame {
                     @Override
                     public void run() {
                         try {
-                            new Bot(button,maxX, maxY);
+                            new Bot(button, maxX, maxY);
                         } catch (AWTException e) {
                             e.printStackTrace();
                         }
@@ -270,7 +296,7 @@ class Window extends JFrame {
 
                 for (int i = ymin; i <= ymax; i++) {
                     for (int c = xmin; c <= xmax; c++) {
-                        discovery(c, i,false);
+                        discovery(c, i, false);
                     }
                 }
                 emptyFields--;
@@ -298,7 +324,7 @@ class Window extends JFrame {
                 for (int i = ymin; i <= ymax; i++) {
                     for (int c = xmin; c <= xmax; c++) {
                         if (button[c][i].getState() == Field.ZAKRYTE) {
-                            discovery(c, i,false);
+                            discovery(c, i, false);
                         }
                     }
                 }
@@ -306,7 +332,7 @@ class Window extends JFrame {
         }
     }
 
-    private void checkWin(){
+    private void checkWin() {
         if (emptyFields == 0) {
             Alert dialog = new Alert("Wygrana");
 
@@ -319,10 +345,10 @@ class Window extends JFrame {
         }
     }
 
-    private void debug(){
+    private void debug() {
         for (int i = 0; i < maxY; i++) {
             for (int c = 0; c < maxX; c++) {
-                switch (button[c][i].getValue()){
+                switch (button[c][i].getValue()) {
                     case Field.MINA:
                         System.out.print(" # ");
                         break;
@@ -330,13 +356,13 @@ class Window extends JFrame {
                         System.out.print("   ");
                         break;
                     default:
-                        System.out.print(" "+button[c][i].getValue()+" ");
+                        System.out.print(" " + button[c][i].getValue() + " ");
                 }
             }
 
             System.out.print(" | ");
             for (int c = 0; c < maxX; c++) {
-                switch (button[c][i].getState()){
+                switch (button[c][i].getState()) {
                     case Field.ZAKRYTE:
                         System.out.print(" # ");
                         break;
@@ -382,13 +408,13 @@ class Window extends JFrame {
                 if (button[x][y].getValue() == -2) {
                     generate(x, y);
                 }
-                discovery(x, y,true);
+                discovery(x, y, true);
             }
-            System.out.println("##################################33");
-            System.out.println(x+", "+y);
+//            System.out.println("##############################################");
+//            System.out.println(x+", "+y);
             checkWin();
-            debug();
-            System.out.println("##############################################");
+//            debug();
+//            System.out.println("##############################################");
 
         }
 
@@ -407,5 +433,20 @@ class Window extends JFrame {
         @Override
         public void mouseExited(MouseEvent mouseEvent) {
         }
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+        System.out.println("b");
+        System.exit(0);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
     }
 }

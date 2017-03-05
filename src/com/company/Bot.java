@@ -14,19 +14,40 @@ class Bot {
 
     Bot(Field[][] button, int maxX, int maxY) throws AWTException {
         this.button = button;
-        this.maxX=maxX;
-        this.maxY=maxY;
+        this.maxX = maxX;
+        this.maxY = maxY;
 
         r = new Robot();
-        start();
+        begin();
     }
 
-    private void start(){
-//        moveToPoint(button[maxX/2][maxY/2]);
-        moveToPoint(button[rand.nextInt(maxX)][rand.nextInt(maxY)]);
-//        System.out.println(maxX/2 + ", "+maxY/2);
+    private void begin() {
+//        moveToPoint(button[maxX / 2][maxY / 2]);
+//        moveToPoint(button[rand.nextInt(maxX)][rand.nextInt(maxY)]);
+//        System.out.println(maxX / 2 + ", " + maxY / 2);
 
+        moveToPoint(button[0][0]);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        moveToPoint(button[4][4]);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        moveToPoint(button[1][1]);
 
+//        for (int i = 0; i < maxX; i++) {
+//            moveToPoint(button[i][i]);
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     private void moveToPoint(Field f) {
@@ -43,12 +64,12 @@ class Bot {
         int dy = (y2 - y1) / n;
 
         for (int i = 1; i <= n; i++) {
+            r.mouseMove(x1 + dx * i, y1 + dy * i);
             try {
                 Thread.sleep(15);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            r.mouseMove(x1 + dx * i, y1 + dy * i);
         }
 
         r.mouseMove(x2, y2);
