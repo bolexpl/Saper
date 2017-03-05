@@ -11,7 +11,7 @@ class Window extends JFrame {
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
     private int maxX = 10;
     private int maxY = 10;
-    private int hardline = 15;
+    private int hardline = 7;//15
     private Field button[][];
     private int minesFields = hardline;
     private int emptyFields = (maxX * maxY) - hardline;
@@ -67,6 +67,10 @@ class Window extends JFrame {
         setLocation((int) screen.getWidth() / 2 - this.getWidth() / 2,
                 (int) screen.getHeight() / 2 - this.getHeight() / 2);
         setVisible(true);
+
+        minesFields = hardline;
+        emptyFields = (maxX * maxY) - hardline;
+        minyBT.setText(Integer.toString(minesFields));
     }
 
     /**
@@ -152,24 +156,32 @@ class Window extends JFrame {
         int y;
         Random rand = new Random();
         int i = hardline;
-        while (i > 0) {
-            x = rand.nextInt(maxX);
-            y = rand.nextInt(maxY);
-            if (button[x][y].getValue() != Field.MINA
-                    && !((x == xx && y == yy)
-                    || (x == xx - 1 && y == yy - 1)
-                    || (x == xx + 1 && y == yy + 1)
-                    || (x == xx - 1 && y == yy)
-                    || (x == xx + 1 && y == yy)
-                    || (x == xx && y == yy - 1)
-                    || (x == xx && y == yy + 1)
-                    || (x == xx + 1 && y == yy - 1)
-                    || (x == xx - 1 && y == yy + 1))
-                    ) {
-                button[x][y].setValue(Field.MINA);
-                i--;
-            }
-        }
+//        while (i > 0) {
+//            x = rand.nextInt(maxX);
+//            y = rand.nextInt(maxY);
+//            if (button[x][y].getValue() != Field.MINA
+//                    && !((x == xx && y == yy)
+//                    || (x == xx - 1 && y == yy - 1)
+//                    || (x == xx + 1 && y == yy + 1)
+//                    || (x == xx - 1 && y == yy)
+//                    || (x == xx + 1 && y == yy)
+//                    || (x == xx && y == yy - 1)
+//                    || (x == xx && y == yy + 1)
+//                    || (x == xx + 1 && y == yy - 1)
+//                    || (x == xx - 1 && y == yy + 1))
+//                    ) {
+//                button[x][y].setValue(Field.MINA);
+//                i--;
+//            }
+//        }
+
+        button[0][2].setValue(Field.MINA);
+        button[5][1].setValue(Field.MINA);
+        button[6][4].setValue(Field.MINA);
+        button[8][4].setValue(Field.MINA);
+        button[6][6].setValue(Field.MINA);
+        button[3][8].setValue(Field.MINA);
+        button[9][8].setValue(Field.MINA);
 
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
@@ -202,7 +214,7 @@ class Window extends JFrame {
      * @param x - współrzędna x wybranego pola
      * @param y - współrzędna y wybranego pola
      */
-    private void discovery(int x, int y) {
+    private void discovery(int x, int y, boolean recursive) {
         if (button[x][y].getState() == Field.ZAKRYTE) {
             button[x][y].setState(Field.ODKRYTE);
             button[x][y].setBackground(Color.WHITE);
@@ -258,12 +270,12 @@ class Window extends JFrame {
 
                 for (int i = ymin; i <= ymax; i++) {
                     for (int c = xmin; c <= xmax; c++) {
-                        discovery(c, i);
+                        discovery(c, i,false);
                     }
                 }
                 emptyFields--;
             }
-        } else if (button[x][y].getState() == Field.ODKRYTE && button[x][y].getValue() > Field.PUSTE) {
+        } else if (button[x][y].getState() == Field.ODKRYTE && button[x][y].getValue() > Field.PUSTE && recursive) {
 
             int xmin = (x == 0) ? 0 : x - 1;
             int xmax = (x == maxX - 1) ? maxX - 1 : x + 1;
@@ -286,12 +298,56 @@ class Window extends JFrame {
                 for (int i = ymin; i <= ymax; i++) {
                     for (int c = xmin; c <= xmax; c++) {
                         if (button[c][i].getState() == Field.ZAKRYTE) {
-                            discovery(c, i);
+                            discovery(c, i,false);
                         }
                     }
                 }
             }
         }
+    }
+
+    private void checkWin(){
+        if (emptyFields == 0) {
+            Alert dialog = new Alert("Wygrana");
+
+            Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+            dialog.setSize(150, 80);
+            dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
+                    (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
+            dialog.setVisible(true);
+            newGame();
+        }
+    }
+
+    private void debug(){
+        System.out.println("##############################################");
+        for (int i = 0; i < maxY; i++) {
+            for (int c = 0; c < maxX; c++) {
+                switch (button[c][i].getValue()){
+                    case Field.MINA:
+                        System.out.print(" # ");
+                        break;
+                    case Field.PUSTE:
+                        System.out.print("   ");
+                        break;
+                    default:
+                        System.out.print(" "+button[c][i].getValue()+" ");
+                }
+            }
+
+            System.out.print(" | ");
+            for (int c = 0; c < maxX; c++) {
+                switch (button[c][i].getState()){
+                    case Field.ZAKRYTE:
+                        System.out.print(" # ");
+                        break;
+                    default:
+                        System.out.print("   ");
+                }
+            }
+            System.out.print("\n");
+        }
+        System.out.println("##############################################");
     }
 
     /**
@@ -328,19 +384,11 @@ class Window extends JFrame {
                 if (button[x][y].getValue() == -2) {
                     generate(x, y);
                 }
-                discovery(x, y);
+                discovery(x, y,true);
             }
+            checkWin();
+            debug();
 
-            if (emptyFields == 0) {
-                Alert dialog = new Alert("Wygrana");
-
-                Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-                dialog.setSize(150, 80);
-                dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
-                        (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
-                dialog.setVisible(true);
-                newGame();
-            }
         }
 
         @Override

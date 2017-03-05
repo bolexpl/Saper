@@ -2,21 +2,31 @@ package com.company;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.util.Random;
 
 class Bot {
 
-    private Field[][] bt;
+    private Field[][] button;
     private Robot r;
+    private Random rand = new Random();
     private int maxX;
     private int maxY;
 
     Bot(Field[][] button, int maxX, int maxY) throws AWTException {
-        this.bt = button;
+        this.button = button;
         this.maxX=maxX;
         this.maxY=maxY;
 
         r = new Robot();
-        moveToPoint(button[4][4]);
+        start();
+    }
+
+    private void start(){
+//        moveToPoint(button[maxX/2][maxY/2]);
+        moveToPoint(button[rand.nextInt(maxX)][rand.nextInt(maxY)]);
+//        System.out.println(maxX/2 + ", "+maxY/2);
+
+
     }
 
     private void moveToPoint(Field f) {
@@ -42,7 +52,7 @@ class Bot {
         }
 
         r.mouseMove(x2, y2);
-//        r.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//        r.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        r.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        r.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
 }
