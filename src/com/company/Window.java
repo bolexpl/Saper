@@ -22,30 +22,9 @@ class Window extends JFrame implements KeyListener {
     Window() {
         super("Saper");
 
-//        bot = new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    new Bot(button, maxX, maxY);
-//                } catch (AWTException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-
         createMenuBar();
 
         JPanel bar = new JPanel();
-
-        Action action = new AbstractAction("Stop autopilot") {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.exit(0);
-            }
-        };
-        KeyStroke key = KeyStroke.getKeyStroke('q');
-        bar.getActionMap().put("Stop autopilot", action);
-        bar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(key, "Stop autopilot");
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -115,27 +94,6 @@ class Window extends JFrame implements KeyListener {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 newGame();
-            }
-        });
-        game.add(eMenuItem);
-
-        eMenuItem = new JMenuItem("Bot");
-        eMenuItem.setMnemonic(KeyEvent.VK_B);
-        eMenuItem.setToolTipText("Autopilot");
-        eMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                MenuSelectionManager.defaultManager().clearSelectedPath();
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            new Bot(button, maxX, maxY);
-                        } catch (AWTException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
             }
         });
         game.add(eMenuItem);
