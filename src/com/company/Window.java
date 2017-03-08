@@ -11,7 +11,7 @@ class Window extends JFrame implements KeyListener {
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
     private int maxX = 10;
     private int maxY = 10;
-    private int hardline = 7;//15
+    private int hardline = 15;//15
     private Field button[][];
     private int minesFields = hardline;
     private int emptyFields = (maxX * maxY) - hardline;
