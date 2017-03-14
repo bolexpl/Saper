@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
+/**
+ * Klasa głównego okna programu
+ * */
 class Window extends JFrame {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
@@ -18,6 +21,9 @@ class Window extends JFrame {
     private JLabel minyBT = new JLabel(Integer.toString(minesFields));
     private JPanel mainPanel = new JPanel();
     private JPanel plansza = new JPanel();
+
+    private long startTime;
+    private double time;
 
     Window() {
         super("Saper");
@@ -69,6 +75,8 @@ class Window extends JFrame {
         minesFields = hardline;
         emptyFields = (maxX * maxY) - hardline;
         minyBT.setText(Integer.toString(minesFields));
+
+        startTime = System.currentTimeMillis();
     }
 
     /**
@@ -108,6 +116,7 @@ class Window extends JFrame {
 
     /**
      * Ustawienie rozmiarów planszy i ilości min
+     *
      * @param x     - rozmiar x planszy
      * @param y     - rozmiar y planszy
      * @param count - ilość min
@@ -123,6 +132,7 @@ class Window extends JFrame {
 
     /**
      * Generowanie min
+     *
      * @param xx - współrzędna x wybranego pola
      * @param yy - współrzędna y wybranego pola
      */
@@ -161,7 +171,7 @@ class Window extends JFrame {
         generateNumbers();
     }
 
-    private void generateNumbers(){
+    private void generateNumbers() {
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
         for (int i = 0; i < maxX; i++) {
@@ -189,6 +199,7 @@ class Window extends JFrame {
 
     /**
      * Odkrywanie pola
+     *
      * @param x - współrzędna x wybranego pola
      * @param y - współrzędna y wybranego pola
      */
@@ -204,7 +215,7 @@ class Window extends JFrame {
                 newGame();
             } else if (button[x][y].getValue() > Field.PUSTE) {
 
-                setNumberColor(x,y);
+                setNumberColor(x, y);
                 button[x][y].setText(Integer.toString(button[x][y].getValue()));
                 emptyFields--;
             } else if (button[x][y].getValue() == Field.PUSTE) {
@@ -256,10 +267,11 @@ class Window extends JFrame {
 
     /**
      * Ustawienie koloru liczb na planszy
+     *
      * @param x - współrzędna x pola
      * @param y - współrzędna y pola
-     * */
-    private void setNumberColor(int x, int y){
+     */
+    private void setNumberColor(int x, int y) {
         switch (button[x][y].getValue()) {
             case 1:
                 button[x][y].setForeground(Color.BLUE);
@@ -290,9 +302,14 @@ class Window extends JFrame {
 
     /**
      * Sprawdzenie warunków wygranej
-     * */
+     */
     private void checkWin() {
         if (emptyFields == 0) {
+            time = (double) ((System.currentTimeMillis() - startTime) / 100) / 10;
+//            System.out.println(time);
+            Record.write("nazwa", time);
+
+
             new Alert("Wygrana");
             newGame();
         }
