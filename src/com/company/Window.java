@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-class Window extends JFrame implements KeyListener {
+class Window extends JFrame {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
@@ -25,11 +25,8 @@ class Window extends JFrame implements KeyListener {
         createMenuBar();
 
         JPanel bar = new JPanel();
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         setContentPane(mainPanel);
-
         setLayout(new BorderLayout());
 
         mainPanel.add(bar, BorderLayout.NORTH);
@@ -115,7 +112,6 @@ class Window extends JFrame implements KeyListener {
 
     /**
      * Ustawienie rozmiarów planszy i ilości min
-     *
      * @param x     - rozmiar x planszy
      * @param y     - rozmiar y planszy
      * @param count - ilość min
@@ -131,7 +127,6 @@ class Window extends JFrame implements KeyListener {
 
     /**
      * Generowanie min
-     *
      * @param xx - współrzędna x wybranego pola
      * @param yy - współrzędna y wybranego pola
      */
@@ -194,7 +189,6 @@ class Window extends JFrame implements KeyListener {
 
     /**
      * Odkrywanie pola
-     *
      * @param x - współrzędna x wybranego pola
      * @param y - współrzędna y wybranego pola
      */
@@ -210,8 +204,11 @@ class Window extends JFrame implements KeyListener {
 
                 dialog.pack();
                 dialog.setSize(150, 80);
-                dialog.setLocation(600, 300);
+                Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+                dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
+                        (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
                 dialog.setVisible(true);
+
                 newGame();
             } else if (button[x][y].getValue() > Field.PUSTE) {
 
@@ -290,6 +287,9 @@ class Window extends JFrame implements KeyListener {
         }
     }
 
+    /**
+     * Sprawdzenie warunków wygranej
+     * */
     private void checkWin() {
         if (emptyFields == 0) {
             Alert dialog = new Alert("Wygrana");
@@ -300,35 +300,6 @@ class Window extends JFrame implements KeyListener {
                     (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
             dialog.setVisible(true);
             newGame();
-        }
-    }
-
-    private void debug() {
-        for (int i = 0; i < maxY; i++) {
-            for (int c = 0; c < maxX; c++) {
-                switch (button[c][i].getValue()) {
-                    case Field.MINA:
-                        System.out.print(" # ");
-                        break;
-                    case Field.PUSTE:
-                        System.out.print("   ");
-                        break;
-                    default:
-                        System.out.print(" " + button[c][i].getValue() + " ");
-                }
-            }
-
-            System.out.print(" | ");
-            for (int c = 0; c < maxX; c++) {
-                switch (button[c][i].getState()) {
-                    case Field.ZAKRYTE:
-                        System.out.print(" # ");
-                        break;
-                    default:
-                        System.out.print("   ");
-                }
-            }
-            System.out.print("\n");
         }
     }
 
@@ -394,17 +365,32 @@ class Window extends JFrame implements KeyListener {
 
     }
 
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-        System.out.println("b");
-        System.exit(0);
-    }
+    private void debug() {
+        for (int i = 0; i < maxY; i++) {
+            for (int c = 0; c < maxX; c++) {
+                switch (button[c][i].getValue()) {
+                    case Field.MINA:
+                        System.out.print(" # ");
+                        break;
+                    case Field.PUSTE:
+                        System.out.print("   ");
+                        break;
+                    default:
+                        System.out.print(" " + button[c][i].getValue() + " ");
+                }
+            }
 
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
+            System.out.print(" | ");
+            for (int c = 0; c < maxX; c++) {
+                switch (button[c][i].getState()) {
+                    case Field.ZAKRYTE:
+                        System.out.print(" # ");
+                        break;
+                    default:
+                        System.out.print("   ");
+                }
+            }
+            System.out.print("\n");
+        }
     }
 }
