@@ -43,11 +43,7 @@ class Window extends JFrame {
     private void newGame() {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 
-        Prompt dialog = new Prompt(this);
-        dialog.pack();
-        dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
-                (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
-        dialog.setVisible(true);
+        new Prompt(this);
 
         mainPanel.remove(plansza);
         plansza = new JPanel();
@@ -162,9 +158,13 @@ class Window extends JFrame {
 //        button[3][8].setValue(Field.MINA);
 //        button[9][8].setValue(Field.MINA);
 
+        generateNumbers();
+    }
+
+    private void generateNumbers(){
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
-        for (i = 0; i < maxX; i++) {
+        for (int i = 0; i < maxX; i++) {
             for (int c = 0; c < maxY; c++) {
                 if (button[i][c].getValue() != -1) {
                     countMines = 0;
@@ -200,44 +200,11 @@ class Window extends JFrame {
             if (button[x][y].getValue() == Field.MINA) {
 
                 button[x][y].setIcon(trafione);
-                Alert dialog = new Alert("Przegrana");
-
-                dialog.pack();
-                dialog.setSize(150, 80);
-                Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-                dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
-                        (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
-                dialog.setVisible(true);
-
+                new Alert("Przegrana");
                 newGame();
             } else if (button[x][y].getValue() > Field.PUSTE) {
 
-                switch (button[x][y].getValue()) {
-                    case 1:
-                        button[x][y].setForeground(Color.BLUE);
-                        break;
-                    case 2:
-                        button[x][y].setForeground(Color.GREEN);
-                        break;
-                    case 3:
-                        button[x][y].setForeground(Color.RED);
-                        break;
-                    case 4:
-                        button[x][y].setForeground(Color.YELLOW);
-                        break;
-                    case 5:
-                        button[x][y].setForeground(Color.CYAN);
-                        break;
-                    case 6:
-                        button[x][y].setForeground(Color.MAGENTA);
-                        break;
-                    case 7:
-                        button[x][y].setForeground(Color.ORANGE);
-                        break;
-                    case 8:
-                        button[x][y].setForeground(Color.GRAY);
-                        break;
-                }
+                setNumberColor(x,y);
                 button[x][y].setText(Integer.toString(button[x][y].getValue()));
                 emptyFields--;
             } else if (button[x][y].getValue() == Field.PUSTE) {
@@ -288,17 +255,45 @@ class Window extends JFrame {
     }
 
     /**
+     * Ustawienie koloru liczb na planszy
+     * @param x - współrzędna x pola
+     * @param y - współrzędna y pola
+     * */
+    private void setNumberColor(int x, int y){
+        switch (button[x][y].getValue()) {
+            case 1:
+                button[x][y].setForeground(Color.BLUE);
+                break;
+            case 2:
+                button[x][y].setForeground(Color.GREEN);
+                break;
+            case 3:
+                button[x][y].setForeground(Color.RED);
+                break;
+            case 4:
+                button[x][y].setForeground(Color.YELLOW);
+                break;
+            case 5:
+                button[x][y].setForeground(Color.CYAN);
+                break;
+            case 6:
+                button[x][y].setForeground(Color.MAGENTA);
+                break;
+            case 7:
+                button[x][y].setForeground(Color.ORANGE);
+                break;
+            case 8:
+                button[x][y].setForeground(Color.GRAY);
+                break;
+        }
+    }
+
+    /**
      * Sprawdzenie warunków wygranej
      * */
     private void checkWin() {
         if (emptyFields == 0) {
-            Alert dialog = new Alert("Wygrana");
-
-            Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-            dialog.setSize(150, 80);
-            dialog.setLocation((int) screen.getWidth() / 2 - dialog.getWidth() / 2,
-                    (int) screen.getHeight() / 2 - dialog.getHeight() / 2);
-            dialog.setVisible(true);
+            new Alert("Wygrana");
             newGame();
         }
     }
@@ -306,7 +301,7 @@ class Window extends JFrame {
     /**
      * Klasa reakcji na kliknięcie
      */
-    class Odkrycie implements MouseListener {
+    private class Odkrycie implements MouseListener {
         private int x;
         private int y;
 
@@ -344,7 +339,6 @@ class Window extends JFrame {
             checkWin();
 //            debug();
 //            System.out.println("##############################################");
-
         }
 
         @Override

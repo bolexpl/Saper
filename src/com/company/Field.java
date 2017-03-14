@@ -2,7 +2,7 @@ package com.company;
 
 import javax.swing.*;
 
-public class Field extends JButton {
+class Field extends JButton {
 
     /*
     * -2 nieokreślone
@@ -10,7 +10,6 @@ public class Field extends JButton {
     * 0 puste
     * */
     private int value;
-
     static final int MINA = -1;
     static final int PUSTE = 0;
 
@@ -24,47 +23,37 @@ public class Field extends JButton {
     static final int ZAKRYTE = 1;
     static final int FLAGA = 2;
 
-
     Field() {
         super();
         this.state = ZAKRYTE;
         this.value = -2;
     }
 
-    public Field(ImageIcon icon) {
-        super(new ImageIcon(
-                (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
-        this.state = ZAKRYTE;
-        this.value = -2;
-    }
-
-    public Field(String s) {
-        super(s);
-        this.state = ZAKRYTE;
-        this.value = -2;
-    }
-
-    public Field(Action action) {
-        super(action);
-        this.state = ZAKRYTE;
-        this.value = -2;
-    }
-
-    public Field(String s, ImageIcon icon) {
-        super(s, new ImageIcon(
-                (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
-        this.state = ZAKRYTE;
-        this.value = -2;
-    }
-
-    void setIcon(ImageIcon icon) {
-        if (icon == null) {
-            super.setIcon(null);
-        } else {
-            super.setIcon(new ImageIcon(
-                    (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
-        }
-    }
+//    public Field(ImageIcon icon) {
+//        super(new ImageIcon(
+//                (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
+//        this.state = ZAKRYTE;
+//        this.value = -2;
+//    }
+//
+//    public Field(String s) {
+//        super(s);
+//        this.state = ZAKRYTE;
+//        this.value = -2;
+//    }
+//
+//    public Field(Action action) {
+//        super(action);
+//        this.state = ZAKRYTE;
+//        this.value = -2;
+//    }
+//
+//    public Field(String s, ImageIcon icon) {
+//        super(s, new ImageIcon(
+//                (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
+//        this.state = ZAKRYTE;
+//        this.value = -2;
+//    }
 
     int getValue() {
         return value;
@@ -80,5 +69,14 @@ public class Field extends JButton {
 
     void setState(int state) {
         this.state = state;
+    }
+
+    void setIcon(ImageIcon icon) {
+        if (icon == null) {
+            super.setIcon(null);
+        } else {
+            super.setIcon(new ImageIcon(
+                    (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
+        }
     }
 }

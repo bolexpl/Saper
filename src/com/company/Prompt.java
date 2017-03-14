@@ -15,8 +15,8 @@ public class Prompt extends JDialog {
     private JButton buttonDefault;
     private Window w;
 
-    public Prompt(Window wx) {
-        this.w = wx;
+    Prompt(Window w) {
+        this.w = w;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -54,6 +54,13 @@ public class Prompt extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+
+        pack();
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
+                (int) screen.getHeight() / 2 - getHeight() / 2);
+        setVisible(true);
     }
 
     private void onOK() {
@@ -66,7 +73,7 @@ public class Prompt extends JDialog {
                 message.setText("Za małe dane!");
                 return;
             }
-            if(count >= (x*y)-9) {
+            if (count >= (x * y) - 9) {
                 message.setForeground(Color.RED);
                 message.setText("Za dużo min!");
                 return;

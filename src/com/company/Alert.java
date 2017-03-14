@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class Alert extends JDialog {
@@ -8,7 +9,7 @@ public class Alert extends JDialog {
     private JButton buttonOK;
     private JLabel label1;
 
-    public Alert(String x) {
+    Alert(String x) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -19,6 +20,12 @@ public class Alert extends JDialog {
                 onOK();
             }
         });
+
+        setSize(150, 80);
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
+                (int) screen.getHeight() / 2 - getHeight() / 2);
+        setVisible(true);
     }
 
     private void onOK() {
