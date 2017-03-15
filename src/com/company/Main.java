@@ -1,7 +1,6 @@
 package com.company;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -11,7 +10,7 @@ public class Main {
             public void run() {
 //                new Window();
 //                new ResultsWindow();
-                new Testowy();
+                new ResultsWindow();
             }
         });
 
