@@ -7,24 +7,25 @@ import java.util.ArrayList;
  * Klasa opisująca wynik gry
  */
 public class Record implements Serializable {
-    private String name;
+
+    private String date;
     private double time;
     private static String fileName = "records.dat";
 
-    Record(String name, double time) {
-        this.name = name;
+    public Record(String date, double time) {
+        this.date = date;
         this.time = time;
     }
 
-    public String getName() {
-        return name;
+    public String getDate() {
+        return date;
     }
 
     public double getTime() {
         return time;
     }
 
-    static ArrayList<Record> read() {
+    public static ArrayList<Record> read() {
         ArrayList<Record> wynik = new ArrayList<>();
 
         ObjectInputStream input = null;
@@ -63,7 +64,7 @@ public class Record implements Serializable {
         return wynik;
     }
 
-    static void write(String name, double time) {
+    public static void write(String name, double time) {
         ObjectOutputStream output = null;
         ArrayList<Record> list;
 
@@ -101,12 +102,12 @@ public class Record implements Serializable {
         }
     }
 
-    static void clearRecords(){
+    public static void clearRecords() {
         File f = new File(fileName);
 
-        if(f.delete()){
+        if (f.delete()) {
             System.out.println("Usunięto");
-        }else{
+        } else {
             System.out.println("Problem");
         }
     }

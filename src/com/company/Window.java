@@ -23,7 +23,6 @@ class Window extends JFrame {
     private JPanel plansza = new JPanel();
 
     private long startTime;
-    private double time;
 
     Window() {
         super("Saper");
@@ -76,6 +75,7 @@ class Window extends JFrame {
         emptyFields = (maxX * maxY) - hardline;
         minyBT.setText(Integer.toString(minesFields));
 
+        //TODO
         startTime = System.currentTimeMillis();
     }
 
@@ -95,6 +95,17 @@ class Window extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 newGame();
+            }
+        });
+        game.add(eMenuItem);
+
+        eMenuItem = new JMenuItem("Wyniki");
+        eMenuItem.setMnemonic(KeyEvent.VK_W);
+        eMenuItem.setToolTipText("Zapisane rekordy gry");
+        eMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                results();
             }
         });
         game.add(eMenuItem);
@@ -305,14 +316,17 @@ class Window extends JFrame {
      */
     private void checkWin() {
         if (emptyFields == 0) {
-            time = (double) ((System.currentTimeMillis() - startTime) / 100) / 10;
-//            System.out.println(time);
+            //TODO
+            double time = (double) ((System.currentTimeMillis() - startTime) / 100) / 10;
             Record.write("nazwa", time);
-
 
             new Alert("Wygrana");
             newGame();
         }
+    }
+
+    private void results(){
+        new ResultsWindow();
     }
 
     /**
