@@ -22,9 +22,7 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-//                new Window();
-//                new ResultsWindow();
-                new ResultsWindow();
+                new Window();
             }
         });
 
