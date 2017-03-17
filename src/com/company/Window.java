@@ -217,10 +217,7 @@ class Window extends JFrame {
     private void discovery(int x, int y, boolean recursive) {
         if (button[x][y].getState() == Field.ZAKRYTE) {
             button[x][y].setState(Field.ODKRYTE);
-
             button[x][y].setBackground(Color.WHITE);
-            button[x][y].setContentAreaFilled(false);
-            button[x][y].setOpaque(true);
 
             if (button[x][y].getValue() == Field.MINA) {
 
