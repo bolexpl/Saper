@@ -21,7 +21,7 @@ public class Alert extends JDialog {
             }
         });
 
-        setSize(150, 80);
+        setSize(170, 120);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
