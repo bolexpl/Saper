@@ -22,6 +22,7 @@ public class Alert extends JDialog {
         });
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 
+
         //TODO
 //        setSize(200, 100);
         contentPane.setPreferredSize(new Dimension(150,80));
