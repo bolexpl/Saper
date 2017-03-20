@@ -10,7 +10,7 @@ public class Main {
             @Override
             public void run() {
 //                new Window();
-                new Alert("aaaaa");
+                new Alert("Przegrana");
             }
         });
 
