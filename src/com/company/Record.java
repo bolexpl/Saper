@@ -93,7 +93,6 @@ public class Record implements Serializable {
             for (Record r2 : list) {
                 output.writeObject(r2);
             }
-
             output.close();
         } catch (IOException e) {
             System.out.println("Błąd wyjścia");

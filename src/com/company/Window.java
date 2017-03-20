@@ -46,8 +46,6 @@ class Window extends JFrame {
      * Tworzenie nowej planszy
      */
     private void newGame() {
-        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-
         new Prompt(this);
 
         mainPanel.remove(plansza);
@@ -66,6 +64,7 @@ class Window extends JFrame {
             }
         }
 
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         pack();
         setLocation((int) screen.getWidth() / 2 - this.getWidth() / 2,
                 (int) screen.getHeight() / 2 - this.getHeight() / 2);
@@ -76,7 +75,7 @@ class Window extends JFrame {
         minyBT.setText(Integer.toString(minesFields));
 
         //TODO
-        startTime = System.currentTimeMillis();
+//        startTime = System.currentTimeMillis();
     }
 
     /**
@@ -326,7 +325,8 @@ class Window extends JFrame {
     }
 
     private void results(){
-        new ResultsWindow();
+//        new ResultsWindow();
+        new ResultsDialog();
     }
 
     /**

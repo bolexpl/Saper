@@ -7,12 +7,12 @@ import java.awt.event.*;
 public class Prompt extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
+    private JButton buttonDefault;
     private JButton buttonCancel;
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
     private JLabel message;
-    private JButton buttonDefault;
     private Window w;
 
     Prompt(Window w) {
@@ -79,6 +79,8 @@ public class Prompt extends JDialog {
                 return;
             }
             w.setGameSize(x, y, count);
+            dispose();
+        } else if (textField1.getText().equals("") && textField2.getText().equals("") && textField3.getText().equals("")) {
             dispose();
         } else {
             message.setForeground(Color.RED);
