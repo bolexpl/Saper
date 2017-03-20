@@ -20,17 +20,10 @@ public class Alert extends JDialog {
                 onOK();
             }
         });
+
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-
-
-        //TODO
-//        setSize(200, 100);
         contentPane.setPreferredSize(new Dimension(150,80));
         pack();
-//        setSize((int) screen.getWidth() / 3, (int) screen.getHeight() / 3);
-
-
-
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
         setVisible(true);
