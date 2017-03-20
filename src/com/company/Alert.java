@@ -24,7 +24,7 @@ public class Alert extends JDialog {
 
         //TODO
 //        setSize(200, 100);
-        contentPane.setPreferredSize(new Dimension(150,90));
+        contentPane.setPreferredSize(new Dimension(150,80));
         pack();
 //        setSize((int) screen.getWidth() / 3, (int) screen.getHeight() / 3);
 
