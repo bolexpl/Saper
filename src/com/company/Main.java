@@ -1,6 +1,5 @@
 package com.company;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class Main {
@@ -9,8 +8,7 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-//                new Window();
-                new Alert("Przegrana");
+                new Window();
             }
         });
 

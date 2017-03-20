@@ -10,19 +10,13 @@ public class Record implements Serializable {
 
     private String date;
     private double time;
+    private String board;
     private static String fileName = "records.dat";
 
-    public Record(String date, double time) {
+    public Record(String date, double time, String board) {
         this.date = date;
         this.time = time;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public double getTime() {
-        return time;
+        this.board = board;
     }
 
     public static ArrayList<Record> read() {
@@ -64,7 +58,7 @@ public class Record implements Serializable {
         return wynik;
     }
 
-    public static void write(String name, double time) {
+    public static void write(String name, double time, String board) {
         ObjectOutputStream output = null;
         ArrayList<Record> list;
 
@@ -87,7 +81,7 @@ public class Record implements Serializable {
             System.exit(0);
         }
 
-        Record r = new Record(name, time);
+        Record r = new Record(name, time,board);
         list.add(r);
         try {
             for (Record r2 : list) {

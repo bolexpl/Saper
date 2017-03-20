@@ -3,8 +3,10 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Vector;
 
 public class ResultsDialog extends JDialog {
+
     private JPanel mainPanel;
     private JButton buttonOK;
 
@@ -27,7 +29,7 @@ public class ResultsDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        JTable table = new JTable(Debug.data, Debug.kolumny);
+        JTable table = new JTable(DaneDoTabeli.data, DaneDoTabeli.kolumny);
         JScrollPane scrollPane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
 
@@ -36,6 +38,25 @@ public class ResultsDialog extends JDialog {
         top.add(new JLabel("Rozmiar planszy: "));
 
         String[] boards = {"3x3", "4x4", "5x5"};
+
+
+
+
+        //TODO
+        Vector<String> boards2 = new Vector<>();
+
+        for(Object[] x: DaneDoTabeli.data){
+//            System.out.println(x[2].toString());
+            if(!boards2.contains(x[2].toString())){
+                boards2.add(x[2].toString());
+            }
+        }
+        for(String x: boards2){
+            System.out.println(x);
+        }
+
+
+
         JComboBox<String> select = new JComboBox<>(boards);
         top.add(select);
         select.addActionListener(new ActionListener() {
