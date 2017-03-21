@@ -98,8 +98,8 @@ class Window extends JFrame {
         });
         game.add(eMenuItem);
 
-        eMenuItem = new JMenuItem("Wyniki");
-        eMenuItem.setMnemonic(KeyEvent.VK_W);
+        eMenuItem = new JMenuItem("Rekordy");
+        eMenuItem.setMnemonic(KeyEvent.VK_R);
         eMenuItem.setToolTipText("Zapisane rekordy gry");
         eMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -109,8 +109,8 @@ class Window extends JFrame {
         });
         game.add(eMenuItem);
 
-        eMenuItem = new JMenuItem("Zakończ");
-        eMenuItem.setMnemonic(KeyEvent.VK_Z);
+        eMenuItem = new JMenuItem("Wyjście");
+        eMenuItem.setMnemonic(KeyEvent.VK_W);
         eMenuItem.setToolTipText("Wyjście z gry");
         eMenuItem.addActionListener(new ActionListener() {
             @Override
