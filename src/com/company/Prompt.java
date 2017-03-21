@@ -1,8 +1,6 @@
 package com.company;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -56,7 +54,6 @@ public class Prompt extends JDialog {
             }
         });
 
-
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
@@ -65,34 +62,27 @@ public class Prompt extends JDialog {
 
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onCancel();
+                System.exit(0);
             }
         });
-
-//        buttonDefault.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent actionEvent) {
-//                dispose();
-//            }
-//        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                onCancel();
+                System.exit(0);
             }
         });
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onCancel();
+                System.exit(0);
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         pack();
-//        setSize(new Dimension(this.getWidth()+50, this.getHeight()));
+        setSize(new Dimension(this.getWidth()+80, this.getHeight()));
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
@@ -118,7 +108,6 @@ public class Prompt extends JDialog {
             return;
         }
 
-
         if (!textField1.getText().equals("") && !textField2.getText().equals("") && !textField3.getText().equals("")) {
             int x = Integer.parseInt(textField1.getText());
             int y = Integer.parseInt(textField2.getText());
@@ -141,9 +130,5 @@ public class Prompt extends JDialog {
             message.setForeground(Color.RED);
             message.setText("Złe dane!");
         }
-    }
-
-    private void onCancel() {
-        System.exit(0);
     }
 }

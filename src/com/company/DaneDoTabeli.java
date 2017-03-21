@@ -2,7 +2,8 @@ package com.company;
 
 class DaneDoTabeli {
 
-    static String kolumny[] = {"Data", "Plansza", "Czas"};
+    static String kolumny[] = {"Data", "Czas", "Plansza"};
+
     static Object[][] data = {
             {"asdad", "12s", "3x3"},
             {"drugi", "1s", "3x3"},

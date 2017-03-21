@@ -19,48 +19,23 @@ public class Record implements Serializable {
         this.board = board;
     }
 
-    public static ArrayList<Record> read() {
-        ArrayList<Record> wynik = new ArrayList<>();
-
-        ObjectInputStream input = null;
-        try {
-            input = new ObjectInputStream(new FileInputStream(fileName));
-        } catch (FileNotFoundException e) {
-            System.out.println("Brak pliku");
-            System.exit(0);
-        } catch (IOException e) {
-            System.out.println("Błąd wyjścia");
-            System.exit(0);
-        }
-
-        Record r;
-        try {
-            while (true) {
-                try {
-                    r = (Record) input.readObject();
-                    wynik.add(r);
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-
-            input.close();
-        } catch (IOException e) {
-            System.out.println("Błąd wyjścia");
-            e.printStackTrace();
-            System.exit(0);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Nie znaleziono klasy");
-            e.printStackTrace();
-            System.exit(0);
-        }
-
-        return wynik;
+    public String getDate() {
+        return date;
     }
 
-    public static void write(String name, double time, String board) {
-        ObjectOutputStream output = null;
+    public double getTime() {
+        return time;
+    }
+
+    public String getBoard() {
+        return board;
+    }
+
+    public static void write(Record r) {
+        ObjectOutputStream output;
         ArrayList<Record> list;
+
+//        System.out.println("#############################################write");
 
         File f = new File(fileName);
         if (f.exists() && !f.isDirectory()) {
@@ -69,30 +44,71 @@ public class Record implements Serializable {
             list = new ArrayList<>();
         }
 
-        try {
-            output = new ObjectOutputStream(new FileOutputStream(fileName));
-        } catch (FileNotFoundException e) {
-            System.out.println("Brak pliku");
-            e.printStackTrace();
-            System.exit(0);
-        } catch (IOException e) {
-            System.out.println("Błąd wyjścia");
-            e.printStackTrace();
-            System.exit(0);
-        }
+//        for(Record x : list){
+//            System.out.println(x.getDate()+", "+x.getTime()+", "+x.getBoard());
+//        }
 
-        Record r = new Record(name, time,board);
         list.add(r);
         try {
+            output = new ObjectOutputStream(new FileOutputStream(fileName));
+
             for (Record r2 : list) {
+//                System.out.println("a");
                 output.writeObject(r2);
             }
             output.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Brak pliku");
+//            e.printStackTrace();
+            System.exit(0);
         } catch (IOException e) {
             System.out.println("Błąd wyjścia");
-            e.printStackTrace();
+//            e.printStackTrace();
             System.exit(0);
         }
+//        System.out.println("----------------------------------------write");
+    }
+
+    //------------------------------------------------------------------------------------
+
+    public static ArrayList<Record> read() {
+        ArrayList<Record> wynik = new ArrayList<>();
+        ObjectInputStream input;
+        Record r;
+
+//        System.out.println("#############################################read");
+
+        try {
+            input = new ObjectInputStream(new FileInputStream(fileName));
+
+            while (true) {
+                try {
+                    r = (Record) input.readObject();
+//                    System.out.println(r.getDate()+", "+r.getTime()+", "+r.getBoard());
+                    wynik.add(r);
+//                    System.out.println("dodałem");
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+
+            input.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Brak pliku");
+//            e.printStackTrace();
+            System.exit(0);
+        } catch (IOException e) {
+            System.out.println("Błąd wyjścia");
+//            e.printStackTrace();
+            System.exit(0);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Nie znaleziono klasy");
+//            e.printStackTrace();
+            System.exit(0);
+        }
+//        System.out.println("----------------------------------------read");
+        return wynik;
     }
 
     public static void clearRecords() {

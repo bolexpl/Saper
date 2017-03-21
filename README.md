@@ -2,7 +2,10 @@
 Gra w języku Java z użyciem Swing.
 Aby skompilować i uruchomić potrzebne jest środowisko IntelliJ.
 
-## Zadania
-- główne mechaniki gry
+## Gotowe
 - zapisywanie wyników
 - okno wyników
+
+## Do zrobienia
+- główna mechanika gry
+- wybór planszy
