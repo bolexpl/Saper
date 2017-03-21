@@ -2,6 +2,8 @@ package com.company;
 
 class DaneDoTabeli {
 
+    static String[] boards = {"8x8", "16x16", "30x16","własne ustawienia"};
+
     static String kolumny[] = {"Data", "Czas", "Plansza"};
 
     static Object[][] data = {

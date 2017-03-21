@@ -1,20 +1,15 @@
 package com.company;
 
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 import javax.swing.table.AbstractTableModel;
-import java.util.List;
+import java.util.Vector;
 
 public class RecordsModel extends AbstractTableModel {
 
-    private List<Record> records = null;
+    private Vector<Record> records;
     private final static Object[] columns = {"Data", "Czas", "Plansza"};
 
-    public RecordsModel(List<Record> records) {
-        this.records = records;
-    }
-
-    public void setModelData(List<Record> records){
+    public RecordsModel(Vector<Record> records) {
+        super();
         this.records = records;
     }
 
@@ -39,11 +34,6 @@ public class RecordsModel extends AbstractTableModel {
     }
 
     @Override
-    public Class<?> getColumnClass(int i) {
-        return null;
-    }
-
-    @Override
     public boolean isCellEditable(int i, int i1) {
         return false;
     }
@@ -63,20 +53,5 @@ public class RecordsModel extends AbstractTableModel {
             default:
                 return r;
         }
-    }
-
-    @Override
-    public void setValueAt(Object o, int i, int i1) {
-
-    }
-
-    @Override
-    public void addTableModelListener(TableModelListener tableModelListener) {
-
-    }
-
-    @Override
-    public void removeTableModelListener(TableModelListener tableModelListener) {
-
     }
 }

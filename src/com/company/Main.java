@@ -2,7 +2,6 @@ package com.company;
 
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -22,33 +21,11 @@ public class Main {
 //        Record.write(new Record("asd",20.1,"16x16"));
 //        Record.write(new Record("qwe",20.6,"30x16"));
 
-
-//        ObjectInputStream is;
-//
-//        Record r;
-//
-//        try{
-//            is = new ObjectInputStream(new FileInputStream("records.dat"));
-//            while (true) {
-//                try {
-//                    r = (Record) is.readObject();
-//                    System.out.println(r.getDate()+", "+r.getTime()+", "+r.getBoard());
-//                } catch (EOFException e) {
-//                    break;
-//                }
-//            }
-//            is.close();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-
-
 //        System.out.println("##################################################");
 
-
-        ArrayList<Record> a = Record.read();
-        for (Record s : a) {
-            System.out.println(s.getDate() + ", " + s.getTime() + ", " + s.getBoard());
-        }
+//        Vector<Record> a = Record.read();
+//        for (Record s : a) {
+//            System.out.println(s.getDate() + ", " + s.getTime() + ", " + s.getBoard());
+//        }
     }
 }

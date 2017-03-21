@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Klasa opisująca wynik gry
@@ -33,7 +34,7 @@ public class Record implements Serializable {
 
     public static void write(Record r) {
         ObjectOutputStream output;
-        ArrayList<Record> list;
+        Vector<Record> list;
 
 //        System.out.println("#############################################write");
 
@@ -41,7 +42,7 @@ public class Record implements Serializable {
         if (f.exists() && !f.isDirectory()) {
             list = read();
         } else {
-            list = new ArrayList<>();
+            list = new Vector<>();
         }
 
 //        for(Record x : list){
@@ -60,11 +61,11 @@ public class Record implements Serializable {
 
         } catch (FileNotFoundException e) {
             System.out.println("Brak pliku");
-//            e.printStackTrace();
+            e.printStackTrace();
             System.exit(0);
         } catch (IOException e) {
             System.out.println("Błąd wyjścia");
-//            e.printStackTrace();
+            e.printStackTrace();
             System.exit(0);
         }
 //        System.out.println("----------------------------------------write");
@@ -72,8 +73,8 @@ public class Record implements Serializable {
 
     //------------------------------------------------------------------------------------
 
-    public static ArrayList<Record> read() {
-        ArrayList<Record> wynik = new ArrayList<>();
+    public static Vector<Record> read() {
+        Vector<Record> wynik = new Vector<>();
         ObjectInputStream input;
         Record r;
 
@@ -96,15 +97,15 @@ public class Record implements Serializable {
             input.close();
         } catch (FileNotFoundException e) {
             System.out.println("Brak pliku");
-//            e.printStackTrace();
+            e.printStackTrace();
             System.exit(0);
         } catch (IOException e) {
             System.out.println("Błąd wyjścia");
-//            e.printStackTrace();
+            e.printStackTrace();
             System.exit(0);
         } catch (ClassNotFoundException e) {
             System.out.println("Nie znaleziono klasy");
-//            e.printStackTrace();
+            e.printStackTrace();
             System.exit(0);
         }
 //        System.out.println("----------------------------------------read");

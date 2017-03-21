@@ -30,14 +30,12 @@ public class ResultsDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-//        JTable table = new JTable(DaneDoTabeli.data, DaneDoTabeli.kolumny);
-        JTable table = new JTable(new RecordsModel(Record.read()));
 
-        table.setShowVerticalLines(false);
-//        table.setCellSelectionEnabled(false);
-//        table.setFocusable(false);
-        table.setEnabled(false);
-
+        RecordsModel model = new RecordsModel(Record.read());
+        JTable table = new JTable(model);
+//        table.setShowVerticalLines(false);
+//        table.setShowHorizontalLines(false);
+        table.setShowGrid(false);
 
         JScrollPane scrollPane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
@@ -47,14 +45,14 @@ public class ResultsDialog extends JDialog {
         top.add(new JLabel("Rozmiar planszy: "));
 
         //TODO wybór planszy
-        Vector<String> boards = new Vector<>();
-        for (Object[] x : DaneDoTabeli.data) {
-            if (!boards.contains(x[2].toString())) {
-                boards.add(x[2].toString());
-            }
-        }
+//        Vector<String> boards = new Vector<>();
+//        for (Object[] x : DaneDoTabeli.data) {
+//            if (!boards.contains(x[2].toString())) {
+//                boards.add(x[2].toString());
+//            }
+//        }
 
-        JComboBox<String> select = new JComboBox<>(boards);
+        JComboBox<String> select = new JComboBox<>(DaneDoTabeli.boards);
         top.add(select);
         select.addActionListener(new ActionListener() {
             @Override
@@ -77,7 +75,7 @@ public class ResultsDialog extends JDialog {
 
         mainPanel.add(top, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
-        mainPanel.add(bottom,BorderLayout.SOUTH);
+        mainPanel.add(bottom, BorderLayout.SOUTH);
 
         setSize(400, 300);
 
