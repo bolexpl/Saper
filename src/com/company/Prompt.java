@@ -1,18 +1,24 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 
 public class Prompt extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JButton buttonDefault;
     private JButton buttonCancel;
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
     private JLabel message;
+    private JRadioButton a8x8RadioButton;
+    private JRadioButton a16x16RadioButton;
+    private JRadioButton a30x16RadioButton;
+    private JRadioButton wlasneUstawieniaRadioButton;
+    private ButtonGroup group;
     private Window w;
 
     Prompt(Window w) {
@@ -20,6 +26,36 @@ public class Prompt extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+
+        a8x8RadioButton.setActionCommand("8x8");
+        a16x16RadioButton.setActionCommand("16x16");
+        a30x16RadioButton.setActionCommand("30x16");
+
+        group = new ButtonGroup();
+        group.add(a8x8RadioButton);
+        group.add(a16x16RadioButton);
+        group.add(a30x16RadioButton);
+        group.add(wlasneUstawieniaRadioButton);
+
+        textField1.setEnabled(false);
+        textField2.setEnabled(false);
+        textField3.setEnabled(false);
+
+        wlasneUstawieniaRadioButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                if(itemEvent.getStateChange() == ItemEvent.DESELECTED){
+                    textField1.setEnabled(false);
+                    textField2.setEnabled(false);
+                    textField3.setEnabled(false);
+                }else{
+                    textField1.setEnabled(true);
+                    textField2.setEnabled(true);
+                    textField3.setEnabled(true);
+                }
+            }
+        });
+
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -33,12 +69,12 @@ public class Prompt extends JDialog {
             }
         });
 
-        buttonDefault.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                dispose();
-            }
-        });
+//        buttonDefault.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//                dispose();
+//            }
+//        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -55,8 +91,8 @@ public class Prompt extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-
         pack();
+//        setSize(new Dimension(this.getWidth()+50, this.getHeight()));
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
@@ -64,6 +100,25 @@ public class Prompt extends JDialog {
     }
 
     private void onOK() {
+
+        if(!wlasneUstawieniaRadioButton.isSelected()){
+            String[] a = group.getSelection().getActionCommand().split("x");
+            int x = Integer.parseInt(a[0]);
+            int y = Integer.parseInt(a[1]);
+            int count;
+            if(x==8){
+                count = 10;
+            }else if(x==16){
+                count = 40;
+            }else{
+                count = 99;
+            }
+            w.setGameSize(x,y,count);
+            dispose();
+            return;
+        }
+
+
         if (!textField1.getText().equals("") && !textField2.getText().equals("") && !textField3.getText().equals("")) {
             int x = Integer.parseInt(textField1.getText());
             int y = Integer.parseInt(textField2.getText());
