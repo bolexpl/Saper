@@ -390,6 +390,7 @@ class Window extends JFrame {
 
     }
 
+    //TODO usunąć
     private void debug() {
         for (int i = 0; i < maxY; i++) {
             for (int c = 0; c < maxX; c++) {
