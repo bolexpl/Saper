@@ -44,7 +44,6 @@ public class ResultsDialog extends JDialog {
 
         //TODO
         Vector<String> boards2 = new Vector<>();
-
         for(Object[] x: DaneDoTabeli.data){
 //            System.out.println(x[2].toString());
             if(!boards2.contains(x[2].toString())){
@@ -54,6 +53,9 @@ public class ResultsDialog extends JDialog {
         for(String x: boards2){
             System.out.println(x);
         }
+
+
+
 
 
 
