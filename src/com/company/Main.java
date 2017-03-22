@@ -21,8 +21,8 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-//                new Window();
-                new ResultsDialog();
+                new Window();
+//                new ResultsDialog();
             }
         });
 

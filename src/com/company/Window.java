@@ -14,10 +14,10 @@ class Window extends JFrame {
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
     private int maxX = 10;
     private int maxY = 10;
-    private int hardline = 15;//15
+    private int hardline;
     private Field button[][];
-    private int minesFields = hardline;
-    private int emptyFields = (maxX * maxY) - hardline;
+    private int minesFields;
+    private int emptyFields;
     private JLabel minyBT = new JLabel(Integer.toString(minesFields));
     private JPanel mainPanel = new JPanel();
     private JPanel plansza = new JPanel();
@@ -181,6 +181,9 @@ class Window extends JFrame {
         generateNumbers();
     }
 
+    /**
+     * Generowanie pól numerowanych
+     * */
     private void generateNumbers() {
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
@@ -325,7 +328,6 @@ class Window extends JFrame {
     }
 
     private void results(){
-//        new ResultsWindow();
         new ResultsDialog();
     }
 
@@ -365,27 +367,42 @@ class Window extends JFrame {
                 }
                 discovery(x, y, true);
             }
-//            System.out.println("##############################################");
-//            System.out.println(x+", "+y);
             checkWin();
-//            debug();
-//            System.out.println("##############################################");
         }
 
         @Override
-        public void mousePressed(MouseEvent mouseEvent) {
+        public void mousePressed(MouseEvent e) {
         }
 
         @Override
-        public void mouseReleased(MouseEvent mouseEvent) {
+        public void mouseReleased(MouseEvent e) {
+//            if (e.getButton() == 3) {
+//                if (button[x][y].getState() == Field.ZAKRYTE) {
+//                    button[x][y].setState(Field.FLAGA);
+//                    button[x][y].setIcon(flaga);
+//                    minesFields--;
+//                    minyBT.setText(Integer.toString(minesFields));
+//                } else if (button[x][y].getState() == Field.FLAGA) {
+//                    button[x][y].setState(Field.ZAKRYTE);
+//                    button[x][y].setIcon(null);
+//                    minesFields++;
+//                    minyBT.setText(Integer.toString(minesFields));
+//                }
+//            } else if (e.getButton() == 1) {
+//                if (button[x][y].getValue() == -2) {
+//                    generate(x, y);
+//                }
+//                discovery(x, y, true);
+//            }
+//            checkWin();
         }
 
         @Override
-        public void mouseEntered(MouseEvent mouseEvent) {
+        public void mouseEntered(MouseEvent e) {
         }
 
         @Override
-        public void mouseExited(MouseEvent mouseEvent) {
+        public void mouseExited(MouseEvent e) {
         }
 
     }
