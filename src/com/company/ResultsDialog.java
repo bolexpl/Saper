@@ -41,7 +41,7 @@ public class ResultsDialog extends JDialog {
      * */
     private void assignButtons() {
         buttonOK = new JButton("Ok");
-        buttonClear = new JButton("Wyczyść");
+        buttonClear = new JButton("Resetuj wyniki");
         String[] boards = {"wszystko", "8x8", "16x16", "30x16", "własne ustawienia"};
         select = new JComboBox<>(boards);
         getRootPane().setDefaultButton(buttonOK);

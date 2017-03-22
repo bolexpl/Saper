@@ -156,37 +156,36 @@ class Window extends JFrame {
         int x;
         int y;
         Random rand = new Random();
-//        int i = hardline;
-//        while (i > 0) {
-//            x = rand.nextInt(maxX);
-//            y = rand.nextInt(maxY);
-//            if (button[x][y].getValue() != Field.MINA
-//                    && !((x == xx && y == yy)
-//                    || (x == xx - 1 && y == yy - 1)
-//                    || (x == xx + 1 && y == yy + 1)
-//                    || (x == xx - 1 && y == yy)
-//                    || (x == xx + 1 && y == yy)
-//                    || (x == xx && y == yy - 1)
-//                    || (x == xx && y == yy + 1)
-//                    || (x == xx + 1 && y == yy - 1)
-//                    || (x == xx - 1 && y == yy + 1))
-//                    ) {
-//                button[x][y].setValue(Field.MINA);
-//                i--;
-//            }
-//        }
+        int i = hardline;
+        while (i > 0) {
+            x = rand.nextInt(maxX);
+            y = rand.nextInt(maxY);
+            if (button[x][y].getValue() != Field.MINA
+                    && !((x == xx && y == yy)
+                    || (x == xx - 1 && y == yy - 1)
+                    || (x == xx + 1 && y == yy + 1)
+                    || (x == xx - 1 && y == yy)
+                    || (x == xx + 1 && y == yy)
+                    || (x == xx && y == yy - 1)
+                    || (x == xx && y == yy + 1)
+                    || (x == xx + 1 && y == yy - 1)
+                    || (x == xx - 1 && y == yy + 1))
+                    ) {
+                button[x][y].setValue(Field.MINA);
+                i--;
+            }
+        }
 
-        //TODO
-        button[0][2].setValue(Field.MINA);
-        button[0][1].setValue(Field.MINA);
-        button[0][0].setValue(Field.MINA);
-        button[5][1].setValue(Field.MINA);
-        button[6][4].setValue(Field.MINA);
-        button[6][6].setValue(Field.MINA);
-        button[6][1].setValue(Field.MINA);
-        button[6][2].setValue(Field.MINA);
-        button[6][3].setValue(Field.MINA);
-        button[5][3].setValue(Field.MINA);
+//        button[0][2].setValue(Field.MINA);
+//        button[0][1].setValue(Field.MINA);
+//        button[0][0].setValue(Field.MINA);
+//        button[5][1].setValue(Field.MINA);
+//        button[6][4].setValue(Field.MINA);
+//        button[6][6].setValue(Field.MINA);
+//        button[6][1].setValue(Field.MINA);
+//        button[6][2].setValue(Field.MINA);
+//        button[6][3].setValue(Field.MINA);
+//        button[5][3].setValue(Field.MINA);
 
         generateNumbers();
     }
@@ -334,6 +333,9 @@ class Window extends JFrame {
             LocalDateTime d = LocalDateTime.now();
             String date = d.getDayOfMonth() + "/" + d.getMonthValue() + "/" + d.getYear();
             double time = (double) ((System.currentTimeMillis() - startTime) / 100) / 10;
+
+
+
             Record.write(new Record(date, time, board));
 
             new Alert("Wygrana", time);
