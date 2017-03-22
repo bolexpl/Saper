@@ -334,9 +334,9 @@ class Window extends JFrame {
             LocalDateTime d = LocalDateTime.now();
             String date = d.getDayOfMonth() + "/" + d.getMonthValue() + "/" + d.getYear();
             double time = (double) ((System.currentTimeMillis() - startTime) / 100) / 10;
-//            Record.write(new Record(date, time, board));
+            Record.write(new Record(date, time, board));
 
-            new Alert("Wygrana", date, time, board);
+            new Alert("Wygrana", time);
             newGame();
         }
     }
