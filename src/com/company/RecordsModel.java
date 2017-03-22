@@ -13,7 +13,11 @@ public class RecordsModel extends AbstractTableModel {
         this.records = records;
     }
 
-    public Record getRecord(int i){
+    public void setData(Vector<Record> records) {
+        this.records = records;
+    }
+
+    public Record getRecord(int i) {
         return records.get(i);
     }
 
@@ -41,7 +45,7 @@ public class RecordsModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int column) {
 
-        if(records == null) return null;
+        if (records == null) return null;
         Record r = records.get(row);
         switch (column) {
             case 0:

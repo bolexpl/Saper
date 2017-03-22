@@ -36,8 +36,6 @@ public class Record implements Serializable {
         ObjectOutputStream output;
         Vector<Record> list;
 
-//        System.out.println("#############################################write");
-
         File f = new File(fileName);
         if (f.exists() && !f.isDirectory()) {
             list = read();
@@ -45,40 +43,28 @@ public class Record implements Serializable {
             list = new Vector<>();
         }
 
-//        for(Record x : list){
-//            System.out.println(x.getDate()+", "+x.getTime()+", "+x.getBoard());
-//        }
-
         list.add(r);
         try {
             output = new ObjectOutputStream(new FileOutputStream(fileName));
 
             for (Record r2 : list) {
-//                System.out.println("a");
                 output.writeObject(r2);
             }
             output.close();
 
         } catch (FileNotFoundException e) {
             System.out.println("Brak pliku");
-            e.printStackTrace();
             System.exit(0);
         } catch (IOException e) {
             System.out.println("Błąd wyjścia");
-            e.printStackTrace();
             System.exit(0);
         }
-//        System.out.println("----------------------------------------write");
     }
-
-    //------------------------------------------------------------------------------------
 
     public static Vector<Record> read() {
         Vector<Record> wynik = new Vector<>();
         ObjectInputStream input;
         Record r;
-
-//        System.out.println("#############################################read");
 
         try {
             input = new ObjectInputStream(new FileInputStream(fileName));
@@ -86,9 +72,7 @@ public class Record implements Serializable {
             while (true) {
                 try {
                     r = (Record) input.readObject();
-//                    System.out.println(r.getDate()+", "+r.getTime()+", "+r.getBoard());
                     wynik.add(r);
-//                    System.out.println("dodałem");
                 } catch (EOFException e) {
                     break;
                 }
@@ -108,7 +92,49 @@ public class Record implements Serializable {
             e.printStackTrace();
             System.exit(0);
         }
-//        System.out.println("----------------------------------------read");
+        return wynik;
+    }
+
+    public static Vector<Record> read(String filter){
+        Vector<Record> wynik = new Vector<>();
+
+        ObjectInputStream input;
+        Record r;
+
+        try {
+            input = new ObjectInputStream(new FileInputStream(fileName));
+
+            while (true) {
+                try {
+                    r = (Record) input.readObject();
+                    if (r.getBoard().equals(filter) ||
+                            (filter.equals("własne ustawienia") &&
+                                    !r.getBoard().equals("8x8") &&
+                                    !r.getBoard().equals("16x16") &&
+                                    !r.getBoard().equals("30x16"))
+                            ) {
+                        wynik.add(r);
+                    }
+
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+
+            input.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Brak pliku");
+            e.printStackTrace();
+            System.exit(0);
+        } catch (IOException e) {
+            System.out.println("Błąd wyjścia");
+            e.printStackTrace();
+            System.exit(0);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Nie znaleziono klasy");
+            e.printStackTrace();
+            System.exit(0);
+        }
         return wynik;
     }
 
