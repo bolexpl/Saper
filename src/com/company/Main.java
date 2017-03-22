@@ -26,11 +26,6 @@ public class Main {
             }
         });
 
-
-
-
-//        System.out.println("##################################################");
-
 //        Vector<Record> a = Record.read();
 //        for (Record s : a) {
 //            System.out.println(s.getDate() + ", " + s.getTime() + ", " + s.getBoard());

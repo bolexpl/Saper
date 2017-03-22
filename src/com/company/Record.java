@@ -51,13 +51,10 @@ public class Record implements Serializable {
                 output.writeObject(r2);
             }
             output.close();
-
         } catch (FileNotFoundException e) {
             System.out.println("Brak pliku");
-            System.exit(0);
         } catch (IOException e) {
             System.out.println("Błąd wyjścia");
-            System.exit(0);
         }
     }
 
@@ -65,6 +62,11 @@ public class Record implements Serializable {
         Vector<Record> wynik = new Vector<>();
         ObjectInputStream input;
         Record r;
+
+        File f = new File(fileName);
+        if (!f.exists()) {
+            init();
+        }
 
         try {
             input = new ObjectInputStream(new FileInputStream(fileName));
@@ -82,15 +84,12 @@ public class Record implements Serializable {
         } catch (FileNotFoundException e) {
             System.out.println("Brak pliku");
             e.printStackTrace();
-            System.exit(0);
         } catch (IOException e) {
             System.out.println("Błąd wyjścia");
             e.printStackTrace();
-            System.exit(0);
         } catch (ClassNotFoundException e) {
             System.out.println("Nie znaleziono klasy");
             e.printStackTrace();
-            System.exit(0);
         }
         return wynik;
     }
@@ -100,6 +99,11 @@ public class Record implements Serializable {
 
         ObjectInputStream input;
         Record r;
+
+        File f = new File(fileName);
+        if (!f.exists()) {
+            init();
+        }
 
         try {
             input = new ObjectInputStream(new FileInputStream(fileName));
@@ -125,15 +129,12 @@ public class Record implements Serializable {
         } catch (FileNotFoundException e) {
             System.out.println("Brak pliku");
             e.printStackTrace();
-            System.exit(0);
         } catch (IOException e) {
             System.out.println("Błąd wyjścia");
             e.printStackTrace();
-            System.exit(0);
         } catch (ClassNotFoundException e) {
             System.out.println("Nie znaleziono klasy");
             e.printStackTrace();
-            System.exit(0);
         }
         return wynik;
     }
@@ -141,10 +142,33 @@ public class Record implements Serializable {
     public static void clearRecords() {
         File f = new File(fileName);
 
+        Vector<Record> a = Record.read();
+        for (Record s : a) {
+            System.out.println(s.getDate() + ", " + s.getTime() + ", " + s.getBoard());
+        }
+
+        System.out.println("czyszczenie");
         if (f.delete()) {
             System.out.println("Usunięto");
         } else {
             System.out.println("Problem");
+        }
+
+        a = Record.read();
+        for (Record s : a) {
+            System.out.println(s.getDate() + ", " + s.getTime() + ", " + s.getBoard());
+        }
+    }
+
+    public static void init(){
+        try{
+            new ObjectOutputStream(new FileOutputStream(fileName)).close();
+        }catch (FileNotFoundException e){
+            System.out.println("Brak pliku");
+            e.printStackTrace();
+        }catch (IOException e){
+            System.out.println("Błąd wyjścia");
+            e.printStackTrace();
         }
     }
 }
