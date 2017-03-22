@@ -21,8 +21,9 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Window();
+//                new Window();
 //                new ResultsDialog();
+                new Alert("Wygrana", "1/2/2017", 12, "8x8");
             }
         });
 

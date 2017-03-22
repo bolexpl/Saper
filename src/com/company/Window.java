@@ -3,6 +3,9 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 /**
@@ -12,6 +15,7 @@ class Window extends JFrame {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
+    private ImageIcon mina = new ImageIcon(getClass().getResource("res/mina.png"));
     private int maxX = 10;
     private int maxY = 10;
     private int hardline;
@@ -23,6 +27,7 @@ class Window extends JFrame {
     private JPanel plansza = new JPanel();
 
     private long startTime;
+    private String board;
 
     Window() {
         super("Saper");
@@ -75,7 +80,7 @@ class Window extends JFrame {
         minyBT.setText(Integer.toString(minesFields));
 
         //TODO
-//        startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
     }
 
     /**
@@ -138,6 +143,7 @@ class Window extends JFrame {
         minesFields = hardline;
         emptyFields = (maxX * maxY) - hardline;
         minyBT.setText(Integer.toString(minesFields));
+        board = x + "x" + y;
     }
 
     /**
@@ -150,33 +156,37 @@ class Window extends JFrame {
         int x;
         int y;
         Random rand = new Random();
-        int i = hardline;
-        while (i > 0) {
-            x = rand.nextInt(maxX);
-            y = rand.nextInt(maxY);
-            if (button[x][y].getValue() != Field.MINA
-                    && !((x == xx && y == yy)
-                    || (x == xx - 1 && y == yy - 1)
-                    || (x == xx + 1 && y == yy + 1)
-                    || (x == xx - 1 && y == yy)
-                    || (x == xx + 1 && y == yy)
-                    || (x == xx && y == yy - 1)
-                    || (x == xx && y == yy + 1)
-                    || (x == xx + 1 && y == yy - 1)
-                    || (x == xx - 1 && y == yy + 1))
-                    ) {
-                button[x][y].setValue(Field.MINA);
-                i--;
-            }
-        }
+//        int i = hardline;
+//        while (i > 0) {
+//            x = rand.nextInt(maxX);
+//            y = rand.nextInt(maxY);
+//            if (button[x][y].getValue() != Field.MINA
+//                    && !((x == xx && y == yy)
+//                    || (x == xx - 1 && y == yy - 1)
+//                    || (x == xx + 1 && y == yy + 1)
+//                    || (x == xx - 1 && y == yy)
+//                    || (x == xx + 1 && y == yy)
+//                    || (x == xx && y == yy - 1)
+//                    || (x == xx && y == yy + 1)
+//                    || (x == xx + 1 && y == yy - 1)
+//                    || (x == xx - 1 && y == yy + 1))
+//                    ) {
+//                button[x][y].setValue(Field.MINA);
+//                i--;
+//            }
+//        }
 
-//        button[0][2].setValue(Field.MINA);
-//        button[5][1].setValue(Field.MINA);
-//        button[6][4].setValue(Field.MINA);
-//        button[8][4].setValue(Field.MINA);
-//        button[6][6].setValue(Field.MINA);
-//        button[3][8].setValue(Field.MINA);
-//        button[9][8].setValue(Field.MINA);
+        //TODO
+        button[0][2].setValue(Field.MINA);
+        button[0][1].setValue(Field.MINA);
+        button[0][0].setValue(Field.MINA);
+        button[5][1].setValue(Field.MINA);
+        button[6][4].setValue(Field.MINA);
+        button[6][6].setValue(Field.MINA);
+        button[6][1].setValue(Field.MINA);
+        button[6][2].setValue(Field.MINA);
+        button[6][3].setValue(Field.MINA);
+        button[5][3].setValue(Field.MINA);
 
         generateNumbers();
     }
@@ -186,10 +196,10 @@ class Window extends JFrame {
      */
     private void generateNumbers() {
         int xmin, xmax, ymin, ymax;
-        int countMines = 0;
+        int countMines;
         for (int i = 0; i < maxX; i++) {
             for (int c = 0; c < maxY; c++) {
-                if (button[i][c].getValue() != -1) {
+                if (button[i][c].getValue() != Field.MINA) {
                     countMines = 0;
                     xmin = (i == 0) ? 0 : i - 1;
                     xmax = (i == maxX - 1) ? maxX - 1 : i + 1;
@@ -199,7 +209,7 @@ class Window extends JFrame {
 
                     for (int j = xmin; j <= xmax; j++) {
                         for (int z = ymin; z <= ymax; z++) {
-                            if (button[j][z].getValue() == -1) {
+                            if (button[j][z].getValue() == Field.MINA) {
                                 countMines++;
                             }
                         }
@@ -223,8 +233,9 @@ class Window extends JFrame {
 
             if (button[x][y].getValue() == Field.MINA) {
 
+                button[x][y].setState(Field.ODKRYTE);
                 button[x][y].setIcon(trafione);
-                new Alert("Przegrana");
+                onLoose();
                 newGame();
             } else if (button[x][y].getValue() > Field.PUSTE) {
 
@@ -318,24 +329,41 @@ class Window extends JFrame {
      */
     private void checkWin() {
         if (emptyFields == 0) {
-            //TODO
-//            double time = (double) ((System.currentTimeMillis() - startTime) / 100) / 10;
-//            Record.write("nazwa", time);
 
-            new Alert("Wygrana");
+            //TODO
+            LocalDateTime d = LocalDateTime.now();
+            String date = d.getDayOfMonth() + "/" + d.getMonthValue() + "/" + d.getYear();
+            double time = (double) ((System.currentTimeMillis() - startTime) / 100) / 10;
+//            Record.write(new Record(date, time, board));
+
+            new Alert("Wygrana", date, time, board);
             newGame();
         }
     }
 
     /**
+     * W przypadku przegranej oznaczenie wszystkich min
+     */
+    private void onLoose() {
+        for (int i = 0; i < maxX; i++) {
+            for (int c = 0; c < maxY; c++) {
+                if (button[i][c].getValue() == Field.MINA && button[i][c].getState() == Field.ZAKRYTE) {
+                    button[i][c].setIcon(mina);
+                }
+            }
+        }
+        new Alert("Przegrana");
+    }
+
+    /**
      * Pokazanie okna wyników
-     * */
+     */
     private void results() {
         new ResultsDialog();
     }
 
     /**
-     * Klasa reakcji na kliknięcie
+     * Klasa obsługująca reakcję na kliknięcie
      */
     private class Odkrycie implements MouseListener {
 
@@ -353,18 +381,11 @@ class Window extends JFrame {
             this.bt = bt;
         }
 
-        @Override
-        public void mouseClicked(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-        }
-
         /**
          * Sprawdzenie czy kursor nadal jest na przycisku
-         * */
+         *
+         * @param e - obiekt zdarzenia myszy
+         */
         @Override
         public void mouseReleased(MouseEvent e) {
             Point p = MouseInfo.getPointerInfo().getLocation();
@@ -374,8 +395,46 @@ class Window extends JFrame {
                     p.getX() <= b.getX() + bt.getWidth() &&
                     p.getY() >= b.getY() &&
                     p.getY() <= b.getY() + bt.getHeight()) {
-                mouse(x,y,e);
+                mouse(x, y, e);
             }
+        }
+
+        /**
+         * Metoda wywołana przy kliknięciu
+         *
+         * @param x - współrzędna x wybranego pola
+         * @param y - współrzędna y wybranego pola
+         * @param e - obiekt zdarzenia myszy
+         */
+        private void mouse(int x, int y, MouseEvent e) {
+            if (e.getButton() == 3) {
+                if (button[x][y].getState() == Field.ZAKRYTE) {
+                    button[x][y].setState(Field.FLAGA);
+                    button[x][y].setIcon(flaga);
+                    minesFields--;
+                    minyBT.setText(Integer.toString(minesFields));
+                } else if (button[x][y].getState() == Field.FLAGA) {
+                    button[x][y].setState(Field.ZAKRYTE);
+                    button[x][y].setIcon(null);
+                    minesFields++;
+                    minyBT.setText(Integer.toString(minesFields));
+                }
+            } else if (e.getButton() == 1) {
+                if (button[x][y].getValue() == -2) {
+                    generate(x, y);
+                }
+                discovery(x, y, true);
+            }
+            checkWin();
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
         }
 
         @Override
@@ -385,28 +444,6 @@ class Window extends JFrame {
         @Override
         public void mouseExited(MouseEvent e) {
         }
-    }
-
-    private void mouse(int x, int y, MouseEvent e) {
-        if (e.getButton() == 3) {
-            if (button[x][y].getState() == Field.ZAKRYTE) {
-                button[x][y].setState(Field.FLAGA);
-                button[x][y].setIcon(flaga);
-                minesFields--;
-                minyBT.setText(Integer.toString(minesFields));
-            } else if (button[x][y].getState() == Field.FLAGA) {
-                button[x][y].setState(Field.ZAKRYTE);
-                button[x][y].setIcon(null);
-                minesFields++;
-                minyBT.setText(Integer.toString(minesFields));
-            }
-        } else if (e.getButton() == 1) {
-            if (button[x][y].getValue() == -2) {
-                generate(x, y);
-            }
-            discovery(x, y, true);
-        }
-        checkWin();
     }
 
     //TODO usunąć
