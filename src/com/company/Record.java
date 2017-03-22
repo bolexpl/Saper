@@ -1,9 +1,6 @@
 package com.company;
 
-import com.sun.corba.se.impl.io.OutputStreamHook;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -85,10 +82,13 @@ public class Record implements Serializable {
             input.close();
         } catch (FileNotFoundException e) {
             new Alert("Brak pliku");
+            e.printStackTrace();
         } catch (IOException e) {
             new Alert("Błąd odczytania wyników");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             new Alert("Uszkodzony plik");
+            e.printStackTrace();
         }
         return wynik;
     }
@@ -127,10 +127,13 @@ public class Record implements Serializable {
             input.close();
         } catch (FileNotFoundException e) {
             new Alert("Brak pliku");
+            e.printStackTrace();
         } catch (IOException e) {
             new Alert("Błąd odczytania wyników");
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             new Alert("Uszkodzony plik");
+            e.printStackTrace();
         }
         return wynik;
     }
@@ -140,11 +143,12 @@ public class Record implements Serializable {
         try {
             output = new ObjectOutputStream(new FileOutputStream(fileName));
             output.close();
-            throw new IOException();
         } catch (FileNotFoundException e) {
             new Alert("Brak pliku");
+            e.printStackTrace();
         } catch (IOException e) {
             new Alert("Błąd usuwania wyników");
+            e.printStackTrace();
         }
     }
 
