@@ -7,7 +7,7 @@ import java.util.Random;
 
 /**
  * Klasa głównego okna programu
- * */
+ */
 class Window extends JFrame {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
@@ -59,7 +59,7 @@ class Window extends JFrame {
                 button[c][i] = new Field();
                 button[c][i].setPreferredSize(new Dimension(40, 40));
                 button[c][i].setMargin(new Insets(0, 0, 0, 0));
-                button[c][i].addMouseListener(new Odkrycie(c, i));
+                button[c][i].addMouseListener(new Odkrycie(c, i, button[c][i]));
                 plansza.add(button[c][i]);
             }
         }
@@ -183,7 +183,7 @@ class Window extends JFrame {
 
     /**
      * Generowanie pól numerowanych
-     * */
+     */
     private void generateNumbers() {
         int xmin, xmax, ymin, ymax;
         int countMines = 0;
@@ -327,7 +327,10 @@ class Window extends JFrame {
         }
     }
 
-    private void results(){
+    /**
+     * Pokazanie okna wyników
+     * */
+    private void results() {
         new ResultsDialog();
     }
 
@@ -335,66 +338,44 @@ class Window extends JFrame {
      * Klasa reakcji na kliknięcie
      */
     private class Odkrycie implements MouseListener {
+
         private int x;
         private int y;
+        private JButton bt;
 
         /**
          * @param x - współrzędna x wybranego pola
          * @param y - współrzędna y wybranego pola
          */
-        private Odkrycie(int x, int y) {
+        private Odkrycie(int x, int y, JButton bt) {
             this.x = x;
             this.y = y;
+            this.bt = bt;
         }
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (e.getButton() == 3) {
-                if (button[x][y].getState() == Field.ZAKRYTE) {
-                    button[x][y].setState(Field.FLAGA);
-                    button[x][y].setIcon(flaga);
-                    minesFields--;
-                    minyBT.setText(Integer.toString(minesFields));
-                } else if (button[x][y].getState() == Field.FLAGA) {
-                    button[x][y].setState(Field.ZAKRYTE);
-                    button[x][y].setIcon(null);
-                    minesFields++;
-                    minyBT.setText(Integer.toString(minesFields));
-                }
-            } else if (e.getButton() == 1) {
-                if (button[x][y].getValue() == -2) {
-                    generate(x, y);
-                }
-                discovery(x, y, true);
-            }
-            checkWin();
+
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
         }
 
+        /**
+         * Sprawdzenie czy kursor nadal jest na przycisku
+         * */
         @Override
         public void mouseReleased(MouseEvent e) {
-//            if (e.getButton() == 3) {
-//                if (button[x][y].getState() == Field.ZAKRYTE) {
-//                    button[x][y].setState(Field.FLAGA);
-//                    button[x][y].setIcon(flaga);
-//                    minesFields--;
-//                    minyBT.setText(Integer.toString(minesFields));
-//                } else if (button[x][y].getState() == Field.FLAGA) {
-//                    button[x][y].setState(Field.ZAKRYTE);
-//                    button[x][y].setIcon(null);
-//                    minesFields++;
-//                    minyBT.setText(Integer.toString(minesFields));
-//                }
-//            } else if (e.getButton() == 1) {
-//                if (button[x][y].getValue() == -2) {
-//                    generate(x, y);
-//                }
-//                discovery(x, y, true);
-//            }
-//            checkWin();
+            Point p = MouseInfo.getPointerInfo().getLocation();
+            Point b = bt.getLocationOnScreen();
+
+            if (p.getX() >= b.getX() &&
+                    p.getX() <= b.getX() + bt.getWidth() &&
+                    p.getY() >= b.getY() &&
+                    p.getY() <= b.getY() + bt.getHeight()) {
+                mouse(x,y,e);
+            }
         }
 
         @Override
@@ -404,7 +385,28 @@ class Window extends JFrame {
         @Override
         public void mouseExited(MouseEvent e) {
         }
+    }
 
+    private void mouse(int x, int y, MouseEvent e) {
+        if (e.getButton() == 3) {
+            if (button[x][y].getState() == Field.ZAKRYTE) {
+                button[x][y].setState(Field.FLAGA);
+                button[x][y].setIcon(flaga);
+                minesFields--;
+                minyBT.setText(Integer.toString(minesFields));
+            } else if (button[x][y].getState() == Field.FLAGA) {
+                button[x][y].setState(Field.ZAKRYTE);
+                button[x][y].setIcon(null);
+                minesFields++;
+                minyBT.setText(Integer.toString(minesFields));
+            }
+        } else if (e.getButton() == 1) {
+            if (button[x][y].getValue() == -2) {
+                generate(x, y);
+            }
+            discovery(x, y, true);
+        }
+        checkWin();
     }
 
     //TODO usunąć
