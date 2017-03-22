@@ -78,8 +78,6 @@ class Window extends JFrame {
         minesFields = hardline;
         emptyFields = (maxX * maxY) - hardline;
         minyBT.setText(Integer.toString(minesFields));
-
-        //TODO
         startTime = System.currentTimeMillis();
     }
 
@@ -143,7 +141,13 @@ class Window extends JFrame {
         minesFields = hardline;
         emptyFields = (maxX * maxY) - hardline;
         minyBT.setText(Integer.toString(minesFields));
-        board = x + "x" + y;
+
+        if( x==8 && y==8 || x==16 && y==16 || x==30 && y==16 ){
+            board = x + "x" + y;
+        }else{
+            board = x + "x" + y+" ("+hardline+" min)";
+        }
+
     }
 
     /**
