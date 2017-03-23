@@ -1,7 +1,6 @@
 package com.company;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -52,9 +51,9 @@ public class Record implements Serializable {
             }
             output.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Brak pliku");
+            new Alert("Brak pliku");
         } catch (IOException e) {
-            System.out.println("Błąd wyjścia");
+            new Alert("Błąd wyjścia");
         }
     }
 
@@ -82,19 +81,19 @@ public class Record implements Serializable {
 
             input.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Brak pliku");
+            new Alert("Brak pliku");
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("Błąd wyjścia");
+            new Alert("Błąd odczytania wyników");
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            System.out.println("Nie znaleziono klasy");
+            new Alert("Uszkodzony plik");
             e.printStackTrace();
         }
         return wynik;
     }
 
-    public static Vector<Record> read(String filter){
+    public static Vector<Record> read(String filter) {
         Vector<Record> wynik = new Vector<>();
 
         ObjectInputStream input;
@@ -127,48 +126,39 @@ public class Record implements Serializable {
 
             input.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Brak pliku");
+            new Alert("Brak pliku");
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("Błąd wyjścia");
+            new Alert("Błąd odczytania wyników");
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            System.out.println("Nie znaleziono klasy");
+            new Alert("Uszkodzony plik");
             e.printStackTrace();
         }
         return wynik;
     }
 
     public static void clearRecords() {
-        File f = new File(fileName);
-
-        Vector<Record> a = Record.read();
-        for (Record s : a) {
-            System.out.println(s.getDate() + ", " + s.getTime() + ", " + s.getBoard());
-        }
-
-        System.out.println("czyszczenie");
-        if (f.delete()) {
-            System.out.println("Usunięto");
-        } else {
-            System.out.println("Problem");
-        }
-
-        a = Record.read();
-        for (Record s : a) {
-            System.out.println(s.getDate() + ", " + s.getTime() + ", " + s.getBoard());
+        ObjectOutputStream output;
+        try {
+            output = new ObjectOutputStream(new FileOutputStream(fileName));
+            output.close();
+        } catch (FileNotFoundException e) {
+            new Alert("Brak pliku");
+            e.printStackTrace();
+        } catch (IOException e) {
+            new Alert("Błąd usuwania wyników");
+            e.printStackTrace();
         }
     }
 
-    public static void init(){
-        try{
+    public static void init() {
+        try {
             new ObjectOutputStream(new FileOutputStream(fileName)).close();
-        }catch (FileNotFoundException e){
-            System.out.println("Brak pliku");
-            e.printStackTrace();
-        }catch (IOException e){
-            System.out.println("Błąd wyjścia");
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            new Alert("Brak pliku");
+        } catch (IOException e) {
+            new Alert("Błąd usuwania wyników");
         }
     }
 }

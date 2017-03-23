@@ -41,7 +41,9 @@ public class ResultsDialog extends JDialog {
      * */
     private void assignButtons() {
         buttonOK = new JButton("Ok");
-        buttonClear = new JButton("Wyczyść");
+        buttonClear = new JButton("Resetuj wyniki");
+        String[] boards = {"wszystko", "8x8", "16x16", "30x16", "własne ustawienia"};
+        select = new JComboBox<>(boards);
         getRootPane().setDefaultButton(buttonOK);
         mainPanel.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -58,6 +60,7 @@ public class ResultsDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Record.clearRecords();
+                setUpTableData("wszystko");
             }
         });
         select.addActionListener(new ActionListener() {
@@ -75,7 +78,6 @@ public class ResultsDialog extends JDialog {
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());
         top.add(new JLabel("Rozmiar planszy: "));
-        select = new JComboBox<>(DaneDoTabeli.boards);
         top.add(select);
 
         model = new RecordsModel(Record.read());

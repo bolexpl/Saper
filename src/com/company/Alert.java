@@ -17,19 +17,21 @@ public class Alert extends JDialog {
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                dispose();
             }
         });
 
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        contentPane.setPreferredSize(new Dimension(150,80));
+        Dimension d = contentPane.getPreferredSize();
+        d.width += 50;
+        contentPane.setPreferredSize(d);
         pack();
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
         setVisible(true);
     }
 
-    private void onOK() {
-        dispose();
+    Alert(String x, double time) {
+        this("<html>"+x+"<br/><br/>Czas: "+time+"</html>");
     }
 }
