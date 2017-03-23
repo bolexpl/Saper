@@ -29,32 +29,6 @@ class Field extends JButton {
         this.value = -2;
     }
 
-//    public Field(ImageIcon icon) {
-//        super(new ImageIcon(
-//                (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
-//        this.state = ZAKRYTE;
-//        this.value = -2;
-//    }
-//
-//    public Field(String s) {
-//        super(s);
-//        this.state = ZAKRYTE;
-//        this.value = -2;
-//    }
-//
-//    public Field(Action action) {
-//        super(action);
-//        this.state = ZAKRYTE;
-//        this.value = -2;
-//    }
-//
-//    public Field(String s, ImageIcon icon) {
-//        super(s, new ImageIcon(
-//                (icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))));
-//        this.state = ZAKRYTE;
-//        this.value = -2;
-//    }
-
     int getValue() {
         return value;
     }
