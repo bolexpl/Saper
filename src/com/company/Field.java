@@ -4,20 +4,11 @@ import javax.swing.*;
 
 class Field extends JButton {
 
-    /*
-    * -2 nieokreślone
-    * -1 mina
-    * 0 puste
-    * */
     private int value;
     static final int MINA = -1;
     static final int PUSTE = 0;
+    static final int NIEOKRESLONE = -2;
 
-    /*
-    * 0 odkryte
-    * 1 zakryte
-    * 2 flaga
-    * */
     private int state;
     static final int ODKRYTE = 0;
     static final int ZAKRYTE = 1;

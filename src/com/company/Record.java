@@ -31,6 +31,10 @@ public class Record implements Serializable {
         return board;
     }
 
+    /**
+     * Zapisywanie nowego rekordu do pliku
+     * @param r - rekord do zapisania
+     * */
     public static void write(Record r) {
         ObjectOutputStream output;
         Vector<Record> list;
@@ -57,6 +61,9 @@ public class Record implements Serializable {
         }
     }
 
+    /**
+     * Odczytywanie wszystkich rekordów z pliku
+     * */
     public static Vector<Record> read() {
         Vector<Record> wynik = new Vector<>();
         ObjectInputStream input;
@@ -93,6 +100,10 @@ public class Record implements Serializable {
         return wynik;
     }
 
+    /**
+     * Odczytywanie rekordów dla danej planszy
+     * @param filter - rozmiar planszy
+     * */
     public static Vector<Record> read(String filter) {
         Vector<Record> wynik = new Vector<>();
 
@@ -138,6 +149,9 @@ public class Record implements Serializable {
         return wynik;
     }
 
+    /**
+     * Usuwanie wszystkich rekordów z pliku
+     * */
     public static void clearRecords() {
         ObjectOutputStream output;
         try {
@@ -152,6 +166,9 @@ public class Record implements Serializable {
         }
     }
 
+    /**
+     * Tworzenie pliku binarnego do przechowywania wyników
+     * */
     public static void init() {
         try {
             new ObjectOutputStream(new FileOutputStream(fileName)).close();

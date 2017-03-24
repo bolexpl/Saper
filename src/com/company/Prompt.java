@@ -100,7 +100,6 @@ public class Prompt extends JDialog {
     }
 
     private void onOK() {
-
         if (!wlasneUstawieniaRadioButton.isSelected()) {
             String[] a = group.getSelection().getActionCommand().split("x");
             int x = Integer.parseInt(a[0]);

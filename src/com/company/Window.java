@@ -16,15 +16,16 @@ class Window extends JFrame {
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
     private ImageIcon mina = new ImageIcon(getClass().getResource("res/mina.png"));
+    private JLabel minyBT = new JLabel();
+    private JPanel mainPanel = new JPanel();
+    private JPanel plansza = new JPanel();
+
     private int maxX = 10;
     private int maxY = 10;
     private int hardline;
-    private Field button[][];
     private int minesFields;
     private int emptyFields;
-    private JLabel minyBT = new JLabel(Integer.toString(minesFields));
-    private JPanel mainPanel = new JPanel();
-    private JPanel plansza = new JPanel();
+    private Field button[][];
 
     private long startTime;
     private String board;
@@ -142,10 +143,10 @@ class Window extends JFrame {
         emptyFields = (maxX * maxY) - hardline;
         minyBT.setText(Integer.toString(minesFields));
 
-        if( x==8 && y==8 || x==16 && y==16 || x==30 && y==16 ){
+        if (x == 8 && y == 8 || x == 16 && y == 16 || x == 30 && y == 16) {
             board = x + "x" + y;
-        }else{
-            board = x + "x" + y+" ("+hardline+" min)";
+        } else {
+            board = x + "x" + y + " (" + hardline + " min)";
         }
 
     }
@@ -339,7 +340,6 @@ class Window extends JFrame {
             double time = (double) ((System.currentTimeMillis() - startTime) / 100) / 10;
 
 
-
             Record.write(new Record(date, time, board));
 
             new Alert("Wygrana", time);
@@ -426,7 +426,7 @@ class Window extends JFrame {
                     minyBT.setText(Integer.toString(minesFields));
                 }
             } else if (e.getButton() == 1) {
-                if (button[x][y].getValue() == -2) {
+                if (button[x][y].getValue() == Field.NIEOKRESLONE) {
                     generate(x, y);
                 }
                 discovery(x, y, true);

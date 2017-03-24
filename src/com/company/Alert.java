@@ -9,6 +9,9 @@ public class Alert extends JDialog {
     private JButton buttonOK;
     private JLabel label1;
 
+    /**
+     * @param x - komunikat
+     */
     Alert(String x) {
         setContentPane(contentPane);
         setModal(true);
@@ -31,7 +34,11 @@ public class Alert extends JDialog {
         setVisible(true);
     }
 
+    /**
+     * @param x    - komunikat
+     * @param time - czas przejścia gry
+     */
     Alert(String x, double time) {
-        this("<html>"+x+"<br/><br/>Czas: "+time+"</html>");
+        this("<html>" + x + "<br/><br/>Czas: " + time + "</html>");
     }
 }

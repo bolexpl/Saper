@@ -99,6 +99,7 @@ public class ResultsDialog extends JDialog {
 
     /**
      * Pobranie danych do modelu i odświeżenie tabeli
+     * @param a - rozmiar planszy
      * */
     private void setUpTableData(String a) {
         if (a.equals("wszystko")) {

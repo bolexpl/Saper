@@ -13,6 +13,10 @@ public class RecordsModel extends AbstractTableModel {
         this.records = records;
     }
 
+    /**
+     * Przypisanie danych
+     * @param records - wektor rekordów
+     * */
     public void setData(Vector<Record> records) {
         this.records = records;
     }
