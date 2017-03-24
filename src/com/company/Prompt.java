@@ -60,28 +60,7 @@ public class Prompt extends JDialog {
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 error.setText("");
-//                if (wlasneUstawieniaRadioButton.isSelected() &&
-//                        textField1.getText().equals("") &&
-//                        textField2.getText().equals("") &&
-//                        textField3.getText().equals("")) {
-//
-//                    try {
-//                        int x = Integer.parseInt(textField1.getText());
-//                        int y = Integer.parseInt(textField2.getText());
-//                        int count = Integer.parseInt(textField3.getText());
-//                        if (x <= 3 || y <= 3) {
-//                            error.setText("Za małe dane!");
-//                            return;
-//                        }
-//                        if (count >= (x * y) - 9) {
-//                            error.setText("Za dużo min!");
-//                        }
-//                    } catch (NumberFormatException exc) {
-//                        error.setText("Złe dane!");
-//                    }
-//                } else {
                 onOK();
-//                }
             }
         });
 
