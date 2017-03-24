@@ -99,13 +99,13 @@ public class ResultsDialog extends JDialog {
 
     /**
      * Pobranie danych do modelu i odświeżenie tabeli
-     * @param a - rozmiar planszy
+     * @param s - rozmiar planszy
      * */
-    private void setUpTableData(String a) {
-        if (a.equals("wszystko")) {
+    private void setUpTableData(String s) {
+        if (s.equals("wszystko")) {
             model.setData(Record.read());
         } else {
-            model.setData(Record.read(a));
+            model.setData(Record.read(s));
         }
         model.fireTableDataChanged();
     }
