@@ -13,33 +13,33 @@ public class Alert extends JDialog {
     /**
      * @param x - komunikat
      */
-    Alert(String x) {
+    public Alert(String x) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        String fileName = "records.dat";
-        try{
-            fileName = Record.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+//        String fileName = "records.dat";
+//        try{
+//            fileName = Record.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+//
+//            StringBuilder s = new StringBuilder();
+//            if(fileName.contains(".jar")){
+//                for(int i=fileName.length()-1; i>=0;i--){
+//                    if(fileName.charAt(i) == '/') {
+//                        s.append(fileName.subSequence(0,i+1));
+//                        break;
+//                    }
+//                }
+//                fileName = s.toString()+"records.dat";
+//            }else{
+//                fileName = fileName+"records.dat";
+//            }
+//        }catch (URISyntaxException e){
+//            e.printStackTrace();
+//        }
+//        label1.setText(fileName);
 
-            StringBuilder s = new StringBuilder();
-            if(fileName.contains(".jar")){
-                for(int i=fileName.length()-1; i>=0;i--){
-                    if(fileName.charAt(i) == '/') {
-                        s.append(fileName.subSequence(0,i+1));
-                        break;
-                    }
-                }
-                fileName = s.toString()+"records.dat";
-            }else{
-                fileName = fileName+"records.dat";
-            }
-        }catch (URISyntaxException e){
-            e.printStackTrace();
-        }
-        label1.setText(fileName);
-
-//        label1.setText(x);
+        label1.setText(x);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -61,7 +61,7 @@ public class Alert extends JDialog {
      * @param x    - komunikat
      * @param time - czas przejścia gry
      */
-    Alert(String x, double time) {
+    public Alert(String x, double time) {
         this("<html>" + x + "<br/><br/>Czas: " + time + "</html>");
     }
 }

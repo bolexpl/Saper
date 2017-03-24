@@ -11,7 +11,6 @@ public class Prompt extends JDialog {
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
-    private JLabel message;
     private JRadioButton a8x8RadioButton;
     private JRadioButton a16x16RadioButton;
     private JRadioButton a30x16RadioButton;
@@ -20,7 +19,7 @@ public class Prompt extends JDialog {
     private ButtonGroup group;
     private Window w;
 
-    Prompt(Window w) {
+    public Prompt(Window w) {
         this.w = w;
         setContentPane(contentPane);
         setModal(true);

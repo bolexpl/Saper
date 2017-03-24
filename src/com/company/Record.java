@@ -14,7 +14,6 @@ public class Record implements Serializable {
     private String board;
     private static String fileName = "records.dat";
 
-
     public Record(String date, double time, String board) {
         this.date = date;
         this.time = time;

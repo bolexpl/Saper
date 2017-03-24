@@ -11,7 +11,7 @@ import java.util.Random;
 /**
  * Klasa głównego okna programu
  */
-class Window extends JFrame {
+public class Window extends JFrame {
 
     private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
     private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
@@ -30,7 +30,7 @@ class Window extends JFrame {
     private long startTime;
     private String board;
 
-    Window() {
+    public Window() {
         super("Saper");
 
         createMenuBar();
@@ -135,7 +135,7 @@ class Window extends JFrame {
      * @param y     - rozmiar y planszy
      * @param count - ilość min
      */
-    void setGameSize(int x, int y, int count) {
+    public void setGameSize(int x, int y, int count) {
         this.maxX = x;
         this.maxY = y;
         this.hardline = count;
