@@ -3,6 +3,7 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URISyntaxException;
 
 public class Alert extends JDialog {
     private JPanel contentPane;
@@ -16,7 +17,29 @@ public class Alert extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        label1.setText(x);
+
+        String fileName = "records.dat";
+        try{
+            fileName = Record.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+
+            StringBuilder s = new StringBuilder();
+            if(fileName.contains(".jar")){
+                for(int i=fileName.length()-1; i>=0;i--){
+                    if(fileName.charAt(i) == '/') {
+                        s.append(fileName.subSequence(0,i+1));
+                        break;
+                    }
+                }
+                fileName = s.toString()+"records.dat";
+            }else{
+                fileName = fileName+"records.dat";
+            }
+        }catch (URISyntaxException e){
+            e.printStackTrace();
+        }
+        label1.setText(fileName);
+
+//        label1.setText(x);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

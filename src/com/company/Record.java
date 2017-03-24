@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.util.Vector;
 
 /**
@@ -12,6 +13,7 @@ public class Record implements Serializable {
     private double time;
     private String board;
     private static String fileName = "records.dat";
+
 
     public Record(String date, double time, String board) {
         this.date = date;
@@ -36,6 +38,7 @@ public class Record implements Serializable {
      * @param r - rekord do zapisania
      * */
     public static void write(Record r) {
+        setFileName();
         ObjectOutputStream output;
         Vector<Record> list;
 
@@ -65,6 +68,7 @@ public class Record implements Serializable {
      * Odczytywanie wszystkich rekordów z pliku
      * */
     public static Vector<Record> read() {
+        setFileName();
         Vector<Record> wynik = new Vector<>();
         ObjectInputStream input;
         Record r;
@@ -105,6 +109,7 @@ public class Record implements Serializable {
      * @param filter - rozmiar planszy
      * */
     public static Vector<Record> read(String filter) {
+        setFileName();
         Vector<Record> wynik = new Vector<>();
 
         ObjectInputStream input;
@@ -176,6 +181,27 @@ public class Record implements Serializable {
             new Alert("Brak pliku");
         } catch (IOException e) {
             new Alert("Błąd usuwania wyników");
+        }
+    }
+
+    public static void setFileName(){
+        try{
+            fileName = Record.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+
+            StringBuilder s = new StringBuilder();
+            if(fileName.contains(".jar")){
+                for(int i=fileName.length()-1; i>=0;i--){
+                    if(fileName.charAt(i) == '/') {
+                        s.append(fileName.subSequence(0,i+1));
+                        break;
+                    }
+                }
+                fileName = s.toString()+"records.dat";
+            }else{
+                fileName = fileName+"records.dat";
+            }
+        }catch (URISyntaxException e){
+            fileName = "records.dat";
         }
     }
 }
