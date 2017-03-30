@@ -10,17 +10,15 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-//                new Window();
-                new Alert("wygrana");
+                new Window();
             }
         });
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new AlertTest("wygrana");
-                System.exit(0);
-            }
-        });
+//        EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                System.exit(0);
+//            }
+//        });
 
 
 //        Vector<Record> v = Record.read();
