@@ -10,7 +10,15 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Window();
+//                new Window();
+                new Alert("wygrana");
+            }
+        });
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new AlertTest("wygrana");
+                System.exit(0);
             }
         });
 

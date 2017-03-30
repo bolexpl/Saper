@@ -1,11 +1,12 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.net.URISyntaxException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Alert extends JDialog {
+public class AlertTest extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JLabel label1;
@@ -13,7 +14,23 @@ public class Alert extends JDialog {
     /**
      * @param x - komunikat
      */
-    public Alert(String x) {
+    public AlertTest(String x) {
+        contentPane = new JPanel();
+        label1 = new JLabel(x);
+        buttonOK = new JButton("Ok");
+
+        contentPane.setLayout(new BorderLayout());
+        JPanel top = new JPanel();
+        top.setBorder(new EmptyBorder(10,15,5,15));
+        top.setLayout(new BorderLayout());
+        top.add(label1,BorderLayout.WEST);
+
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new FlowLayout());
+        bottom.add(buttonOK);
+
+        contentPane.add(top,BorderLayout.NORTH);
+        contentPane.add(bottom,BorderLayout.SOUTH);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -40,7 +57,7 @@ public class Alert extends JDialog {
      * @param x    - komunikat
      * @param time - czas przejścia gry
      */
-    public Alert(String x, double time) {
+    public AlertTest(String x, double time) {
         this("<html>" + x + "<br/><br/>Czas: " + time + "</html>");
     }
 }
