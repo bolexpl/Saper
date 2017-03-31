@@ -13,13 +13,6 @@ public class Main {
                 new Window();
             }
         });
-//        new ResultsDialog();
-//        EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                System.exit(0);
-//            }
-//        });
 
 //        Vector<Record> v = Record.read();
 //        for(Record r : v){
