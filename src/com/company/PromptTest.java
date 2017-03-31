@@ -24,20 +24,26 @@ public class PromptTest extends JDialog {
         this.w = w;
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
+        GridLayout grid = new GridLayout(9, 1);
+        grid.setVgap(10);
+        GridLayout grid2 = new GridLayout(1, 2);
+        grid2.setHgap(10);
 
         JPanel bottom = new JPanel();
         bottom.setLayout(new BorderLayout());
         JPanel right = new JPanel();
-        right.setLayout(new GridLayout(1, 2));
-        right.setBorder(new EmptyBorder(0,0,10,10));
+        right.setLayout(grid2);
+        right.setBorder(new EmptyBorder(0, 0, 10, 10));
         buttonOK = new JButton("Ok");
         buttonCancel = new JButton("Wyjście");
         right.add(buttonOK);
         right.add(buttonCancel);
 
         JPanel top = new JPanel();
-        top.setLayout(new GridLayout(9, 1));
-        top.setBorder(new EmptyBorder(10,15,0,15));
+
+
+        top.setLayout(grid);
+        top.setBorder(new EmptyBorder(15, 15, 0, 15));
         top.add(new JLabel("Podaj ilość min:"));
         a8x8RadioButton = new JRadioButton("8x8");
         a16x16RadioButton = new JRadioButton("16x16");
@@ -64,6 +70,7 @@ public class PromptTest extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
 
         a8x8RadioButton.setActionCommand("8x8");
+        a8x8RadioButton.setSelected(true);
         a16x16RadioButton.setActionCommand("16x16");
         a30x16RadioButton.setActionCommand("30x16");
 

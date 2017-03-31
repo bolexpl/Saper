@@ -53,13 +53,6 @@ public class Window extends JFrame {
      */
     private void newGame() {
 //        new Prompt(this);
-//        Window w = this;
-//        EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                new Prompt(w);
-//            }
-//        });
         new PromptTest(this);
 
         mainPanel.remove(plansza);
