@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -21,11 +22,55 @@ public class Prompt extends JDialog {
 
     public Prompt(Window w) {
         this.w = w;
+        contentPane = new JPanel();
+        contentPane.setLayout(new BorderLayout());
+        GridLayout grid = new GridLayout(9, 1);
+        grid.setVgap(10);
+        GridLayout grid2 = new GridLayout(1, 2);
+        grid2.setHgap(10);
+
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new BorderLayout());
+        JPanel right = new JPanel();
+        right.setLayout(grid2);
+        right.setBorder(new EmptyBorder(0, 0, 10, 10));
+        buttonOK = new JButton("Ok");
+        buttonCancel = new JButton("Wyjście");
+        right.add(buttonOK);
+        right.add(buttonCancel);
+
+        JPanel top = new JPanel();
+
+
+        top.setLayout(grid);
+        top.setBorder(new EmptyBorder(15, 15, 0, 15));
+        top.add(new JLabel("Podaj ilość min:"));
+        a8x8RadioButton = new JRadioButton("8x8");
+        a16x16RadioButton = new JRadioButton("16x16");
+        a30x16RadioButton = new JRadioButton("30x16");
+        wlasneUstawieniaRadioButton = new JRadioButton("własne ustawienia");
+        error = new JLabel();
+        textField1 = new JTextField();
+        textField2 = new JTextField();
+        textField3 = new JTextField();
+
+        top.add(a8x8RadioButton);
+        top.add(a16x16RadioButton);
+        top.add(a30x16RadioButton);
+        top.add(wlasneUstawieniaRadioButton);
+        top.add(error);
+        top.add(textField1);
+        top.add(textField2);
+        top.add(textField3);
+        bottom.add(right, BorderLayout.EAST);
+        contentPane.add(top, BorderLayout.NORTH);
+        contentPane.add(bottom, BorderLayout.SOUTH);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
         a8x8RadioButton.setActionCommand("8x8");
+        a8x8RadioButton.setSelected(true);
         a16x16RadioButton.setActionCommand("16x16");
         a30x16RadioButton.setActionCommand("30x16");
 
@@ -87,11 +132,8 @@ public class Prompt extends JDialog {
 
         pack();
 
-        setSize(new Dimension(this.getWidth() + 80, this.
-
-                getHeight()));
+        setSize(new Dimension(this.getWidth() + 80, this.getHeight()));
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
         setVisible(true);

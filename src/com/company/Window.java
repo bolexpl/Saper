@@ -3,8 +3,6 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -52,6 +50,7 @@ public class Window extends JFrame {
      * Tworzenie nowej planszy
      */
     private void newGame() {
+//        new Prompt(this);
         new Prompt(this);
 
         mainPanel.remove(plansza);
