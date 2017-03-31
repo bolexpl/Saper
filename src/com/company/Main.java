@@ -13,6 +13,7 @@ public class Main {
                 new Window();
             }
         });
+//        new ResultsDialog();
 //        EventQueue.invokeLater(new Runnable() {
 //            @Override
 //            public void run() {
@@ -20,12 +21,10 @@ public class Main {
 //            }
 //        });
 
-
 //        Vector<Record> v = Record.read();
 //        for(Record r : v){
 //            System.out.println(r.getDate()+", "+r.getTime()+", "+r.getBoard());
 //        }
-
 
 //        Record.write(new Record("tera",34,"duża"));
 //        Record.write(new Record("tera",1,"duża"));

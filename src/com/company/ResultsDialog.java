@@ -4,11 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
- * Klasa opisująca okno z tabelą wyników
- */
 public class ResultsDialog extends JDialog {
-
     private JPanel mainPanel;
     private JButton buttonOK;
     private JButton buttonClear;
@@ -16,6 +12,9 @@ public class ResultsDialog extends JDialog {
     private RecordsModel model;
 
     public ResultsDialog() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout());
+
         setContentPane(mainPanel);
         mainPanel.setLayout(new BorderLayout());
         setModal(true);
