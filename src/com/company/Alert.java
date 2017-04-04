@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Alert extends JDialog {
+class Alert extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JLabel label1;
@@ -14,7 +14,7 @@ public class Alert extends JDialog {
     /**
      * @param x - komunikat
      */
-    public Alert(String x) {
+    Alert(String x) {
         contentPane = new JPanel();
         label1 = new JLabel(x);
         buttonOK = new JButton("Ok");
@@ -57,7 +57,7 @@ public class Alert extends JDialog {
      * @param x    - komunikat
      * @param time - czas przejścia gry
      */
-    public Alert(String x, double time) {
+    Alert(String x, double time) {
         this("<html>" + x + "<br/><br/>Czas: " + time + "</html>");
     }
 }

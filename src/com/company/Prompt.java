@@ -5,7 +5,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Prompt extends JDialog {
+class Prompt extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -20,7 +20,7 @@ public class Prompt extends JDialog {
     private ButtonGroup group;
     private Window w;
 
-    public Prompt(Window w) {
+    Prompt(Window w) {
         this.w = w;
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());

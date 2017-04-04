@@ -7,28 +7,28 @@ import java.util.Vector;
 /**
  * Klasa opisująca wynik gry
  */
-public class Record implements Serializable {
+class Record implements Serializable {
 
     private String date;
     private double time;
     private String board;
     private static String fileName = "records.dat";
 
-    public Record(String date, double time, String board) {
+    Record(String date, double time, String board) {
         this.date = date;
         this.time = time;
         this.board = board;
     }
 
-    public String getDate() {
+    String getDate() {
         return date;
     }
 
-    public double getTime() {
+    double getTime() {
         return time;
     }
 
-    public String getBoard() {
+    String getBoard() {
         return board;
     }
 
@@ -37,7 +37,7 @@ public class Record implements Serializable {
      *
      * @param r - rekord do zapisania
      */
-    public static void write(Record r) {
+    static void write(Record r) {
         setFileName();
         ObjectOutputStream output;
         Vector<Record> list;
@@ -68,7 +68,7 @@ public class Record implements Serializable {
     /**
      * Odczytywanie wszystkich rekordów z pliku
      */
-    public static Vector<Record> read() {
+    static Vector<Record> read() {
         setFileName();
         Vector<Record> wynik = new Vector<>();
         ObjectInputStream input;
@@ -111,7 +111,7 @@ public class Record implements Serializable {
      *
      * @param filter - rozmiar planszy
      */
-    public static Vector<Record> read(String filter) {
+    static Vector<Record> read(String filter) {
         setFileName();
         Vector<Record> wynik = new Vector<>();
 
@@ -161,7 +161,7 @@ public class Record implements Serializable {
     /**
      * Usuwanie wszystkich rekordów z pliku
      */
-    public static void clearRecords() {
+    static void clearRecords() {
         ObjectOutputStream output;
         try {
             output = new ObjectOutputStream(new FileOutputStream(fileName));
@@ -178,7 +178,7 @@ public class Record implements Serializable {
     /**
      * Tworzenie pliku binarnego do przechowywania wyników
      */
-    public static void init() {
+    private static void init() {
         try {
             new ObjectOutputStream(new FileOutputStream(fileName)).close();
         } catch (FileNotFoundException e) {
@@ -188,7 +188,7 @@ public class Record implements Serializable {
         }
     }
 
-    public static void setFileName() {
+    private static void setFileName() {
         try {
             fileName = Record.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 

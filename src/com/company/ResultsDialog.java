@@ -4,14 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ResultsDialog extends JDialog {
+class ResultsDialog extends JDialog {
     private JPanel mainPanel;
     private JButton buttonOK;
     private JButton buttonClear;
     private JComboBox<String> select;
     private RecordsModel model;
 
-    public ResultsDialog() {
+    ResultsDialog() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout());
 
