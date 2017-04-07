@@ -1,11 +1,12 @@
 package com.company;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.net.URISyntaxException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Alert extends JDialog {
+class Alert extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JLabel label1;
@@ -13,31 +14,26 @@ public class Alert extends JDialog {
     /**
      * @param x - komunikat
      */
-    public Alert(String x) {
+    Alert(String x) {
+        contentPane = new JPanel();
+        label1 = new JLabel(x);
+        buttonOK = new JButton("Ok");
+
+        contentPane.setLayout(new BorderLayout());
+        JPanel top = new JPanel();
+        top.setBorder(new EmptyBorder(10,15,5,15));
+        top.setLayout(new BorderLayout());
+        top.add(label1,BorderLayout.WEST);
+
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new FlowLayout());
+        bottom.add(buttonOK);
+
+        contentPane.add(top,BorderLayout.NORTH);
+        contentPane.add(bottom,BorderLayout.SOUTH);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-
-//        String fileName = "records.dat";
-//        try{
-//            fileName = Record.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-//
-//            StringBuilder s = new StringBuilder();
-//            if(fileName.contains(".jar")){
-//                for(int i=fileName.length()-1; i>=0;i--){
-//                    if(fileName.charAt(i) == '/') {
-//                        s.append(fileName.subSequence(0,i+1));
-//                        break;
-//                    }
-//                }
-//                fileName = s.toString()+"records.dat";
-//            }else{
-//                fileName = fileName+"records.dat";
-//            }
-//        }catch (URISyntaxException e){
-//            e.printStackTrace();
-//        }
-//        label1.setText(fileName);
 
         label1.setText(x);
 
@@ -61,7 +57,7 @@ public class Alert extends JDialog {
      * @param x    - komunikat
      * @param time - czas przejścia gry
      */
-    public Alert(String x, double time) {
+    Alert(String x, double time) {
         this("<html>" + x + "<br/><br/>Czas: " + time + "</html>");
     }
 }

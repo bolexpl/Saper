@@ -7,36 +7,37 @@ import java.util.Vector;
 /**
  * Klasa opisująca wynik gry
  */
-public class Record implements Serializable {
+class Record implements Serializable {
 
     private String date;
     private double time;
     private String board;
     private static String fileName = "records.dat";
 
-    public Record(String date, double time, String board) {
+    Record(String date, double time, String board) {
         this.date = date;
         this.time = time;
         this.board = board;
     }
 
-    public String getDate() {
+    String getDate() {
         return date;
     }
 
-    public double getTime() {
+    double getTime() {
         return time;
     }
 
-    public String getBoard() {
+    String getBoard() {
         return board;
     }
 
     /**
      * Zapisywanie nowego rekordu do pliku
+     *
      * @param r - rekord do zapisania
-     * */
-    public static void write(Record r) {
+     */
+    static void write(Record r) {
         setFileName();
         ObjectOutputStream output;
         Vector<Record> list;
@@ -50,7 +51,8 @@ public class Record implements Serializable {
 
         list.add(r);
         try {
-            output = new ObjectOutputStream(new FileOutputStream(fileName));
+            BufferedOutputStream buff = new BufferedOutputStream(new FileOutputStream(fileName));
+            output = new ObjectOutputStream(buff);
 
             for (Record r2 : list) {
                 output.writeObject(r2);
@@ -65,8 +67,8 @@ public class Record implements Serializable {
 
     /**
      * Odczytywanie wszystkich rekordów z pliku
-     * */
-    public static Vector<Record> read() {
+     */
+    static Vector<Record> read() {
         setFileName();
         Vector<Record> wynik = new Vector<>();
         ObjectInputStream input;
@@ -78,7 +80,8 @@ public class Record implements Serializable {
         }
 
         try {
-            input = new ObjectInputStream(new FileInputStream(fileName));
+            BufferedInputStream buff = new BufferedInputStream(new FileInputStream(fileName));
+            input = new ObjectInputStream(buff);
 
             while (true) {
                 try {
@@ -105,9 +108,10 @@ public class Record implements Serializable {
 
     /**
      * Odczytywanie rekordów dla danej planszy
+     *
      * @param filter - rozmiar planszy
-     * */
-    public static Vector<Record> read(String filter) {
+     */
+    static Vector<Record> read(String filter) {
         setFileName();
         Vector<Record> wynik = new Vector<>();
 
@@ -120,7 +124,8 @@ public class Record implements Serializable {
         }
 
         try {
-            input = new ObjectInputStream(new FileInputStream(fileName));
+            BufferedInputStream buff = new BufferedInputStream(new FileInputStream(fileName));
+            input = new ObjectInputStream(buff);
 
             while (true) {
                 try {
@@ -155,8 +160,8 @@ public class Record implements Serializable {
 
     /**
      * Usuwanie wszystkich rekordów z pliku
-     * */
-    public static void clearRecords() {
+     */
+    static void clearRecords() {
         ObjectOutputStream output;
         try {
             output = new ObjectOutputStream(new FileOutputStream(fileName));
@@ -172,8 +177,8 @@ public class Record implements Serializable {
 
     /**
      * Tworzenie pliku binarnego do przechowywania wyników
-     * */
-    public static void init() {
+     */
+    private static void init() {
         try {
             new ObjectOutputStream(new FileOutputStream(fileName)).close();
         } catch (FileNotFoundException e) {
@@ -183,23 +188,23 @@ public class Record implements Serializable {
         }
     }
 
-    public static void setFileName(){
-        try{
+    private static void setFileName() {
+        try {
             fileName = Record.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
 
             StringBuilder s = new StringBuilder();
-            if(fileName.contains(".jar")){
-                for(int i=fileName.length()-1; i>=0;i--){
-                    if(fileName.charAt(i) == '/') {
-                        s.append(fileName.subSequence(0,i+1));
+            if (fileName.contains(".jar")) {
+                for (int i = fileName.length() - 1; i >= 0; i--) {
+                    if (fileName.charAt(i) == '/') {
+                        s.append(fileName.subSequence(0, i + 1));
                         break;
                     }
                 }
-                fileName = s.toString()+"records.dat";
-            }else{
-                fileName = fileName+"records.dat";
+                fileName = s.toString() + "records.dat";
+            } else {
+                fileName = fileName + "records.dat";
             }
-        }catch (URISyntaxException e){
+        } catch (URISyntaxException e) {
             fileName = "records.dat";
         }
     }
