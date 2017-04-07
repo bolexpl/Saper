@@ -44,7 +44,7 @@ class Prompt extends JDialog {
 
         top.setLayout(grid);
         top.setBorder(new EmptyBorder(15, 15, 0, 15));
-        top.add(new JLabel("Podaj ilość min:"));
+        top.add(new JLabel("Wybierz planszę:"));
         a8x8RadioButton = new JRadioButton("8x8");
         a16x16RadioButton = new JRadioButton("16x16");
         a30x16RadioButton = new JRadioButton("30x16");
@@ -58,10 +58,10 @@ class Prompt extends JDialog {
         top.add(a16x16RadioButton);
         top.add(a30x16RadioButton);
         top.add(wlasneUstawieniaRadioButton);
-        top.add(error);
         top.add(textField1);
         top.add(textField2);
         top.add(textField3);
+        top.add(error);
         bottom.add(right, BorderLayout.EAST);
         contentPane.add(top, BorderLayout.NORTH);
         contentPane.add(bottom, BorderLayout.SOUTH);
