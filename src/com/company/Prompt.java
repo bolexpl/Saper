@@ -132,7 +132,7 @@ class Prompt extends JDialog {
 
         pack();
 
-        setSize(new Dimension(this.getWidth() + 80, this.getHeight()));
+        setSize(new Dimension(this.getWidth() + 80, this.getHeight()-getInsets().top));
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
