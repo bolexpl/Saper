@@ -131,8 +131,13 @@ class Prompt extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         pack();
+//        buttonOK.setText(Integer.toString(getWidth()));
+//        buttonCancel.setText(Integer.toString(getHeight()));
+//        setSize(new Dimension(this.getWidth() + 80, this.getHeight()));
+        //206,367
 
-        setSize(new Dimension(this.getWidth() + 80, this.getHeight()));
+        setSize(286,357);
+
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
