@@ -50,7 +50,6 @@ class Window extends JFrame {
      * Tworzenie nowej planszy
      */
     private void newGame() {
-//        new Prompt(this);
         new Prompt(this);
 
         mainPanel.remove(plansza);
