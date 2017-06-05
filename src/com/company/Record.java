@@ -69,19 +69,20 @@ public class Record implements Serializable {
     }
 
     /**
-     * Odczytywanie wszystkich rekordów z pliku
+     * Odczytywanie rekordów z pliku
      */
     public static Vector<Record> read() {
         return read(true);
     }
 
+    /**
+     * @param message - flaga określająca czy należy wyświetlić wiadomość jeśli nie ma wyników
+     * */
     public static Vector<Record> read(boolean message) {
         return read("wszystko", message);
     }
 
     /**
-     * Odczytywanie rekordów dla danej planszy
-     *
      * @param filter - rozmiar planszy
      */
     public static Vector<Record> read(String filter, boolean message) {
@@ -125,13 +126,10 @@ public class Record implements Serializable {
             }
         } catch (FileNotFoundException e) {
             new Alert("Brak pliku");
-            e.printStackTrace();
         } catch (IOException e) {
             new Alert("Błąd odczytania wyników");
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             new Alert("Uszkodzony plik");
-            e.printStackTrace();
         } catch (RecordsException e) {
             new Alert(e.getMessage());
         }
@@ -139,35 +137,19 @@ public class Record implements Serializable {
     }
 
     /**
-     * Usuwanie wszystkich rekordów z pliku
+     * Tworzenie pustego pliku do przechowywania wyników
      */
-    public static void clearRecords() {
-        ObjectOutputStream output;
+    public static void init() {
         try {
-            output = new ObjectOutputStream(new FileOutputStream(fileName));
-            output.close();
-        } catch (FileNotFoundException e) {
-            new Alert("Brak pliku");
-            e.printStackTrace();
+            new ObjectOutputStream(new FileOutputStream(fileName)).close();
         } catch (IOException e) {
-            new Alert("Błąd usuwania wyników");
-            e.printStackTrace();
+            new Alert("Błąd tworzenia pliku z wynikami");
         }
     }
 
     /**
-     * Tworzenie pliku binarnego do przechowywania wyników
-     */
-    private static void init() {
-        try {
-            new ObjectOutputStream(new FileOutputStream(fileName)).close();
-        } catch (FileNotFoundException e) {
-            new Alert("Brak pliku");
-        } catch (IOException e) {
-            new Alert("Błąd usuwania wyników");
-        }
-    }
-
+     * Ustawienie ścieżki do pliku
+     * */
     private static void setFileName() {
         try {
             fileName = Record.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();

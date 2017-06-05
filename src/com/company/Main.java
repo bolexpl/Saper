@@ -15,10 +15,10 @@ public class Main {
             }
         });
 
-        Record.write(new Record("tera",34,"8x8"));
-        Record.write(new Record("tera",1,"16x16"));
-        Record.write(new Record("tera",39,"8x8"));
-        Record.write(new Record("tera",5,"16x16"));
-        Record.write(new Record("tera",45,"8x8"));
+//        Record.write(new Record("tera",34,"8x8"));
+//        Record.write(new Record("tera",1,"16x16"));
+//        Record.write(new Record("tera",39,"8x8"));
+//        Record.write(new Record("tera",5,"16x16"));
+//        Record.write(new Record("tera",45,"8x8"));
     }
 }

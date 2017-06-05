@@ -86,7 +86,7 @@ class ResultsDialog extends JDialog {
         buttonClear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Record.clearRecords();
+                Record.init();
                 setUpTableData("wszystko");
             }
         });
