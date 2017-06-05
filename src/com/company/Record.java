@@ -40,7 +40,7 @@ public class Record implements Serializable {
      *
      * @param r - rekord do zapisania
      */
-    public static void write(Record r){
+    public static void write(Record r) {
         setFileName();
         ObjectOutputStream output;
         Vector<Record> list;
@@ -75,48 +75,8 @@ public class Record implements Serializable {
         return read(true);
     }
 
-    public static Vector<Record> read(boolean message){
-        setFileName();
-        Vector<Record> wynik = new Vector<>();
-        ObjectInputStream input;
-        Record r;
-
-        File f = new File(fileName);
-        if (!f.exists()) {
-            init();
-        }
-
-        try {
-            BufferedInputStream buff = new BufferedInputStream(new FileInputStream(fileName));
-            input = new ObjectInputStream(buff);
-
-            while (true) {
-                try {
-                    r = (Record) input.readObject();
-                    wynik.add(r);
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-
-            input.close();
-            if (message && wynik.size() == 0) {
-                throw new RecordsException("Brak wyników.");
-            }
-
-        } catch (FileNotFoundException e) {
-            new Alert("Brak pliku");
-            e.printStackTrace();
-        } catch (IOException e) {
-            new Alert("Błąd odczytania wyników");
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert("Uszkodzony plik");
-            e.printStackTrace();
-        }catch (RecordsException e){
-            new Alert(e.getMessage());
-        }
-        return wynik;
+    public static Vector<Record> read(boolean message) {
+        return read("wszystko", message);
     }
 
     /**
@@ -147,7 +107,8 @@ public class Record implements Serializable {
                             (filter.equals("własne ustawienia") &&
                                     !r.getBoard().equals("8x8") &&
                                     !r.getBoard().equals("16x16") &&
-                                    !r.getBoard().equals("30x16"))
+                                    !r.getBoard().equals("30x16")) ||
+                            filter.equals("wszystko")
                             ) {
                         wynik.add(r);
                     }
@@ -159,7 +120,7 @@ public class Record implements Serializable {
 
             input.close();
 
-            if (wynik.size() == 0) {
+            if (message && wynik.size() == 0) {
                 throw new RecordsException("Brak wyników.");
             }
         } catch (FileNotFoundException e) {
@@ -171,7 +132,7 @@ public class Record implements Serializable {
         } catch (ClassNotFoundException e) {
             new Alert("Uszkodzony plik");
             e.printStackTrace();
-        }catch (RecordsException e){
+        } catch (RecordsException e) {
             new Alert(e.getMessage());
         }
         return wynik;
