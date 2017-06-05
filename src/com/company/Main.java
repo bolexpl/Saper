@@ -2,6 +2,8 @@ package com.company;
 
 import java.awt.*;
 
+import com.company.windows.Window;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -13,7 +15,7 @@ public class Main {
             }
         });
 
-//        Record.write(new Record("tera",34,"duża"));
+        Record.write(new Record("tera",34,"duża"));
 //        Record.write(new Record("tera",1,"duża"));
 //        Record.write(new Record("tera",39,"duża"));
 //        Record.write(new Record("tera",5,"duża"));

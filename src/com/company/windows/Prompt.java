@@ -1,4 +1,6 @@
-package com.company;
+package com.company.windows;
+
+import com.company.interfaces.GameWindow;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -6,23 +8,17 @@ import java.awt.*;
 import java.awt.event.*;
 
 class Prompt extends JDialog {
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
-    private JRadioButton a8x8RadioButton;
-    private JRadioButton a16x16RadioButton;
-    private JRadioButton a30x16RadioButton;
-    private JRadioButton wlasneUstawieniaRadioButton;
+    private JRadioButton customRadioButton;
     private JLabel error;
     private ButtonGroup group;
-    private Window w;
+    private GameWindow w;
 
-    Prompt(Window w) {
+    Prompt(GameWindow w) {
         this.w = w;
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         GridLayout grid = new GridLayout(9, 1);
         grid.setVgap(10);
@@ -34,8 +30,8 @@ class Prompt extends JDialog {
         JPanel right = new JPanel();
         right.setLayout(grid2);
         right.setBorder(new EmptyBorder(0, 0, 10, 10));
-        buttonOK = new JButton("Ok");
-        buttonCancel = new JButton("Wyjście");
+        JButton buttonOK = new JButton("Ok");
+        JButton buttonCancel = new JButton("Wyjście");
         right.add(buttonOK);
         right.add(buttonCancel);
 
@@ -45,10 +41,10 @@ class Prompt extends JDialog {
         top.setLayout(grid);
         top.setBorder(new EmptyBorder(15, 15, 0, 15));
         top.add(new JLabel("Podaj ilość min:"));
-        a8x8RadioButton = new JRadioButton("8x8");
-        a16x16RadioButton = new JRadioButton("16x16");
-        a30x16RadioButton = new JRadioButton("30x16");
-        wlasneUstawieniaRadioButton = new JRadioButton("własne ustawienia");
+        JRadioButton a8x8RadioButton = new JRadioButton("8x8");
+        JRadioButton a16x16RadioButton = new JRadioButton("16x16");
+        JRadioButton a30x16RadioButton = new JRadioButton("30x16");
+        customRadioButton = new JRadioButton("własne ustawienia");
         error = new JLabel();
         textField1 = new JTextField();
         textField2 = new JTextField();
@@ -57,7 +53,7 @@ class Prompt extends JDialog {
         top.add(a8x8RadioButton);
         top.add(a16x16RadioButton);
         top.add(a30x16RadioButton);
-        top.add(wlasneUstawieniaRadioButton);
+        top.add(customRadioButton);
         top.add(error);
         top.add(textField1);
         top.add(textField2);
@@ -80,13 +76,13 @@ class Prompt extends JDialog {
         group.add(a8x8RadioButton);
         group.add(a16x16RadioButton);
         group.add(a30x16RadioButton);
-        group.add(wlasneUstawieniaRadioButton);
+        group.add(customRadioButton);
 
         textField1.setEnabled(false);
         textField2.setEnabled(false);
         textField3.setEnabled(false);
 
-        wlasneUstawieniaRadioButton.addItemListener(new ItemListener() {
+        customRadioButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {
                 if (itemEvent.getStateChange() == ItemEvent.DESELECTED) {
@@ -146,7 +142,7 @@ class Prompt extends JDialog {
     }
 
     private void onOK() {
-        if (!wlasneUstawieniaRadioButton.isSelected()) {
+        if (!customRadioButton.isSelected()) {
             String[] a = group.getSelection().getActionCommand().split("x");
             int x = Integer.parseInt(a[0]);
             int y = Integer.parseInt(a[1]);

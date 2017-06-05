@@ -1,4 +1,4 @@
-package com.company;
+package com.company.windows;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -6,18 +6,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class Alert extends JDialog {
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JLabel label1;
+public class Alert extends JDialog {
 
     /**
      * @param x - komunikat
      */
-    Alert(String x) {
-        contentPane = new JPanel();
-        label1 = new JLabel(x);
-        buttonOK = new JButton("Ok");
+    public Alert(String x) {
+        JPanel contentPane = new JPanel();
+        JLabel label1 = new JLabel(x);
+        JButton buttonOK = new JButton("Ok");
 
         contentPane.setLayout(new BorderLayout());
         JPanel top = new JPanel();

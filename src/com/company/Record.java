@@ -1,5 +1,8 @@
 package com.company;
 
+import com.company.exception.RecordsException;
+import com.company.windows.Alert;
+
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.Vector;
@@ -7,14 +10,14 @@ import java.util.Vector;
 /**
  * Klasa opisująca wynik gry
  */
-class Record implements Serializable {
+public class Record implements Serializable {
 
     private String date;
     private double time;
     private String board;
     private static String fileName = "records.dat";
 
-    Record(String date, double time, String board) {
+    public Record(String date, double time, String board) {
         this.date = date;
         this.time = time;
         this.board = board;
@@ -37,14 +40,14 @@ class Record implements Serializable {
      *
      * @param r - rekord do zapisania
      */
-    static void write(Record r) {
+    public static void write(Record r){
         setFileName();
         ObjectOutputStream output;
         Vector<Record> list;
 
         File f = new File(fileName);
         if (f.exists() && !f.isDirectory()) {
-            list = read();
+            list = read(false);
         } else {
             list = new Vector<>();
         }
@@ -68,7 +71,11 @@ class Record implements Serializable {
     /**
      * Odczytywanie wszystkich rekordów z pliku
      */
-    static Vector<Record> read() {
+    public static Vector<Record> read() {
+        return read(true);
+    }
+
+    public static Vector<Record> read(boolean message){
         setFileName();
         Vector<Record> wynik = new Vector<>();
         ObjectInputStream input;
@@ -93,6 +100,10 @@ class Record implements Serializable {
             }
 
             input.close();
+            if (message && wynik.size() == 0) {
+                throw new RecordsException("Brak wyników.");
+            }
+
         } catch (FileNotFoundException e) {
             new Alert("Brak pliku");
             e.printStackTrace();
@@ -102,6 +113,8 @@ class Record implements Serializable {
         } catch (ClassNotFoundException e) {
             new Alert("Uszkodzony plik");
             e.printStackTrace();
+        }catch (RecordsException e){
+            new Alert(e.getMessage());
         }
         return wynik;
     }
@@ -111,7 +124,7 @@ class Record implements Serializable {
      *
      * @param filter - rozmiar planszy
      */
-    static Vector<Record> read(String filter) {
+    public static Vector<Record> read(String filter, boolean message) {
         setFileName();
         Vector<Record> wynik = new Vector<>();
 
@@ -145,6 +158,10 @@ class Record implements Serializable {
             }
 
             input.close();
+
+            if (wynik.size() == 0) {
+                throw new RecordsException("Brak wyników.");
+            }
         } catch (FileNotFoundException e) {
             new Alert("Brak pliku");
             e.printStackTrace();
@@ -154,6 +171,8 @@ class Record implements Serializable {
         } catch (ClassNotFoundException e) {
             new Alert("Uszkodzony plik");
             e.printStackTrace();
+        }catch (RecordsException e){
+            new Alert(e.getMessage());
         }
         return wynik;
     }
@@ -161,7 +180,7 @@ class Record implements Serializable {
     /**
      * Usuwanie wszystkich rekordów z pliku
      */
-    static void clearRecords() {
+    public static void clearRecords() {
         ObjectOutputStream output;
         try {
             output = new ObjectOutputStream(new FileOutputStream(fileName));

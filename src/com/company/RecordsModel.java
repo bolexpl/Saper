@@ -8,7 +8,7 @@ public class RecordsModel extends AbstractTableModel {
     private Vector<Record> records;
     private final static Object[] columns = {"Data", "Czas", "Plansza"};
 
-    RecordsModel(Vector<Record> records) {
+    public RecordsModel(Vector<Record> records) {
         super();
         this.records = records;
     }
@@ -17,7 +17,7 @@ public class RecordsModel extends AbstractTableModel {
      * Przypisanie danych
      * @param records - wektor rekordów
      * */
-    void setData(Vector<Record> records) {
+    public void setData(Vector<Record> records) {
         this.records = records;
     }
 
