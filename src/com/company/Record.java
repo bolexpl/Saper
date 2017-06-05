@@ -23,15 +23,15 @@ public class Record implements Serializable {
         this.board = board;
     }
 
-    String getDate() {
+    public String getDate() {
         return date;
     }
 
-    double getTime() {
+    public double getTime() {
         return time;
     }
 
-    String getBoard() {
+    public String getBoard() {
         return board;
     }
 

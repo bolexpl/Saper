@@ -24,8 +24,8 @@ public class Window extends JFrame implements GameWindow {
     private JPanel mainPanel = new JPanel();
     private JPanel plansza = new JPanel();
 
-    private int maxX = 10;
-    private int maxY = 10;
+    private int maxX;
+    private int maxY;
     private int hardline;
     private int minesFields;
     private int emptyFields;
@@ -404,7 +404,7 @@ public class Window extends JFrame implements GameWindow {
                     p.getX() <= b.getX() + bt.getWidth() &&
                     p.getY() >= b.getY() &&
                     p.getY() <= b.getY() + bt.getHeight()) {
-                mouse(x, y, e);
+                fieldClicked(x, y, e);
             }
         }
 
@@ -415,7 +415,7 @@ public class Window extends JFrame implements GameWindow {
          * @param y - współrzędna y wybranego pola
          * @param e - obiekt zdarzenia myszy
          */
-        private void mouse(int x, int y, MouseEvent e) {
+        private void fieldClicked(int x, int y, MouseEvent e) {
 
             //PPM
             if (e.getButton() == 3) {
@@ -464,32 +464,32 @@ public class Window extends JFrame implements GameWindow {
     }
 
     //TODO usunąć
-    private void debug() {
-        for (int i = 0; i < maxY; i++) {
-            for (int c = 0; c < maxX; c++) {
-                switch (button[c][i].getValue()) {
-                    case Field.MINA:
-                        System.out.print(" # ");
-                        break;
-                    case Field.PUSTE:
-                        System.out.print("   ");
-                        break;
-                    default:
-                        System.out.print(" " + button[c][i].getValue() + " ");
-                }
-            }
-
-            System.out.print(" | ");
-            for (int c = 0; c < maxX; c++) {
-                switch (button[c][i].getState()) {
-                    case Field.ZAKRYTE:
-                        System.out.print(" # ");
-                        break;
-                    default:
-                        System.out.print("   ");
-                }
-            }
-            System.out.print("\n");
-        }
-    }
+//    private void debug() {
+//        for (int i = 0; i < maxY; i++) {
+//            for (int c = 0; c < maxX; c++) {
+//                switch (button[c][i].getValue()) {
+//                    case Field.MINA:
+//                        System.out.print(" # ");
+//                        break;
+//                    case Field.PUSTE:
+//                        System.out.print("   ");
+//                        break;
+//                    default:
+//                        System.out.print(" " + button[c][i].getValue() + " ");
+//                }
+//            }
+//
+//            System.out.print(" | ");
+//            for (int c = 0; c < maxX; c++) {
+//                switch (button[c][i].getState()) {
+//                    case Field.ZAKRYTE:
+//                        System.out.print(" # ");
+//                        break;
+//                    default:
+//                        System.out.print("   ");
+//                }
+//            }
+//            System.out.print("\n");
+//        }
+//    }
 }
