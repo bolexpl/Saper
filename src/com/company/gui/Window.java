@@ -445,7 +445,6 @@ public class Window extends JFrame implements GameWindow {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
         }
 
         @Override
