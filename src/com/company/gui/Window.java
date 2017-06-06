@@ -367,7 +367,7 @@ public class Window extends JFrame implements GameWindow {
      * Pokazanie okna wyników
      */
     private void showResults() {
-        new ResultsDialog();
+        new RecordsDialog();
     }
 
     /**

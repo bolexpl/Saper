@@ -7,11 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class ResultsDialog extends JDialog {
+class RecordsDialog extends JDialog {
     private JComboBox<String> select;
     private RecordsModel model;
 
-    ResultsDialog() {
+    RecordsDialog() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout());
 
