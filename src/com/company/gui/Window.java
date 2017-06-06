@@ -1,5 +1,6 @@
 package com.company.gui;
 
+import com.company.AbstractField;
 import com.company.Field;
 import com.company.Record;
 import com.company.interfaces.GameWindow;
@@ -27,7 +28,7 @@ public class Window extends JFrame implements GameWindow {
     private int hardline;
     private int minesFields;
     private int emptyFields;
-    private Field button[][];
+    private AbstractField button[][];
 
     private long startTime;
     private String board;
