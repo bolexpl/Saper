@@ -2,7 +2,7 @@ package com.company;
 
 import java.awt.*;
 
-import com.company.windows.Window;
+import com.company.gui.Window;
 
 public class Main {
 

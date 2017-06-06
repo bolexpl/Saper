@@ -1,4 +1,4 @@
-package com.company.windows;
+package com.company.gui;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

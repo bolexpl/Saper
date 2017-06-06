@@ -1,10 +1,8 @@
-package com.company.windows;
+package com.company.gui;
 
 import com.company.Field;
 import com.company.Record;
-import com.company.exception.RecordsException;
 import com.company.interfaces.GameWindow;
-import com.sun.org.apache.regexp.internal.RE;
 
 import javax.swing.*;
 import java.awt.*;
@@ -112,7 +110,7 @@ public class Window extends JFrame implements GameWindow {
         eMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                results();
+                showResults();
             }
         });
         game.add(eMenuItem);
@@ -367,7 +365,7 @@ public class Window extends JFrame implements GameWindow {
     /**
      * Pokazanie okna wyników
      */
-    private void results() {
+    private void showResults() {
         new ResultsDialog();
     }
 
@@ -464,32 +462,32 @@ public class Window extends JFrame implements GameWindow {
     }
 
     //TODO usunąć
-//    private void debug() {
-//        for (int i = 0; i < maxY; i++) {
-//            for (int c = 0; c < maxX; c++) {
-//                switch (button[c][i].getValue()) {
-//                    case Field.MINA:
-//                        System.out.print(" # ");
-//                        break;
-//                    case Field.PUSTE:
-//                        System.out.print("   ");
-//                        break;
-//                    default:
-//                        System.out.print(" " + button[c][i].getValue() + " ");
-//                }
-//            }
-//
-//            System.out.print(" | ");
-//            for (int c = 0; c < maxX; c++) {
-//                switch (button[c][i].getState()) {
-//                    case Field.ZAKRYTE:
-//                        System.out.print(" # ");
-//                        break;
-//                    default:
-//                        System.out.print("   ");
-//                }
-//            }
-//            System.out.print("\n");
-//        }
-//    }
+    private void debug() {
+        for (int i = 0; i < maxY; i++) {
+            for (int c = 0; c < maxX; c++) {
+                switch (button[c][i].getValue()) {
+                    case Field.MINA:
+                        System.out.print(" # ");
+                        break;
+                    case Field.PUSTE:
+                        System.out.print("   ");
+                        break;
+                    default:
+                        System.out.print(" " + button[c][i].getValue() + " ");
+                }
+            }
+
+            System.out.print(" | ");
+            for (int c = 0; c < maxX; c++) {
+                switch (button[c][i].getState()) {
+                    case Field.ZAKRYTE:
+                        System.out.print(" # ");
+                        break;
+                    default:
+                        System.out.print("   ");
+                }
+            }
+            System.out.print("\n");
+        }
+    }
 }

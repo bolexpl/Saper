@@ -1,8 +1,7 @@
-package com.company.windows;
+package com.company.gui;
 
 import com.company.Record;
 import com.company.RecordsModel;
-import com.company.exception.RecordsException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,13 +91,13 @@ class ResultsDialog extends JDialog {
     /**
      * Pobranie danych do modelu i odświeżenie tabeli
      *
-     * @param s - rozmiar planszy
+     * @param filter - rozmiar planszy
      */
-    private void setUpTableData(String s) {
-        if (s.equals("wszystko")) {
+    private void setUpTableData(String filter) {
+        if (filter.equals("wszystko")) {
             model.setData(Record.read(false));
         } else {
-            model.setData(Record.read(s, false));
+            model.setData(Record.read(filter, false));
         }
         model.fireTableDataChanged();
     }

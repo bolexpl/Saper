@@ -1,7 +1,7 @@
 package com.company;
 
 import com.company.exception.RecordsException;
-import com.company.windows.Alert;
+import com.company.gui.Alert;
 
 import java.io.*;
 import java.net.URISyntaxException;
