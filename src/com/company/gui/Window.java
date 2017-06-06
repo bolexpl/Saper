@@ -1,4 +1,9 @@
-package com.company;
+package com.company.gui;
+
+import com.company.AbstractField;
+import com.company.Field;
+import com.company.Record;
+import com.company.interfaces.GameWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,26 +14,26 @@ import java.util.Random;
 /**
  * Klasa głównego okna programu
  */
-class Window extends JFrame {
+public class Window extends JFrame implements GameWindow {
 
-    private ImageIcon flaga = new ImageIcon(getClass().getResource("res/flaga.png"));
-    private ImageIcon trafione = new ImageIcon(getClass().getResource("res/trafione.png"));
-    private ImageIcon mina = new ImageIcon(getClass().getResource("res/mina.png"));
+    private ImageIcon flaga = new ImageIcon(getClass().getResource("../res/flaga.png"));
+    private ImageIcon trafione = new ImageIcon(getClass().getResource("../res/trafione.png"));
+    private ImageIcon mina = new ImageIcon(getClass().getResource("../res/mina.png"));
     private JLabel minyBT = new JLabel();
     private JPanel mainPanel = new JPanel();
     private JPanel plansza = new JPanel();
 
-    private int maxX = 10;
-    private int maxY = 10;
+    private int maxX;
+    private int maxY;
     private int hardline;
     private int minesFields;
     private int emptyFields;
-    private Field button[][];
+    private AbstractField button[][];
 
     private long startTime;
     private String board;
 
-    Window() {
+    public Window() {
         super("Saper");
 
         createMenuBar();
@@ -50,7 +55,6 @@ class Window extends JFrame {
      * Tworzenie nowej planszy
      */
     private void newGame() {
-//        new Prompt(this);
         new Prompt(this);
 
         mainPanel.remove(plansza);
@@ -64,7 +68,7 @@ class Window extends JFrame {
                 button[c][i] = new Field();
                 button[c][i].setPreferredSize(new Dimension(40, 40));
                 button[c][i].setMargin(new Insets(0, 0, 0, 0));
-                button[c][i].addMouseListener(new Odkrycie(c, i, button[c][i]));
+                button[c][i].addMouseListener(new Discover(c, i, button[c][i]));
                 plansza.add(button[c][i]);
             }
         }
@@ -107,7 +111,7 @@ class Window extends JFrame {
         eMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                results();
+                showResults();
             }
         });
         game.add(eMenuItem);
@@ -134,7 +138,8 @@ class Window extends JFrame {
      * @param y     - rozmiar y planszy
      * @param count - ilość min
      */
-    void setGameSize(int x, int y, int count) {
+    @Override
+    public void setGameSize(int x, int y, int count) {
         this.maxX = x;
         this.maxY = y;
         this.hardline = count;
@@ -293,7 +298,7 @@ class Window extends JFrame {
     }
 
     /**
-     * Ustawienie koloru liczb na planszy
+     * Ustawienie kolorów liczb na planszy
      *
      * @param x - współrzędna x pola
      * @param y - współrzędna y pola
@@ -333,11 +338,9 @@ class Window extends JFrame {
     private void checkWin() {
         if (emptyFields == 0) {
 
-            //TODO
             LocalDateTime d = LocalDateTime.now();
             String date = d.getDayOfMonth() + "/" + d.getMonthValue() + "/" + d.getYear();
             double time = (double) ((System.currentTimeMillis() - startTime) / 100) / 10;
-
 
             Record.write(new Record(date, time, board));
 
@@ -347,7 +350,7 @@ class Window extends JFrame {
     }
 
     /**
-     * W przypadku przegranej oznaczenie wszystkich min
+     * W przypadku przegranej pokazanie wszystkich min
      */
     private void onLoose() {
         for (int i = 0; i < maxX; i++) {
@@ -363,14 +366,14 @@ class Window extends JFrame {
     /**
      * Pokazanie okna wyników
      */
-    private void results() {
-        new ResultsDialog();
+    private void showResults() {
+        new RecordsDialog();
     }
 
     /**
      * Klasa obsługująca reakcję na kliknięcie
      */
-    private class Odkrycie implements MouseListener {
+    private class Discover implements MouseListener {
 
         private int x;
         private int y;
@@ -380,14 +383,14 @@ class Window extends JFrame {
          * @param x - współrzędna x wybranego pola
          * @param y - współrzędna y wybranego pola
          */
-        private Odkrycie(int x, int y, JButton bt) {
+        private Discover(int x, int y, JButton bt) {
             this.x = x;
             this.y = y;
             this.bt = bt;
         }
 
         /**
-         * Sprawdzenie czy kursor nadal jest na przycisku
+         * Sprawdzenie czy kursor jest puszczony na tym samym przycisku
          *
          * @param e - obiekt zdarzenia myszy
          */
@@ -400,7 +403,7 @@ class Window extends JFrame {
                     p.getX() <= b.getX() + bt.getWidth() &&
                     p.getY() >= b.getY() &&
                     p.getY() <= b.getY() + bt.getHeight()) {
-                mouse(x, y, e);
+                fieldClicked(x, y, e);
             }
         }
 
@@ -411,19 +414,27 @@ class Window extends JFrame {
          * @param y - współrzędna y wybranego pola
          * @param e - obiekt zdarzenia myszy
          */
-        private void mouse(int x, int y, MouseEvent e) {
+        private void fieldClicked(int x, int y, MouseEvent e) {
+
+            //PPM
             if (e.getButton() == 3) {
+
                 if (button[x][y].getState() == Field.ZAKRYTE) {
+
                     button[x][y].setState(Field.FLAGA);
                     button[x][y].setIcon(flaga);
                     minesFields--;
                     minyBT.setText(Integer.toString(minesFields));
+
                 } else if (button[x][y].getState() == Field.FLAGA) {
+
                     button[x][y].setState(Field.ZAKRYTE);
                     button[x][y].setIcon(null);
                     minesFields++;
                     minyBT.setText(Integer.toString(minesFields));
                 }
+
+                //LPM
             } else if (e.getButton() == 1) {
                 if (button[x][y].getValue() == Field.NIEOKRESLONE) {
                     generate(x, y);
@@ -435,7 +446,6 @@ class Window extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
         }
 
         @Override

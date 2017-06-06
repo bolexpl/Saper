@@ -2,41 +2,44 @@ package com.company;
 
 import javax.swing.*;
 
-class Field extends JButton {
+public class Field extends AbstractField {
 
-    private int value;
-    static final int MINA = -1;
-    static final int PUSTE = 0;
-    static final int NIEOKRESLONE = -2;
+    public static final int MINA = -1;
+    public static final int PUSTE = 0;
+    public static final int NIEOKRESLONE = -2;
 
-    private int state;
-    static final int ODKRYTE = 0;
-    static final int ZAKRYTE = 1;
-    static final int FLAGA = 2;
+    public static final int ODKRYTE = 0;
+    public static final int ZAKRYTE = 1;
+    public static final int FLAGA = 2;
 
-    Field() {
+    public Field() {
         super();
         this.state = ZAKRYTE;
         this.value = -2;
     }
 
-    int getValue() {
+    @Override
+    public int getValue() {
         return value;
     }
 
-    void setValue(int value) {
+    @Override
+    public void setValue(int value) {
         this.value = value;
     }
 
-    int getState() {
+    @Override
+    public int getState() {
         return state;
     }
 
-    void setState(int state) {
+    @Override
+    public void setState(int state) {
         this.state = state;
     }
 
-    void setIcon(ImageIcon icon) {
+    @Override
+    public void setIcon(ImageIcon icon) {
         if (icon == null) {
             super.setIcon(null);
         } else {

@@ -6,9 +6,9 @@ import java.util.Vector;
 public class RecordsModel extends AbstractTableModel {
 
     private Vector<Record> records;
-    private final static Object[] columns = {"Data", "Czas", "Plansza"};
+    private final static Object[] COLUMNS = {"Data", "Czas", "Plansza"};
 
-    RecordsModel(Vector<Record> records) {
+    public RecordsModel(Vector<Record> records) {
         super();
         this.records = records;
     }
@@ -17,12 +17,8 @@ public class RecordsModel extends AbstractTableModel {
      * Przypisanie danych
      * @param records - wektor rekordów
      * */
-    void setData(Vector<Record> records) {
+    public void setData(Vector<Record> records) {
         this.records = records;
-    }
-
-    public Record getRecord(int i) {
-        return records.get(i);
     }
 
     @Override
@@ -33,12 +29,12 @@ public class RecordsModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return columns.length;
+        return COLUMNS.length;
     }
 
     @Override
     public String getColumnName(int i) {
-        return columns[i].toString();
+        return COLUMNS[i].toString();
     }
 
     @Override
