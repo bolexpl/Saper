@@ -34,6 +34,7 @@ class Prompt extends JDialog {
         JButton buttonCancel = new JButton("Wyjście");
         right.add(buttonOK);
         right.add(buttonCancel);
+        right.setBorder(BorderFactory.createEmptyBorder(10,100,10,10));
 
         JPanel top = new JPanel();
 
@@ -127,7 +128,7 @@ class Prompt extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         pack();
-        setSize(286,400);
+//        setSize(286,400);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
