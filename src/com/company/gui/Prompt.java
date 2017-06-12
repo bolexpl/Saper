@@ -7,6 +7,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Klasa okna dialogowego do wprowadzania rozmiaru planszy
+ * */
 class Prompt extends JDialog {
     private JTextField xField;
     private JTextField yField;
@@ -146,6 +149,9 @@ class Prompt extends JDialog {
         }
     }
 
+    /**
+     * Ustawianie rozmiaru standardowej planszy
+     * */
     private void simpleBoard(){
         String[] a = group.getSelection().getActionCommand().split("x");
         int x = Integer.parseInt(a[0]);
@@ -162,6 +168,9 @@ class Prompt extends JDialog {
         dispose();
     }
 
+    /**
+     * Ustawianie rozmiaru własnej planszy
+     * */
     private void customBoard(){
         try {
             int x = Integer.parseInt(xField.getText());

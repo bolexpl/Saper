@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Klasa okna dialogowego wyświetlającego tabelę wyników
+ * */
 class RecordsDialog extends JDialog {
     private JComboBox<String> select;
     private RecordsModel model;

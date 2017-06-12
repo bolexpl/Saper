@@ -3,6 +3,9 @@ package com.company;
 import javax.swing.table.AbstractTableModel;
 import java.util.Vector;
 
+/**
+ * Klasa modelu danych dla tabeli wyników
+ * */
 public class RecordsModel extends AbstractTableModel {
 
     private Vector<Record> records;

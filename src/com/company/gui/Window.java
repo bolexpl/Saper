@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 /**
- * Klasa głównego okna programu
+ * Klasa głównego okna gry
  */
 public class Window extends JFrame implements GameWindow {
 
