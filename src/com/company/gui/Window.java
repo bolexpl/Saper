@@ -1,10 +1,9 @@
-package com.company.windows;
+package com.company.gui;
 
+import com.company.AbstractField;
 import com.company.Field;
 import com.company.Record;
-import com.company.exception.RecordsException;
 import com.company.interfaces.GameWindow;
-import com.sun.org.apache.regexp.internal.RE;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 /**
- * Klasa głównego okna programu
+ * Klasa głównego okna gry
  */
 public class Window extends JFrame implements GameWindow {
 
@@ -24,12 +23,12 @@ public class Window extends JFrame implements GameWindow {
     private JPanel mainPanel = new JPanel();
     private JPanel plansza = new JPanel();
 
-    private int maxX = 10;
-    private int maxY = 10;
+    private int maxX;
+    private int maxY;
     private int hardline;
     private int minesFields;
     private int emptyFields;
-    private Field button[][];
+    private AbstractField button[][];
 
     private long startTime;
     private String board;
@@ -112,7 +111,7 @@ public class Window extends JFrame implements GameWindow {
         eMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                results();
+                showResults();
             }
         });
         game.add(eMenuItem);
@@ -367,8 +366,8 @@ public class Window extends JFrame implements GameWindow {
     /**
      * Pokazanie okna wyników
      */
-    private void results() {
-        new ResultsDialog();
+    private void showResults() {
+        new RecordsDialog();
     }
 
     /**
@@ -404,7 +403,7 @@ public class Window extends JFrame implements GameWindow {
                     p.getX() <= b.getX() + bt.getWidth() &&
                     p.getY() >= b.getY() &&
                     p.getY() <= b.getY() + bt.getHeight()) {
-                mouse(x, y, e);
+                fieldClicked(x, y, e);
             }
         }
 
@@ -415,7 +414,7 @@ public class Window extends JFrame implements GameWindow {
          * @param y - współrzędna y wybranego pola
          * @param e - obiekt zdarzenia myszy
          */
-        private void mouse(int x, int y, MouseEvent e) {
+        private void fieldClicked(int x, int y, MouseEvent e) {
 
             //PPM
             if (e.getButton() == 3) {
@@ -447,7 +446,6 @@ public class Window extends JFrame implements GameWindow {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
         }
 
         @Override

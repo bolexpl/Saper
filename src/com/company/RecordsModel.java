@@ -3,10 +3,13 @@ package com.company;
 import javax.swing.table.AbstractTableModel;
 import java.util.Vector;
 
+/**
+ * Klasa modelu danych dla tabeli wyników
+ * */
 public class RecordsModel extends AbstractTableModel {
 
     private Vector<Record> records;
-    private final static Object[] columns = {"Data", "Czas", "Plansza"};
+    private final static Object[] COLUMNS = {"Data", "Czas", "Plansza"};
 
     public RecordsModel(Vector<Record> records) {
         super();
@@ -21,10 +24,6 @@ public class RecordsModel extends AbstractTableModel {
         this.records = records;
     }
 
-    public Record getRecord(int i) {
-        return records.get(i);
-    }
-
     @Override
     public int getRowCount() {
         if (records == null) return 0;
@@ -33,12 +32,12 @@ public class RecordsModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return columns.length;
+        return COLUMNS.length;
     }
 
     @Override
     public String getColumnName(int i) {
-        return columns[i].toString();
+        return COLUMNS[i].toString();
     }
 
     @Override

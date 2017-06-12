@@ -1,4 +1,4 @@
-package com.company.windows;
+package com.company.gui;
 
 import com.company.interfaces.GameWindow;
 
@@ -7,17 +7,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Klasa okna dialogowego do wprowadzania rozmiaru planszy
+ * */
 class Prompt extends JDialog {
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField xField;
+    private JTextField yField;
+    private JTextField countField;
     private JRadioButton customRadioButton;
     private JLabel error;
     private ButtonGroup group;
-    private GameWindow w;
+    private GameWindow mainWindow;
 
-    Prompt(GameWindow w) {
-        this.w = w;
+    Prompt(GameWindow mainWindow) {
+        this.mainWindow = mainWindow;
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         GridLayout grid = new GridLayout(9, 1);
@@ -34,6 +37,7 @@ class Prompt extends JDialog {
         JButton buttonCancel = new JButton("Wyjście");
         right.add(buttonOK);
         right.add(buttonCancel);
+        right.setBorder(BorderFactory.createEmptyBorder(10,100,10,10));
 
         JPanel top = new JPanel();
 
@@ -46,18 +50,18 @@ class Prompt extends JDialog {
         JRadioButton a30x16RadioButton = new JRadioButton("30x16");
         customRadioButton = new JRadioButton("własne ustawienia");
         error = new JLabel();
-        textField1 = new JTextField();
-        textField2 = new JTextField();
-        textField3 = new JTextField();
+        xField = new JTextField();
+        yField = new JTextField();
+        countField = new JTextField();
 
         top.add(a8x8RadioButton);
         top.add(a16x16RadioButton);
         top.add(a30x16RadioButton);
         top.add(customRadioButton);
         top.add(error);
-        top.add(textField1);
-        top.add(textField2);
-        top.add(textField3);
+        top.add(xField);
+        top.add(yField);
+        top.add(countField);
         bottom.add(right, BorderLayout.EAST);
         contentPane.add(top, BorderLayout.NORTH);
         contentPane.add(bottom, BorderLayout.SOUTH);
@@ -78,21 +82,21 @@ class Prompt extends JDialog {
         group.add(a30x16RadioButton);
         group.add(customRadioButton);
 
-        textField1.setEnabled(false);
-        textField2.setEnabled(false);
-        textField3.setEnabled(false);
+        xField.setEnabled(false);
+        yField.setEnabled(false);
+        countField.setEnabled(false);
 
         customRadioButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {
                 if (itemEvent.getStateChange() == ItemEvent.DESELECTED) {
-                    textField1.setEnabled(false);
-                    textField2.setEnabled(false);
-                    textField3.setEnabled(false);
+                    xField.setEnabled(false);
+                    yField.setEnabled(false);
+                    countField.setEnabled(false);
                 } else {
-                    textField1.setEnabled(true);
-                    textField2.setEnabled(true);
-                    textField3.setEnabled(true);
+                    xField.setEnabled(true);
+                    yField.setEnabled(true);
+                    countField.setEnabled(true);
                 }
             }
         });
@@ -127,13 +131,7 @@ class Prompt extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         pack();
-//        buttonOK.setText(Integer.toString(getWidth()));
-//        buttonCancel.setText(Integer.toString(getHeight()));
-//        setSize(new Dimension(this.getWidth() + 80, this.getHeight()));
-        //206,367
-
-        setSize(286,357);
-
+//        setSize(286,400);
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((int) screen.getWidth() / 2 - getWidth() / 2,
                 (int) screen.getHeight() / 2 - getHeight() / 2);
@@ -143,44 +141,54 @@ class Prompt extends JDialog {
 
     private void onOK() {
         if (!customRadioButton.isSelected()) {
-            String[] a = group.getSelection().getActionCommand().split("x");
-            int x = Integer.parseInt(a[0]);
-            int y = Integer.parseInt(a[1]);
-            int count;
-            if (x == 8) {
-                count = 10;
-            } else if (x == 16) {
-                count = 40;
-            } else {
-                count = 99;
-            }
-            w.setGameSize(x, y, count);
-            dispose();
-            return;
-        }
-
-        if (!textField1.getText().equals("") && !textField2.getText().equals("") && !textField3.getText().equals("")) {
-
-            try {
-                int x = Integer.parseInt(textField1.getText());
-                int y = Integer.parseInt(textField2.getText());
-                int count = Integer.parseInt(textField3.getText());
-
-                if (x <= 3 || y <= 3) {
-                    error.setText("Za mała wielkość!");
-                    return;
-                }
-                if (count >= (x * y) - 9) {
-                    error.setText("Za dużo min!");
-                    return;
-                }
-                w.setGameSize(x, y, count);
-                dispose();
-            } catch (NumberFormatException e) {
-                error.setText("Złe dane!");
-            }
+            simpleBoard();
+        }else if (!xField.getText().equals("") && !yField.getText().equals("") && !countField.getText().equals("")) {
+            customBoard();
         } else {
             error.setText("Nie wpisano danych!");
+        }
+    }
+
+    /**
+     * Ustawianie rozmiaru standardowej planszy
+     * */
+    private void simpleBoard(){
+        String[] a = group.getSelection().getActionCommand().split("x");
+        int x = Integer.parseInt(a[0]);
+        int y = Integer.parseInt(a[1]);
+        int count;
+        if (x == 8) {
+            count = 10;
+        } else if (x == 16) {
+            count = 40;
+        } else {
+            count = 99;
+        }
+        mainWindow.setGameSize(x, y, count);
+        dispose();
+    }
+
+    /**
+     * Ustawianie rozmiaru własnej planszy
+     * */
+    private void customBoard(){
+        try {
+            int x = Integer.parseInt(xField.getText());
+            int y = Integer.parseInt(yField.getText());
+            int count = Integer.parseInt(countField.getText());
+
+            if (x <= 3 || y <= 3) {
+                error.setText("Za mała wielkość!");
+                return;
+            }
+            if (count >= (x * y) - 9) {
+                error.setText("Za dużo min!");
+                return;
+            }
+            mainWindow.setGameSize(x, y, count);
+            dispose();
+        } catch (NumberFormatException e) {
+            error.setText("Złe dane!");
         }
     }
 }

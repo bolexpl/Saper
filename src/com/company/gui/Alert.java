@@ -1,4 +1,4 @@
-package com.company.windows;
+package com.company.gui;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Klasa okna dialogowego do wyświetlania komunikatów
+ * */
 public class Alert extends JDialog {
 
     /**
