@@ -390,7 +390,8 @@ public class Window extends JFrame implements GameWindow {
         }
 
         /**
-         * Sprawdzenie czy kursor jest puszczony na tym samym przycisku
+         * Sprawdzenie czy kursor jest puszczony na tym samym
+         * przycisku na którym był wciśnięty
          *
          * @param e - obiekt zdarzenia myszy
          */
