@@ -34,33 +34,16 @@ class RecordsDialog extends JDialog {
         select = new JComboBox<>(boards);
         getRootPane().setDefaultButton(buttonOK);
 
-        mainPanel.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        mainPanel.registerKeyboardAction(e -> dispose(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        buttonOK.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                dispose();
-            }
+        buttonOK.addActionListener(actionEvent -> dispose());
+
+        buttonClear.addActionListener(actionEvent -> {
+            Record.init();
+            setUpTableData("wszystko");
         });
 
-        buttonClear.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                Record.init();
-                setUpTableData("wszystko");
-            }
-        });
-
-        select.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                setUpTableData(select.getSelectedItem().toString());
-            }
-        });
+        select.addActionListener(actionEvent -> setUpTableData(select.getSelectedItem().toString()));
 
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());
